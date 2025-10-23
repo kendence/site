@@ -257,18 +257,19 @@
         // --- CÓDIGO DO PAINEL ADMIN (Movido para uma função) ---
         function initializeAdminPanel() {
             // Configuração do Firebase
-            const firebaseConfig = {
-                apiKey: "AIzaSyCnvY_DB4iV0fCf-WUGSsdrKG9EBvqfcZg",
-                authDomain: "kendencefc.firebaseapp.com",
-                projectId: "kendencefc",
-                storageBucket: "kendencefc.appspot.com",
-                messagingSenderId: "879233429651",
-                appId: "1:879233429651:web:afc2184c43bfd3dc9a1d66",
-                measurementId: "G-7SRD00WHGL"
-            };
+  const firebaseConfig = {
+    apiKey: "AIzaSyAz1fgGgpB7F05-watfO69vi6Mpzgw1uMs",
+    authDomain: "kendencefc-66b8b.firebaseapp.com",
+    projectId: "kendencefc-66b8b",
+    storageBucket: "kendencefc-66b8b.firebasestorage.app",
+    messagingSenderId: "405923587103",
+    appId: "1:405923587103:web:b74f3a37deff2f07bc212a",
+    measurementId: "G-HLVLC7D0VD"
+  };
 
-            const app = initializeApp(firebaseConfig);
-            const database = getDatabase(app);
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
 
             let currentSection = 'upcomingGames';
 
@@ -420,3 +421,4 @@
     </script>
 </body>
 </html>
+
