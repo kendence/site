@@ -75,7 +75,7 @@
         <div class="mb-8">
             <label for="section-select" class="block mb-2 text-lg font-medium">Selecione a área para gerenciar:</label>
             <select id="section-select" class="form-input w-full p-3" onchange="showForm(this.value)">
-                <option value="upcomingGames">Próximos Jogos</option>
+                <option value="upcomingGames">PróximOS Jogos</option>
                 <option value="recentResults">Resultados Recentes</option>
                 <option value="news">Notícias</option>
                 <option value="players">Jogadores</option>
@@ -217,9 +217,10 @@
     </div> 
     
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getDatabase, ref, onValue, push, set, remove, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"; // <-- LINHA ADICIONADA
+        // Imports ATUALIZADOS para v12.4.0 e com getAnalytics
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+        import { getDatabase, ref, onValue, push, set, remove, get } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js"; // Adicionado
 
         // --- LÓGICA DE LOGIN (NOVO) ---
         const loginForm = document.getElementById('login-form');
@@ -257,7 +258,8 @@
 
         // --- CÓDIGO DO PAINEL ADMIN (Movido para uma função) ---
         function initializeAdminPanel() {
-            // Configuração do Firebase
+            
+            // Configuração do Firebase ATUALIZADA
             const firebaseConfig = {
                 apiKey: "AIzaSyAz1fgGgpB7F05-watfO69vi6Mpzgw1uMs",
                 authDomain: "kendencefc-66b8b.firebaseapp.com",
@@ -268,10 +270,10 @@
                 measurementId: "G-HLVLC7D0VD"
             };
 
-            // Initialize Firebase
+            // Initialize Firebase (com database e analytics)
             const app = initializeApp(firebaseConfig);
-            const database = getDatabase(app); // <-- LINHA ADICIONADA (ESSENCIAL)
-            const analytics = getAnalytics(app); // <-- Esta linha agora funciona
+            const database = getDatabase(app);
+            const analytics = getAnalytics(app); // Adicionado
 
             let currentSection = 'upcomingGames';
 
@@ -305,7 +307,7 @@
             window.editItem = async (key) => {
                 const section = sections[currentSection];
                 const form = document.getElementById(section.formId);
-                const snapshot = await get(ref(database, `${section.dbRef}/${key}`)); // 'database' agora existe
+                const snapshot = await get(ref(database, `${section.dbRef}/${key}`));
                 if (!snapshot.exists()) return;
                 const data = snapshot.val();
                 document.getElementById(`${currentSection}-id`).value = key;
@@ -340,7 +342,7 @@
             
             window.deleteItem = (key) => {
                 if (confirm('Tem certeza que deseja excluir este item?')) {
-                    remove(ref(database, `${sections[currentSection].dbRef}/${key}`)) // 'database' agora existe
+                    remove(ref(database, `${sections[currentSection].dbRef}/${key}`))
                         .then(() => alert('Item excluído com sucesso!'))
                         .catch(error => alert(error.message));
                 }
@@ -388,7 +390,7 @@
                     delete data['image-final']; // Remove a chave parcial
                 }
 
-                const dataRef = id ? ref(database, `${section.dbRef}/${id}`) : ref(database, section.dbRef); // 'database' agora existe
+                const dataRef = id ? ref(database, `${section.dbRef}/${id}`) : ref(database, section.dbRef);
                 const action = id ? set(dataRef, data) : push(dataRef, data);
 
                 action.then(() => alert(`Dados ${id ? 'atualizados' : 'adicionados'} com sucesso!`))
