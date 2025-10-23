@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>app-Kendence F.C.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+        }
+        .snap-x {
+            scroll-snap-type: x mandatory;
+        }
+        .snap-center {
+            scroll-snap-align: center;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <div id="loading-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-cover bg-center" style="background-image: url('https://raw.githubusercontent.com/jardimjohnkennedy/kendence/refs/heads/main/baner_patrocinio.png');">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div> 
+        
+        <div class="text-center z-10">
+            <img src="https://raw.githubusercontent.com/jardimjohnkennedy/kendence/refs/heads/main/brasao_1.png" alt="Brasão do Time" class="w-39 h-32 mx-auto animate-pulse">
+            
+            <p class="text-white text-lg font-semibold mt-4">Carregando...</p>
+        </div>
+    </div>
+
+
+    <div id="app-container"
+         class="max-w-md mx-auto min-h-screen shadow-lg relative pb-16" 
+         style="background-image: url('https://raw.githubusercontent.com/jardimjohnkennedy/kendence/refs/heads/main/background 3.png'); 
+                background-size: cover; 
+                background-position: center; 
+                background-attachment: fixed;"> 
+    
+        <div id="home-screen" class="screen active">
+            <div class="w-full">
+                <img src="https://raw.githubusercontent.com/jardimjohnkennedy/kendence/refs/heads/main/logo.png" alt="Banner do Time" class="w-full h-auto object-cover">
+            </div>
+
+            <main>
+                <div class="p-4">
+                    <h2 class="font-bold text-lg mb-4">Últimas Notícias</h2>
+                </div>
+                
+                <div id="news-banner-scroll" class="overflow-x-auto snap-x flex no-scrollbar w-full">
+                    </div>
+
+                <div class="p-4">
+                    <div class="grid grid-cols-2 gap-3 mt-6">
+                        <button onclick="navigateTo('news-screen')" class="bg-gray-100 p-3 rounded-lg flex items-center text-left">
+                            <i class="fa fa-newspaper text-xl text-gray-600 mr-3"></i>
+                            <span class="font-semibold">Notícias</span>
+                        </button>
+                        <button onclick="navigateTo('socials-screen')" class="bg-gray-100 p-3 rounded-lg flex items-center text-left">
+                            <i class="fa fa-hashtag text-xl text-gray-600 mr-3"></i>
+                            <span class="font-semibold">Redes Sociais</span>
+                        </button>
+                        <button onclick="navigateTo('history-screen')" class="bg-gray-100 p-3 rounded-lg flex items-center text-left">
+                            <i class="fa fa-book-open text-xl text-gray-600 mr-3"></i>
+                            <span class="font-semibold">História</span>
+                        </button>
+                        <button onclick="navigateTo('sponsors-screen')" class="bg-gray-100 p-3 rounded-lg flex items-center text-left">
+                            <i class="fa fa-handshake text-xl text-gray-600 mr-3"></i>
+                            <span class="font-semibold">Patrocínios</span>
+                        </button>
+                        <button onclick="navigateTo('games-screen')" class="bg-gray-100 p-3 rounded-lg flex items-center text-left">
+                            <i class="fa fa-calendar-alt text-xl text-gray-600 mr-3"></i>
+                            <span class="font-semibold">Jogos</span>
+                        </button>
+                        <button onclick="navigateTo('gallery-screen')" class="bg-gray-100 p-3 rounded-lg flex items-center text-left">
+                            <i class="fa fa-images text-xl text-gray-600 mr-3"></i>
+                            <span class="font-semibold">Galeria</span>
+                        </button>
+                    </div>
+
+                    <section class="mt-8">
+                        <h2 class="font-bold text-lg">Jogadores</h2>
+                        <div id="players-list-home" class="flex overflow-x-auto gap-4 mt-4 no-scrollbar pb-2">
+                            </div>
+                    </section>
+                    
+                    <section class="mt-8">
+                        <h2 class="font-bold text-lg">Próximos Jogos</h2>
+                        <div id="upcoming-games-home" class="flex overflow-x-auto gap-4 mt-4 no-scrollbar pb-2">
+                            </div>
+                    </section>
+                    
+                    <section class="mt-8">
+                        <h2 class="font-bold text-lg">Resultados Recentes</h2>
+                        <div id="recent-results-home" class="flex overflow-x-auto gap-4 mt-4 no-scrollbar pb-2">
+                            </div>
+                    </section>
+                </div>
+            </main>
+            
+            <footer class="p-4 bg-gray-200 text-center text-gray-700 text-sm mt-8">
+                <p class="mb-2"> Para jogos ou campeonato, entrar em contato pelo nosso WhatsApp.</p>
+                <p class="font-semibold">By: A.Yoshi.</p>
+            </footer>
+        </div>
+
+        <div id="news-screen" class="screen">
+            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20">
+                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
+                <h2 class="font-bold text-lg mx-auto">Notícias</h2>
+                <div class="w-6"></div> </header>
+            <main class="p-4 space-y-4" id="news-list-content">
+                </main>
+        </div>
+        
+        <div id="news-detail-screen" class="screen">
+             <header class="p-4 border-b flex items-center justify-between sticky top-0 bg-white z-10">
+                <button onclick="goBack()"><i class="fa fa-arrow-left text-xl"></i></button>
+                <h2 class="font-bold text-lg mx-auto" id="news-detail-title-header">Notícia</h2>
+                <div class="w-6"></div> </header>
+            <main class="p-4" id="news-detail-content">
+                </main>
+        </div>
+
+        <div id="socials-screen" class="screen">
+            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20">
+                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
+                <h2 class="font-bold text-lg mx-auto">Redes Sociais</h2>
+                <div class="w-6"></div> 
+            </header>
+            <main class="p-4 space-y-4">
+                <a href="https://www.youtube.com/channel/UCVG6kWDq2JIdurnN7LIgmPQ" target="_blank" class="block w-full bg-red-600 text-white p-4 rounded-lg flex items-center justify-center font-semibold text-lg hover:bg-red-700 transition">
+                    <i class="fa-brands fa-youtube text-2xl mr-3"></i>
+                    YouTube
+                    </a>
+                
+                <a href="https://www.instagram.com/kendence2015/?__pwa=1" target="_blank" class="block w-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white p-4 rounded-lg flex items-center justify-center font-semibold text-lg hover:opacity-90 transition">
+                    <i class="fa-brands fa-instagram text-2xl mr-3"></i>
+                    Instagram
+                     </a>
+
+                <a href="https://jardimjohnkennedy.github.io/kendence/admin" target="_blank" class="block w-full bg-gray-800 text-white p-4 rounded-lg flex items-center justify-center font-semibold text-lg hover:bg-gray-900 transition">
+                    <i class="fa fa-users text-2xl mr-3"></i>
+                    Acesso à Diretoria
+                    </a>
+            </main>
+        </div>
+
+        <div id="games-screen" class="screen">
+            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20">
+                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
+                <h2 class="font-bold text-lg mx-auto">Jogos</h2>
+                <div class="w-6"></div> </header>
+            <main class="p-4">
+                <section id="upcoming-games-section">
+                    <h3 class="font-bold text-gray-500 text-sm mb-3">PRÓXIMOS JOGOS</h3>
+                    <div id="upcoming-games-list" class="space-y-3">
+                        </div>
+                </section>
+                <section id="recent-results-section" class="mt-8">
+                    <h3 class="font-bold text-gray-500 text-sm mb-3">RESULTADOS RECENTES</h3>
+                    <div id="recent-results-list" class="space-y-3">
+                        </div>
+                </section>
+            </main>
+        </div>
+
+        <div id="sponsors-screen" class="screen">
+            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20">
+                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
+                <h2 class="font-bold text-lg mx-auto">Patrocínios</h2>
+                <div class="w-6"></div> </header>
+            <main class="p-4">
+                <div id="sponsors-grid" class="grid grid-cols-2 gap-4">
+                    </div>
+            </main>
+        </div>
+
+        <div id="player-detail-screen" class="screen">
+             <header class="p-4 border-b flex items-center justify-between sticky top-0 bg-white z-10">
+                <button onclick="goBack()"><i class="fa fa-arrow-left text-xl"></i></button>
+                <h2 class="font-bold text-lg mx-auto">Jogador</h2>
+                <div class="w-6"></div> </header>
+            <main class="p-4" id="player-detail-content">
+                </main>
+            <footer class="p-4 border-t sticky bottom-0 bg-white" id="player-detail-footer">
+                </footer>
+        </div>
+
+        <div id="sponsor-detail-screen" class="screen">
+             <header class="p-4 border-b flex items-center justify-between sticky top-0 bg-white z-10">
+                <button onclick="goBack()"><i class="fa fa-arrow-left text-xl"></i></button>
+                <h2 class="font-bold text-lg mx-auto">Patrocinador</h2>
+                <div class="w-6"></div> </header>
+            <main class="p-4" id="sponsor-detail-content">
+                </main>
+            <footer class="p-4 border-t sticky bottom-0 bg-white" id="sponsor-detail-footer">
+                </footer>
+        </div>
+
+        <div id="history-screen" class="screen">
+            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20">
+                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
+                <h2 class="font-bold text-lg mx-auto">História</h2>
+                <div class="w-6"></div> 
+            </header>
+            <main class="p-4">
+                <img src="https://lh3.googleusercontent.com/d/19tMWJUs5rl403bm4Qz7R3Vep8Lg14qYV" alt="História do Kendence F.C." class="w-full h-48 object-cover rounded-lg mb-4 bg-gray-200">
+                
+                <h2 class="text-2xl font-bold mb-3">Nossa Trajetória</h2>
+                <div class="text-gray-700 space-y-4">
+                    <p>Kendence Futebol Clube 🔴🔵</p>
+                    </p>Desde 1987, o time que nasceu como Meninos do Kennedy carrega a paixão do bairro John Kennedy dentro de campo. Em 2015, passou por uma reformulação e ganhou o nome Kendence, em homenagem à comunidade que o viu crescer.</p>
+
+</p>Com uma história marcada por garra e tradição, o Kendence soma títulos e conquistas:</p>
+</p>Campeão Bronze 2017 🥇🏆,</p>
+</p>Vice-campeão Jataizinho 2018 🥈,</p>
+</p>Vice-campeão Motor Parts Prata 2023 🥈 e</p>
+</p>Vice-campeão Municipal Divisão Prata 2024 🥈.</p>
+</p>Um time que honra seu bairro, sua história e o amor pelo futebol! ⚽🔥</p>
+                   
+                </div>
+            </main>
+        </div>
+
+        <div id="gallery-screen" class="screen">
+            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20">
+                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
+                <h2 class="font-bold text-lg mx-auto">Galeria</h2>
+                <div class="w-6"></div> 
+            </header>
+            <main class="p-4 space-y-4">
+                <a href="https://drive.google.com/drive/folders/1ujHIcc87gguhfM5-aZTzCI9MoJ-u4a-p?usp=drive_link" target="_blank" class="block w-full bg-gray-100 p-4 rounded-lg flex items-center text-left text-lg font-semibold hover:bg-gray-200 transition">
+                    <i class="fa fa-mobile-alt text-2xl text-gray-600 mr-4 w-6 text-center"></i>
+                    Wallpapers
+                    </a>
+
+                 <div class="w-full bg-gray-100 rounded-lg">
+                    <button onclick="toggleCollapse('fotos-sub')" class="w-full p-4 flex items-center justify-between text-left text-lg font-semibold">
+                        <span class="flex items-center">
+                            <i class="fa fa-camera-retro text-2xl text-gray-600 mr-4 w-6 text-center"></i>
+                            Fotos e vídeos
+                        </span>
+                        <i id="fotos-sub-icon" class="fa fa-chevron-down text-gray-500 transition-transform"></i>
+                    </button>
+                    <div id="fotos-sub" class="hidden pl-8 pr-4 pb-4 space-y-2">
+                        
+                        <div class="w-full bg-gray-200 rounded-lg">
+                             <button onclick="toggleCollapse('amistoso-sub')" class="w-full p-3 flex items-center justify-between text-left text-md font-semibold">
+                                <span>Amistoso</span>
+                                <i id="amistoso-sub-icon" class="fa fa-chevron-down text-gray-500 text-sm transition-transform"></i>
+                             </button>
+                             <div id="amistoso-sub" class="hidden pl-6 pr-3 pb-3 space-y-2 mt-1">
+                                <a href="https://drive.google.com/drive/folders/1P9Ls-u-ZZkWhUhSj1TW2-5_OKPqUjMjs?usp=drive_link" target="_blank" class="block p-2 rounded hover:bg-gray-300 transition">Instagran</a>
+                               
+                             </div>
+                        </div>
+                        
+                        <div class="w-full bg-gray-200 rounded-lg">
+                             <button onclick="toggleCollapse('campeonato-sub')" class="w-full p-3 flex items-center justify-between text-left text-md font-semibold">
+                                <span>Campeonato</span>
+                                <i id="campeonato-sub-icon" class="fa fa-chevron-down text-gray-500 text-sm transition-transform"></i>
+                             </button>
+                             <div id="campeonato-sub" class="hidden pl-4 pr-3 pb-3 space-y-2 mt-1">
+                                
+                                <div class="w-full bg-gray-300 rounded-lg">
+                                     <button onclick="toggleCollapse('purosangue-sub')" class="w-full p-2 flex items-center justify-between text-left text-sm font-semibold">
+                                        <span>Puro sangue</span>
+                                        <i id="purosangue-sub-icon" class="fa fa-chevron-down text-gray-500 text-xs transition-transform"></i>
+                                     </button>
+                                     <div id="purosangue-sub" class="hidden pl-6 pr-2 pb-2 space-y-2 mt-1">
+                                        <a href="https://drive.google.com/drive/folders/1fEnOzkYfJNuEqlZfWuT9wA8iP1OZdcC8?usp=drive_link" target="_blank" class="block p-2 rounded hover:bg-gray-400 transition text-sm">Kendence X D'Fiori</a>
+                                        <a href="https://drive.google.com/drive/folders/1-FxljDek7aO-Mu4DO3GOp516QwTq1Ss_?usp=drive_link" target="_blank" class="block p-2 rounded hover:bg-gray-400 transition text-sm">Kendence X Juventus</a>
+                                        <a href="https://drive.google.com/drive/folders/1mGU6qLrcD_sv7jX3lUga3v5ZmC3pk03j?usp=drive_link" target="_blank" class="block p-2 rounded hover:bg-gray-400 transition text-sm">Kendence X A.E.Altitude</a>
+                                        <a href="https://drive.google.com/drive/folders/1HbbdVM-JBEWz3wbdHkNdPOd0rMPOypEM?usp=drive_link" target="_blank" class="block p-2 rounded hover:bg-gray-400 transition text-sm">Kendence X Inter Santa Paula</a>
+                                     </div>
+                                </div>
+                                
+                             </div>
+                        </div>
+
+                    </div>
+                </div>
+                 <a href="https://drive.google.com/drive/folders/1BNs1TjGhXATk8STdXLheeV3UIsTzaAkE?usp=drive_link" target="_blank" class="block w-full bg-gray-100 p-4 rounded-lg flex items-center text-left text-lg font-semibold hover:bg-gray-200 transition">
+                    <i class="fa fa-shield-alt text-2xl text-gray-600 mr-4 w-6 text-center"></i>
+                    Brasão do time
+                    </a>
+
+                <a href="https://drive.google.com/drive/folders/1Z3PidCFqvr9FggAzUEdJkNqgLWtrd-eD?usp=drive_link" target="_blank" class="block w-full bg-gray-100 p-4 rounded-lg flex items-center text-left text-lg font-semibold hover:bg-gray-200 transition">
+                    <i class="fa fa-tshirt text-2xl text-gray-600 mr-4 w-6 text-center"></i>
+                    Camisetas
+                    </a>
+
+                <a href="https://drive.google.com/drive/folders/1BTOeKlLyKpi8or4u2p5a3kxVI-KIQ5AG?usp=drive_link" target="_blank" class="block w-full bg-gray-100 p-4 rounded-lg flex items-center text-left text-lg font-semibold hover:bg-gray-200 transition">
+                    <i class="fa fa-sticky-note text-2xl text-gray-600 mr-4 w-6 text-center"></i> 
+                    Figurinhas
+                    </a>
+
+            </main>
+        </div>
+
+        <div id="image-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 cursor-pointer hidden" onclick="closeImageModal()">
+            <img id="modal-image-src" src="" alt="Imagem em tela cheia" class="max-w-full max-h-full object-contain p-4">
+        </div>
+
+    </div>
+
+    <a href="https://wa.me/5543998202218?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%21" 
+       target="_blank" 
+       class="fixed bottom-4 right-4 z-30 bg-green-500 text-white rounded-full p-3 shadow-lg hover:bg-green-600 transition"
+       aria-label="Contato via WhatsApp">
+        <i class="fa-brands fa-whatsapp text-2xl"></i>
+    </a>
+    <script type="module">
+        // Importar funções necessárias do Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+
+        
+        // --- SEU CÓDIGO DE CONFIGURAÇÃO DO FIREBASE ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyCnvY_DB4iV0fCf-WUGSsdrKG9EBvqfcZg",
+            authDomain: "kendencefc.firebaseapp.com",
+            databaseURL: "https://kendencefc-default-rtdb.firebaseio.com",
+            projectId: "kendencefc",
+            storageBucket: "kendencefc.firebasestorage.app",
+            messagingSenderId: "879233429651",
+            appId: "1:879233429651:web:afc2184c43bfd3dc9a1d66",
+            measurementId: "G-7SRD00WHGL"
+        };
+        // -----------------------------------------------------------------
+
+        // Inicializar o Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app); 
+        const analytics = getAnalytics(app); 
+
+
+        let navigationStack = ['home-screen'];
+        let dbData = {
+            news: {},
+            players: {},
+            upcomingGames: {},
+            recentResults: {},
+            sponsors: {}
+        };
+        let dataLoaded = {
+            news: false,
+            players: false,
+            upcomingGames: false,
+            recentResults: false,
+            sponsors: false
+        };
+
+        // --- NAVEGAÇÃO ---
+        function navigateTo(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            
+            if (navigationStack[navigationStack.length - 1] !== screenId) {
+                navigationStack.push(screenId);
+            }
+            window.scrollTo(0, 0);
+
+            // Carrega dados específicos da tela se necessário
+            if (screenId === 'news-screen') renderNewsList();
+            if (screenId === 'games-screen') renderGamesLists();
+            if (screenId === 'sponsors-screen') renderSponsorsGrid();
+        }
+
+        function goBack() {
+            if (navigationStack.length > 1) {
+                navigationStack.pop();
+                const lastScreen = navigationStack[navigationStack.length - 1];
+                document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+                document.getElementById(lastScreen).classList.add('active');
+                 window.scrollTo(0, 0);
+            }
+        }
+        
+        // Expor as funções de navegação ao escopo global (window)
+        window.navigateTo = navigateTo;
+        window.goBack = goBack;
+        // -------------------------
+
+        // --- RENDERIZAÇÃO (DADOS DO FIREBASE) ---
+
+        // Função para formatar data (ex: 18/10/2025 às 15:10)
+        function formatDateTime(isoString) {
+            if (!isoString) return 'Data indefinida';
+            const date = new Date(isoString);
+            const optionsDate = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            const optionsTime = { hour: '2-digit', minute: '2-digit' };
+            return `${date.toLocaleDateString('pt-BR', optionsDate)} às ${date.toLocaleTimeString('pt-BR', optionsTime)}`;
+        }
+
+        // Home: Slider de Notícias
+        function renderHomeNewsSlider() {
+            const container = document.getElementById('news-banner-scroll');
+            container.innerHTML = '';
+            const newsItems = Object.entries(dbData.news).sort(([,a],[,b]) => new Date(b.date) - new Date(a.date)); // Ordena por data
+            
+            if (newsItems.length === 0) {
+                // Adiciona padding de volta se não houver notícias
+                container.innerHTML = `<div class="p-4"><p class="text-gray-500">Nenhuma notícia encontrada.</p></div>`;
+                return;
+            }
+
+            // Pega apenas as 5 mais recentes para o banner
+            newsItems.slice(0, 5).forEach(([key, news]) => {
+                container.innerHTML += `
+                    <div class="flex-shrink-0 w-full snap-center cursor-pointer" onclick="showNewsItem('${key}')">
+                        <div class="h-48 bg-cover bg-center relative" style="background-image: url('${news.image}');">
+                            <div class="absolute bottom-0 left-0 w-full p-3 bg-black bg-opacity-60">
+                                <p class="text-white font-semibold truncate">${news.title}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            // autoScrollBanner(); // Scroll automático desativado
+        }
+
+        // Home: Lista de Jogadores
+        function renderHomePlayers() {
+            const container = document.getElementById('players-list-home');
+            container.innerHTML = '';
+            const players = Object.entries(dbData.players);
+
+            if (players.length === 0) {
+                container.innerHTML = `<p class="text-gray-500">Nenhum jogador encontrado.</p>`;
+                return;
+            }
+
+            players.forEach(([key, player]) => {
+                container.innerHTML += `
+                    <div class="text-center w-28 flex-shrink-0 cursor-pointer" onclick="showPlayer('${key}')">
+                        <img src="${player.image}" alt="${player.name}" class="w-24 h-24 object-cover rounded-full bg-gray-200 p-1 mx-auto border-2 border-gray-300">
+                        <p class="text-xs font-semibold mt-2 truncate">${player.name}</p>
+                        <p class="text-xs text-gray-500">${player.role}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // Home: Próximos Jogos (Horizontal)
+        function renderHomeUpcomingGames() {
+            const container = document.getElementById('upcoming-games-home');
+            container.innerHTML = '';
+            const upcomingGames = Object.entries(dbData.upcomingGames).sort(([,a],[,b]) => new Date(a.date) - new Date(b.date));
+
+            if (upcomingGames.length === 0) {
+                container.innerHTML = `<p class="text-gray-500">Nenhum jogo agendado.</p>`;
+                return;
+            }
+
+            upcomingGames.forEach(([key, game]) => {
+                container.innerHTML += `
+                    <div class="flex-shrink-0 w-64 border rounded-lg p-3 shadow-sm bg-gray-50">
+                        <p class="font-bold text-md text-center truncate">${game.teams}</p>
+                        <p class="text-sm text-gray-600 text-center"><i class="fa fa-calendar-alt mr-1"></i> ${formatDateTime(game.date)}</p>
+                        <p class="text-sm text-gray-600 text-center"><i class="fa fa-map-marker-alt mr-1"></i> ${game.location}</p>
+                        <a href="${game.mapLink}" target="_blank" class="block w-full text-center bg-yellow-400 text-black font-semibold py-1 px-2 rounded-lg mt-2 text-sm">
+                            <i class="fa fa-map-location-dot mr-1"></i> Ver no Mapa
+                        </a>
+                    </div>
+                `;
+            });
+        }
+        
+        // Home: Resultados Recentes (Horizontal)
+        function renderHomeRecentResults() {
+            const container = document.getElementById('recent-results-home');
+            container.innerHTML = '';
+            const recentResults = Object.entries(dbData.recentResults).sort(([,a],[,b]) => new Date(b.date) - new Date(a.date));
+
+            if (recentResults.length === 0) {
+                container.innerHTML = `<p class="text-gray-500">Nenhum resultado recente.</p>`;
+                return;
+            }
+
+            recentResults.forEach(([key, game]) => {
+                container.innerHTML += `
+                    <div class="flex-shrink-0 w-64 border rounded-lg p-3 shadow-sm bg-gray-50">
+                        <p class="font-bold text-lg text-center truncate">${game.match}</p>
+                        <p class="text-sm text-gray-600 text-center"><i class="fa fa-calendar-alt mr-1"></i> ${formatDateTime(game.date)}</D>
+                        <p class="text-sm text-gray-600 text-center"><i class="fa fa-map-marker-alt mr-1"></i> ${game.location}</p>
+                        <a href="${game.videoLink}" target="_blank" class="block w-full text-center bg-gray-800 text-white font-semibold py-1 px-2 rounded-lg mt-2 text-sm">
+                            <i class="fa fa-video mr-1"></i> Ver Fotos/Vídeos
+                        </a>
+                    </div>
+                `;
+            });
+        }
+
+        // Tela Notícias: Lista Completa
+        function renderNewsList() {
+            const container = document.getElementById('news-list-content');
+            container.innerHTML = '';
+            const newsItems = Object.entries(dbData.news).sort(([,a],[,b]) => new Date(b.date) - new Date(a.date));
+
+            if (newsItems.length === 0) {
+                container.innerHTML = `<p class="text-gray-500 text-center">Nenhuma notícia encontrada.</p>`;
+                return;
+            }
+
+            newsItems.forEach(([key, news]) => {
+                container.innerHTML += `
+                    <div class="cursor-pointer border rounded-lg overflow-hidden shadow-sm" onclick="showNewsItem('${key}')">
+                        <img src="${news.image}" alt="${news.title}" class="w-full h-48 object-cover">
+                        <div class="p-3">
+                            <p class="font-semibold text-lg">${news.title}</p>
+                            <p class="text-sm text-gray-500 mb-2">${new Date(news.date).toLocaleDateString('pt-BR')}</p>
+                            <p class="text-sm text-gray-700">${(news.text || '').substring(0, 100)}...</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Tela Jogos: Próximos e Resultados
+        function renderGamesLists() {
+            const upcomingContainer = document.getElementById('upcoming-games-list');
+            const recentContainer = document.getElementById('recent-results-list');
+            upcomingContainer.innerHTML = '';
+            recentContainer.innerHTML = '';
+
+            const upcomingGames = Object.entries(dbData.upcomingGames).sort(([,a],[,b]) => new Date(a.date) - new Date(b.date));
+            const recentResults = Object.entries(dbData.recentResults).sort(([,a],[,b]) => new Date(b.date) - new Date(a.date));
+
+            if (upcomingGames.length > 0) {
+                upcomingGames.forEach(([key, game]) => {
+                    upcomingContainer.innerHTML += `
+                        <div class="border rounded-lg p-3 shadow-sm">
+                            <p class="font-bold text-lg text-center">${game.teams}</p>
+                            <p class="text-sm text-gray-600 text-center"><i class="fa fa-calendar-alt mr-1"></i> ${formatDateTime(game.date)}</p>
+                            <p class="text-sm text-gray-600 text-center"><i class="fa fa-map-marker-alt mr-1"></i> ${game.location}</p>
+                            <a href="${game.mapLink}" target="_blank" class="block w-full text-center bg-yellow-400 text-black font-semibold py-2 rounded-lg mt-3">
+                                <i class="fa fa-map-location-dot mr-1"></i> Ver no Mapa
+                            </a>
+                        </div>
+                    `;
+                });
+            } else {
+                upcomingContainer.innerHTML = `<p class="text-gray-500 text-center">Nenhum jogo agendado.</p>`;
+            }
+            
+            if (recentResults.length > 0) {
+                recentResults.forEach(([key, game]) => {
+                    recentContainer.innerHTML += `
+                         <div class="border rounded-lg p-3 shadow-sm">
+                            <p class="font-bold text-lg text-center">${game.match}</p>
+                            <p class="text-sm text-gray-600 text-center"><i class="fa fa-calendar-alt mr-1"></i> ${formatDateTime(game.date)}</p>
+                            <p class="text-sm text-gray-600 text-center"><i class="fa fa-map-marker-alt mr-1"></i> ${game.location}</p>
+                            <a href="${game.videoLink}" target="_blank" class="block w-full text-center bg-gray-800 text-white font-semibold py-2 rounded-lg mt-3">
+                                <i class="fa fa-video mr-1"></i> Ver Fotos/Vídeos
+                            </a>
+                        </div>
+                    `;
+                });
+            } else {
+                recentContainer.innerHTML = `<p class="text-gray-500 text-center">Nenhum resultado recente.</p>`;
+            }
+        }
+
+        // Tela Patrocínios: Grid
+        function renderSponsorsGrid() {
+            const container = document.getElementById('sponsors-grid');
+            container.innerHTML = '';
+            const sponsors = Object.entries(dbData.sponsors);
+
+            if (sponsors.length === 0) {
+                container.innerHTML = `<p class="text-gray-500 text-center col-span-2">Nenhum patrocinador encontrado.</p>`;
+                return;
+            }
+
+            sponsors.forEach(([key, sponsor]) => {
+                container.innerHTML += `
+                    <div class="cursor-pointer border rounded-lg p-2 text-center shadow-sm" onclick="showSponsor('${key}')">
+                        <div class="h-24 flex items-center justify-center bg-gray-100 rounded-md">
+                            <img src="${sponsor.image}" alt="${sponsor.name}" class="max-h-full max-w-full object-contain">
+                        </div>
+                        <p class="font-semibold mt-2">${sponsor.name}</p>
+                    </div>
+                `;
+            });
+        }
+
+        // --- NAVEGAÇÃO PARA DETALHES ---
+        
+        // Funções do Modal de Imagem
+        function openImageModal(imageUrl) {
+            const modal = document.getElementById('image-modal');
+            const img = document.getElementById('modal-image-src');
+            if (modal && img) {
+                img.src = imageUrl;
+                modal.classList.remove('hidden');
+            }
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('image-modal');
+            const img = document.getElementById('modal-image-src');
+            if (modal && img) {
+                modal.classList.add('hidden');
+                img.src = ""; // Limpa a imagem para não "piscar" na próxima vez
+            }
+        }
+        
+        // Função para o menu colapsável (Accordion)
+        function toggleCollapse(elementId) {
+            const content = document.getElementById(elementId);
+            const icon = document.getElementById(elementId + '-icon');
+
+            if (content && icon) {
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180'); // Tailwind tem a classe 'rotate-180'
+            }
+        }
+
+
+        // Detalhe da Notícia
+        window.showNewsItem = (key) => {
+            const news = dbData.news[key];
+            if (!news) return;
+            
+            document.getElementById('news-detail-title-header').textContent = news.title.substring(0, 20) + '...';
+            const container = document.getElementById('news-detail-content');
+            container.innerHTML = `
+                <img src="${news.image}" alt="${news.title}" class="w-full h-48 object-cover rounded-lg mb-4 cursor-pointer" onclick="openImageModal('${news.image}')">
+                <h2 class="text-2xl font-bold mb-2">${news.title}</h2>
+                <p class="text-sm text-gray-500 mb-4">${new Date(news.date).toLocaleDateString('pt-BR')}</p>
+                <div class="text-gray-700 whitespace-pre-wrap">${news.text}</div>
+            `;
+            navigateTo('news-detail-screen');
+        }
+
+/// Detalhe do Jogador
+        window.showPlayer = (key) => {
+            const player = dbData.players[key];
+            if (!player) return;
+
+            const content = document.getElementById('player-detail-content');
+            content.innerHTML = `
+                <div class="flex justify-center mb-4">
+                    <img src="${player.image}" alt="${player.name}" class="w-48 h-48 object-cover rounded-full border-4 border-yellow-400">
+                </div>
+                <h2 class="text-2xl font-bold text-center">${player.name}</h2>
+                <p class="text-lg text-gray-600 text-center">${player.role}</p>
+                ${player.description ? `<p class="text-md text-gray-800 mt-2 whitespace-pre-wrap">${player.description}</p>` : ''}
+            `;
+
+            const footer = document.getElementById('player-detail-footer');
+            footer.innerHTML = `
+                <a href="${player.instagram}" target="_blank" class="w-full bg-gray-800 text-white font-bold py-3 rounded-lg flex justify-center items-center">
+                    <i class="fa-brands fa-instagram text-xl mr-2"></i> INSTAGRAM
+                </a>
+            `;
+            navigateTo('player-detail-screen');
+        }
+
+        // Detalhe do Patrocinador
+        window.showSponsor = (key) => {
+            const sponsor = dbData.sponsors[key];
+            if (!sponsor) return;
+
+            const content = document.getElementById('sponsor-detail-content');
+            content.innerHTML = `
+                <div class="flex justify-center mb-4 p-4 bg-gray-100 rounded-lg">
+                    <img src="${sponsor.image}" alt="${sponsor.name}" class="w-48 h-24 object-contain">
+                </div>
+                <h2 class="text-2xl font-bold mb-4">${sponsor.name}</h2>
+                <div class="space-y-2">
+                    <p class="text-gray-700"><i class="fa fa-map-marker-alt w-5 mr-2 text-gray-500"></i> ${sponsor.address}</p>
+                    <p class="text-gray-700"><i class="fa fa-phone w-5 mr-2 text-gray-500"></i> ${sponsor.phone}</p>
+                </div>
+            `;
+
+            const footer = document.getElementById('sponsor-detail-footer');
+            footer.innerHTML = `
+                <a href="${sponsor.instagram}" target="_blank" class="w-full bg-gray-800 text-white font-bold py-3 rounded-lg flex justify-center items-center">
+                    <i class="fa-brands fa-instagram text-xl mr-2"></i> INSTAGRAM
+                </a>
+            `;
+            navigateTo('sponsor-detail-screen'); 
+        }
+        
+        // Expor as funções de navegação ao escopo global (window)
+        window.navigateTo = navigateTo;
+        window.goBack = goBack;
+        window.showNewsItem = showNewsItem;
+        window.showPlayer = showPlayer;
+        window.showSponsor = showSponsor;
+        
+        // Exposição das novas funções do modal
+        window.openImageModal = openImageModal;
+        window.closeImageModal = closeImageModal;
+        
+        // Expor a nova função de colapso
+        window.toggleCollapse = toggleCollapse;
+        // -------------------------
+
+        // Scroll automático do banner de notícias (Função desativada)
+        /*
+        function autoScrollBanner() { ... }
+        */
+
+        // --- INICIALIZAÇÃO E FETCH DE DADOS ---
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Adiciona um tempo limite de 3 segundos para esconder a tela de carregamento.
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loading-screen');
+                if (loadingScreen) {
+                    loadingScreen.style.display = 'none';
+                }
+            }, 3000); // 3000ms = 3 segundos
+
+            
+            // Ouvir por mudanças em 'news'
+            onValue(ref(database, 'news'), (snapshot) => {
+                dbData.news = snapshot.val() || {};
+                dataLoaded.news = true;
+                renderHomeNewsSlider();
+                if (navigationStack[navigationStack.length - 1] === 'news-screen') {
+                    renderNewsList(); 
+                }
+            }, (error) => {
+                console.error("Erro ao carregar notícias:", error.message);
+                dataLoaded.news = true; 
+            });
+
+            // Ouvir por mudanças em 'players'
+            onValue(ref(database, 'players'), (snapshot) => {
+                dbData.players = snapshot.val() || {};
+                dataLoaded.players = true;
+                renderHomePlayers();
+            }, (error) => {
+                console.error("Erro ao carregar jogadores:", error.message);
+                dataLoaded.players = true;
+            });
+
+            // Ouvir por mudanças em 'upcomingGames'
+            onValue(ref(database, 'upcomingGames'), (snapshot) => {
+                dbData.upcomingGames = snapshot.val() || {};
+                dataLoaded.upcomingGames = true;
+                renderHomeUpcomingGames(); 
+                if (navigationStack[navigationStack.length - 1] === 'games-screen') {
+                    renderGamesLists(); 
+                }
+            });
+
+            // Ouvir por mudanças em 'recentResults'
+            onValue(ref(database, 'recentResults'), (snapshot) => {
+                dbData.recentResults = snapshot.val() || {};
+                dataLoaded.recentResults = true;
+                renderHomeRecentResults(); 
+                if (navigationStack[navigationStack.length - 1] === 'games-screen') {
+                    renderGamesLists(); 
+                }
+            });
+
+            // Ouvir por mudanças em 'sponsors'
+            onValue(ref(database, 'sponsors'), (snapshot) => {
+                dbData.sponsors = snapshot.val() || {};
+                dataLoaded.sponsors = true;
+                 if (navigationStack[navigationStack.length - 1] === 'sponsors-screen') {
+                    renderSponsorsGrid(); 
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>
+
+
