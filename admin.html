@@ -219,6 +219,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getDatabase, ref, onValue, push, set, remove, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"; // <-- LINHA ADICIONADA
 
         // --- LÓGICA DE LOGIN (NOVO) ---
         const loginForm = document.getElementById('login-form');
@@ -257,19 +258,20 @@
         // --- CÓDIGO DO PAINEL ADMIN (Movido para uma função) ---
         function initializeAdminPanel() {
             // Configuração do Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyAz1fgGgpB7F05-watfO69vi6Mpzgw1uMs",
-    authDomain: "kendencefc-66b8b.firebaseapp.com",
-    projectId: "kendencefc-66b8b",
-    storageBucket: "kendencefc-66b8b.firebasestorage.app",
-    messagingSenderId: "405923587103",
-    appId: "1:405923587103:web:b74f3a37deff2f07bc212a",
-    measurementId: "G-HLVLC7D0VD"
-  };
+            const firebaseConfig = {
+                apiKey: "AIzaSyAz1fgGgpB7F05-watfO69vi6Mpzgw1uMs",
+                authDomain: "kendencefc-66b8b.firebaseapp.com",
+                projectId: "kendencefc-66b8b",
+                storageBucket: "kendencefc-66b8b.firebasestorage.app",
+                messagingSenderId: "405923587103",
+                appId: "1:405923587103:web:b74f3a37deff2f07bc212a",
+                measurementId: "G-HLVLC7D0VD"
+            };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const database = getDatabase(app); // <-- LINHA ADICIONADA (ESSENCIAL)
+            const analytics = getAnalytics(app); // <-- Esta linha agora funciona
 
             let currentSection = 'upcomingGames';
 
@@ -303,7 +305,7 @@
             window.editItem = async (key) => {
                 const section = sections[currentSection];
                 const form = document.getElementById(section.formId);
-                const snapshot = await get(ref(database, `${section.dbRef}/${key}`));
+                const snapshot = await get(ref(database, `${section.dbRef}/${key}`)); // 'database' agora existe
                 if (!snapshot.exists()) return;
                 const data = snapshot.val();
                 document.getElementById(`${currentSection}-id`).value = key;
@@ -338,7 +340,7 @@
             
             window.deleteItem = (key) => {
                 if (confirm('Tem certeza que deseja excluir este item?')) {
-                    remove(ref(database, `${sections[currentSection].dbRef}/${key}`))
+                    remove(ref(database, `${sections[currentSection].dbRef}/${key}`)) // 'database' agora existe
                         .then(() => alert('Item excluído com sucesso!'))
                         .catch(error => alert(error.message));
                 }
@@ -386,7 +388,7 @@
                     delete data['image-final']; // Remove a chave parcial
                 }
 
-                const dataRef = id ? ref(database, `${section.dbRef}/${id}`) : ref(database, section.dbRef);
+                const dataRef = id ? ref(database, `${section.dbRef}/${id}`) : ref(database, section.dbRef); // 'database' agora existe
                 const action = id ? set(dataRef, data) : push(dataRef, data);
 
                 action.then(() => alert(`Dados ${id ? 'atualizados' : 'adicionados'} com sucesso!`))
@@ -421,4 +423,3 @@
     </script>
 </body>
 </html>
-
