@@ -382,48 +382,69 @@
                 });
             };
 
+            // ##################################################################
+            // #
+            // #                 INÍCIO DO CÓDIGO CORRIGIDO
+            // #
+            // ##################################################################
+            
             function handleFormSubmit(event) {
                 event.preventDefault();
                 const section = sections[currentSection];
                 const form = event.target;
-                const idInput = form.elements[`${currentSection}-id`]; // Acessa o input hidden pelo ID padrão
-                const id = idInput ? idInput.value : null; // Pega o valor se o input existir
+                const idInput = form.elements[`${currentSection}-id`];
+                const id = idInput ? idInput.value : null;
                 const data = {};
+
+                // 1. Coletamos todos os dados brutos do formulário
                 for (const element of form.elements) {
-                    if (element.name && element.name !== 'id') {
-                        let value = element.value;
-                        // Lógica de manipulação de data/hora
-                        if (currentSection === 'upcomingGames' || currentSection === 'recentResults') {
-                            if (element.name === 'date-input') {
-                                data.date = value; // Guarda a data separadamente por enquanto
-                                continue;
-                            } else if (element.name === 'time-input') {
-                                if (data.date) {
-                                    // Combina data e hora para criar um timestamp
-                                    const combinedDateTime = new Date(`${data.date}T${value}:00`);
-                                    data.date = combinedDateTime.getTime();
-                                }
-                                continue;
-                            }
-                        }
-                        // Lógica para combinar URL
-                        if ((currentSection === 'news' || currentSection === 'sponsors') && element.name === 'image-final') {
-                            const baseUrl = document.getElementById(`${currentSection}-baseUrl`).innerText;
-                            value = baseUrl + value;
-                            data.image = value;
-                            continue;
-                        }
-                        
-                        // Garante que a data correta seja salva para 'news'
-                         if (currentSection === 'news' && element.name === 'date') {
-                            data.date = new Date(value).getTime();
-                            continue;
-                        }
-                        
-                        data[element.name] = value;
+                    // Usamos 'name' que foi atribuído pela função setupFormNames
+                    if (element.name && element.name !== 'id') { 
+                        data[element.name] = element.value;
                     }
                 }
+
+                // --- INÍCIO DA CORREÇÃO DE DATA/HORA ---
+
+                // 2. Correção para Próximos Jogos e Resultados Recentes
+                // Usamos os 'names' 'date' e 'time'
+                if (currentSection === 'upcomingGames' || currentSection === 'recentResults') {
+                    const dateStr = data.date; // Ex: "2025-11-10"
+                    const timeStr = data.time; // Ex: "15:00"
+                    
+                    if (dateStr && timeStr) {
+                        // Criamos a data usando a string completa
+                        // new Date("2025-11-10T15:00:00")
+                        // Isso é interpretado como 15:00 no HORÁRIO LOCAL
+                        const combinedDateTime = new Date(`${dateStr}T${timeStr}:00`);
+                        
+                        // Pegamos o timestamp UTC universal
+                        data.date = combinedDateTime.getTime(); 
+                        
+                        // Removemos o campo 'time' que não é mais necessário
+                        delete data.time; 
+                    }
+                }
+
+                // 3. Correção para Notícias (para evitar o mesmo bug de fuso)
+                // Garante que a data da notícia seja 00:00 do dia local
+                if (currentSection === 'news' && data.date) {
+                    // new Date("2025-11-10T00:00:00")
+                    const dateObj = new Date(`${data.date}T00:00:00`);
+                    data.date = dateObj.getTime();
+                }
                 
+                // 4. Lógica de URL (que já existia)
+                // Usamos o 'name' 'image-final'
+                if ((currentSection === 'news' || currentSection === 'sponsors') && data['image-final']) {
+                    const baseUrl = document.getElementById(`${currentSection}-baseUrl`).innerText;
+                    data.image = baseUrl + data['image-final'];
+                    delete data['image-final']; // Limpa o campo extra
+                }
+
+                // --- FIM DA CORREÇÃO DE DATA/HORA ---
+
+                // 5. Salvamos os dados corrigidos no Firebase
                 const dbPath = id ? ref(database, `${section.dbRef}/${id}`) : push(ref(database, section.dbRef));
                 const operation = set(dbPath, data);
                 
@@ -432,6 +453,13 @@
                     .catch(error => alert(error.message))
                     .finally(() => clearForm(currentSection));
             }
+            
+            // ##################################################################
+            // #
+            // #                  FIM DO CÓDIGO CORRIGIDO
+            // #
+            // ##################################################################
+
 
             window.editItem = (key) => {
                 const section = sections[currentSection];
@@ -453,7 +481,8 @@
                                     continue;
                                 } 
                                 // Lógica para campos de data/hora (que precisam ser separados)
-                                else if (element.name === 'date-input' || element.name === 'time-input') {
+                                // CORRIGIDO: Agora os nomes são 'date' e 'time'
+                                else if (element.name === 'date' || element.name === 'time') {
                                     continue;
                                 }
                                 // Lógica para outros campos
@@ -472,6 +501,7 @@
                         // Lógica de preenchimento para data/hora separadas
                         if ((currentSection === 'upcomingGames' || currentSection === 'recentResults')) {
                             const dateObj = new Date(data.date);
+                            // IDs dos campos
                             document.getElementById(`${currentSection}-date-input`).value = dateObj.toISOString().split('T')[0];
                             document.getElementById(`${currentSection}-time-input`).value = dateObj.toTimeString().split(' ')[0].substring(0, 5);
                         }
@@ -582,7 +612,7 @@
             }
             
             // --- INICIALIZAÇÃO DO PAINEL ADMIN ---
-            setupFormNames();
+            setupFormNames(); // ESSA FUNÇÃO É IMPORTANTE
             Object.keys(sections).forEach(key => {
                 document.getElementById(sections[key].formId).addEventListener('submit', handleFormSubmit);
             });
