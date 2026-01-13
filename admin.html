@@ -8,16 +8,16 @@
     <style>
         body { background-color: #1a202c; color: white; }
         
-        /* --- ESTILOS DO LOGIN (NOVO) --- */
+        /* --- ESTILOS DO LOGIN --- */
         #login-screen { background-color: rgba(26, 32, 44, 0.95); z-index: 50; }
         .login-box { background-color: #2d3748; padding: 2.5rem; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
         .login-input { background-color: #4a5568; border: 1px solid #718096; color: white; border-radius: 0.375rem; padding: 0.75rem 1rem; }
         .login-btn { background-color: #4299e1; color: white; padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s; }
         .login-btn:hover { background-color: #2b6cb0; }
-        #login-error { color: #e53e3e; font-size: 0.875rem; margin-top: 0.5rem; display: none; } /* Mensagem de erro oculta por padrão */
+        #login-error { color: #e53e3e; font-size: 0.875rem; margin-top: 0.5rem; display: none; }
         
         /* --- ESTILOS DO PAINEL ADMIN --- */
-        #admin-panel { display: none; } /* Painel oculto initially */
+        #admin-panel { display: none; }
         .form-section, .backup-section { background-color: #2d3748; padding: 2rem; border-radius: 0.5rem; margin-bottom: 2rem; }
         .form-input { background-color: #4a5568; border: 1px solid #718096; color: white; border-radius: 0.375rem; }
         .form-input::-webkit-calendar-picker-indicator { filter: invert(1); }
@@ -40,7 +40,6 @@
 
     <div id="login-screen" class="fixed inset-0 flex items-center justify-center">
         <div class="login-box w-full max-w-sm">
-            
             <img src="https://lh3.googleusercontent.com/d/1c5dDZYwAcdPoD8H-_5pBbkgwISvSG63l" alt="Brasão Kendence F.C." class="w-32 h-27 mx-auto mb-4">
             <h1 class="text-3xl font-bold text-center mb-6">Admin Login</h1>
             <form id="login-form">
@@ -53,7 +52,8 @@
                     <input type="password" id="password" class="login-input w-full" required>
                 </div>
                 <button type="submit" class="login-btn w-full">Entrar</button>
-                <p id="login-error">E-mail ou senha inválidos.</p> </form>
+                <p id="login-error">E-mail ou senha inválidos.</p> 
+            </form>
         </div>
     </div>
     
@@ -155,7 +155,9 @@
                 <h2 class="text-2xl font-bold mb-4">Gerenciar Jogadores e Comissão</h2>
                 <form id="players-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input type="hidden" id="players-id">
+                    
                     <input type="text" id="players-name" placeholder="Nome do Jogador" class="form-input p-2" required>
+                    
                     <select id="players-role" class="form-input p-2" required>
                         <option value="">Selecione a Função</option>
                         <option value="Técnico">Técnico</option>
@@ -174,7 +176,19 @@
                         <option value="Atacante">Atacante</option>
                         <option value="Gandula">Gandula</option>
                     </select>
+
+                    <div class="col-span-1 md:col-span-2">
+                        <label for="players-image" class="block text-sm font-medium mb-1">Link da Foto (URL)</label>
+                        <input type="url" id="players-image" placeholder="Cole o link da imagem aqui (ex: https://i.postimg.cc/...)" class="form-input p-2 w-full">
+                    </div>
+
+                    <div class="col-span-1 md:col-span-2">
+                        <label for="players-instagram" class="block text-sm font-medium mb-1">Link do Instagram</label>
+                        <input type="url" id="players-instagram" placeholder="Link do perfil (ex: https://instagram.com/usuario)" class="form-input p-2 w-full">
+                    </div>
+
                     <textarea id="players-description" placeholder="Descrição (ex:Apelido, Número da camisa, Idade, Altura, Peso, Pé Dominante, )" rows="4" class="form-input p-2 col-span-1 md:col-span-2"></textarea>
+                    
                     <div class="col-span-1 md:col-span-2 flex space-x-2">
                         <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
                         <button type="button" onclick="clearForm('players')" class="btn btn-secondary">Limpar</button>
@@ -209,17 +223,11 @@
     </div>
     
     <script type="module">
-        // Importa a biblioteca principal do Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-        // Importa o módulo de Autenticação e as funções de login e logout
         import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
-        // Importa o módulo do Realtime Database (ou Firestore)
         import { getDatabase, ref, push, set, onValue, remove, get } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
-        // Importa o módulo de Analytics (se você estiver usando)
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js";
 
-        // --- CONFIGURAÇÃO E INICIALIZAÇÃO DO FIREBASE (Movido para o escopo principal) ---
-        // Seus dados de configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAz1fgGgpB7F05-watfO69vi6Mpzgw1uMs",
             authDomain: "kendencefc-66b8b.firebaseapp.com",
@@ -230,14 +238,11 @@
             measurementId: "G-HLVLC7D0VD"
         };
         
-        // Inicializa o Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app); 
-        // Armazena as referências de serviço em constantes globais
         const database = getDatabase(app); 
-        const auth = getAuth(app); // Instância do Auth (Necessária para o login)
+        const auth = getAuth(app); 
 
-        // --- Variáveis e Configurações Globais (RESTANTE DO CÓDIGO ORIGINAL) ---
         const sections = {
             upcomingGames: {
                 dbRef: 'upcomingGames',
@@ -267,7 +272,6 @@
         };
         let currentSection = 'upcomingGames';
         
-        // --- FUNÇÃO PARA TRADUZIR ERROS DO FIREBASE AUTH ---
         function getFirebaseErrorMessage(errorCode) {
              switch (errorCode) {
                 case 'auth/invalid-email':
@@ -283,13 +287,11 @@
             }
         }
         
-        // --- FUNÇÃO DE LOGOUT ---
         window.logout = () => {
             signOut(auth).then(() => {
                 alert('Logout realizado com sucesso!');
                 document.getElementById('admin-panel').style.display = 'none';
-                document.getElementById('login-screen').style.display = 'flex'; // Mostra a tela de login
-                // Limpa os campos após o logout
+                document.getElementById('login-screen').style.display = 'flex'; 
                 document.getElementById('email').value = '';
                 document.getElementById('password').value = '';
                 document.getElementById('login-error').style.display = 'none';
@@ -299,7 +301,6 @@
             });
         }
 
-        // --- LÓGICA DE LOGIN (AGORA COM FIREBASE AUTH) --- 
         const loginForm = document.getElementById('login-form');
         const loginScreen = document.getElementById('login-screen');
         const adminPanel = document.getElementById('admin-panel');
@@ -308,40 +309,28 @@
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault(); 
             
-            // Pega os valores dos campos (agora com id 'email')
             const emailInput = document.getElementById('email');
             const passwordInput = document.getElementById('password');
             const email = emailInput.value;
             const password = passwordInput.value;
             
-            loginError.style.display = 'none'; // Esconde erros anteriores
+            loginError.style.display = 'none'; 
 
-            // Chama a função de login do Firebase
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    // Login bem-sucedido
-                    loginScreen.style.display = 'none'; // Esconde a tela de login
-                    adminPanel.style.display = 'block'; // Mostra o painel admin
-                    
-                    // Inicializa a funcionalidade do painel admin APÓS o login
+                    loginScreen.style.display = 'none'; 
+                    adminPanel.style.display = 'block'; 
                     initializeAdminPanel(); 
                 })
                 .catch((error) => {
-                    // Login falhou
                     loginError.textContent = 'Erro de Login: ' + getFirebaseErrorMessage(error.code);
                     loginError.style.display = 'block'; 
-                    passwordInput.value = ''; // Limpa a senha
+                    passwordInput.value = ''; 
                     emailInput.focus();
                 });
         });
 
-        // --- CÓDIGO DO PAINEL ADMIN (FUNÇÃO initializeAdminPanel REVISADA) ---
         function initializeAdminPanel() {
-            // A inicialização do Firebase foi movida para fora desta função, 
-            // garantindo que 'database' e 'auth' estejam disponíveis globalmente.
-            // O restante do código de administração permanece o mesmo.
-
-            // ... Seu código original para gerenciar o painel:
             window.showForm = (sectionName) => {
                 currentSection = sectionName;
                 document.querySelectorAll('.form-section').forEach(form => {
@@ -356,7 +345,7 @@
                 const form = document.getElementById(sections[sectionName].formId);
                 form.reset();
                 const idInput = form.elements[`${sectionName}-id`];
-                if (idInput) idInput.value = ''; // Limpa o ID em modo de edição
+                if (idInput) idInput.value = ''; 
                 const button = form.querySelector('button[type="submit"]');
                 if (button) button.textContent = 'Adicionar / Salvar';
             };
@@ -382,12 +371,6 @@
                 });
             };
 
-            // ##################################################################
-            // #
-            // #                 INÍCIO DO CÓDIGO CORRIGIDO
-            // #
-            // ##################################################################
-            
             function handleFormSubmit(event) {
                 event.preventDefault();
                 const section = sections[currentSection];
@@ -396,55 +379,34 @@
                 const id = idInput ? idInput.value : null;
                 const data = {};
 
-                // 1. Coletamos todos os dados brutos do formulário
                 for (const element of form.elements) {
-                    // Usamos 'name' que foi atribuído pela função setupFormNames
                     if (element.name && element.name !== 'id') { 
                         data[element.name] = element.value;
                     }
                 }
 
-                // --- INÍCIO DA CORREÇÃO DE DATA/HORA ---
-
-                // 2. Correção para Próximos Jogos e Resultados Recentes
-                // Usamos os 'names' 'date' e 'time'
                 if (currentSection === 'upcomingGames' || currentSection === 'recentResults') {
-                    const dateStr = data.date; // Ex: "2025-11-10"
-                    const timeStr = data.time; // Ex: "15:00"
+                    const dateStr = data.date; 
+                    const timeStr = data.time; 
                     
                     if (dateStr && timeStr) {
-                        // Criamos a data usando a string completa
-                        // new Date("2025-11-10T15:00:00")
-                        // Isso é interpretado como 15:00 no HORÁRIO LOCAL
                         const combinedDateTime = new Date(`${dateStr}T${timeStr}:00`);
-                        
-                        // Pegamos o timestamp UTC universal
                         data.date = combinedDateTime.getTime(); 
-                        
-                        // Removemos o campo 'time' que não é mais necessário
                         delete data.time; 
                     }
                 }
 
-                // 3. Correção para Notícias (para evitar o mesmo bug de fuso)
-                // Garante que a data da notícia seja 00:00 do dia local
                 if (currentSection === 'news' && data.date) {
-                    // new Date("2025-11-10T00:00:00")
                     const dateObj = new Date(`${data.date}T00:00:00`);
                     data.date = dateObj.getTime();
                 }
                 
-                // 4. Lógica de URL (que já existia)
-                // Usamos o 'name' 'image-final'
                 if ((currentSection === 'news' || currentSection === 'sponsors') && data['image-final']) {
                     const baseUrl = document.getElementById(`${currentSection}-baseUrl`).innerText;
                     data.image = baseUrl + data['image-final'];
-                    delete data['image-final']; // Limpa o campo extra
+                    delete data['image-final']; 
                 }
 
-                // --- FIM DA CORREÇÃO DE DATA/HORA ---
-
-                // 5. Salvamos os dados corrigidos no Firebase
                 const dbPath = id ? ref(database, `${section.dbRef}/${id}`) : push(ref(database, section.dbRef));
                 const operation = set(dbPath, data);
                 
@@ -453,13 +415,6 @@
                     .catch(error => alert(error.message))
                     .finally(() => clearForm(currentSection));
             }
-            
-            // ##################################################################
-            // #
-            // #                  FIM DO CÓDIGO CORRIGIDO
-            // #
-            // ##################################################################
-
 
             window.editItem = (key) => {
                 const section = sections[currentSection];
@@ -468,29 +423,21 @@
                         const data = snapshot.val();
                         const form = document.getElementById(section.formId);
                         
-                        // 1. Define o ID para modo de edição
                         document.getElementById(`${currentSection}-id`).value = key;
                         form.querySelector('button[type="submit"]').textContent = 'Salvar Edição';
 
-                        // 2. Preenche os campos
                         for (const element of form.elements) {
                             if (element.name) {
-                                // Lógica para campos de URL combinada
                                 if (element.name === 'image-final') {
-                                    // A lógica de preenchimento de URL é tratada no snippet a seguir
                                     continue;
                                 } 
-                                // Lógica para campos de data/hora (que precisam ser separados)
-                                // CORRIGIDO: Agora os nomes são 'date' e 'time'
                                 else if (element.name === 'date' || element.name === 'time') {
                                     continue;
                                 }
-                                // Lógica para outros campos
                                 else if (data[element.name] !== undefined) {
                                     element.value = data[element.name];
                                 }
                                 
-                                // Caso especial para 'news-date'
                                 if (currentSection === 'news' && element.name === 'date') {
                                     const dateObj = new Date(data.date);
                                     element.value = dateObj.toISOString().split('T')[0];
@@ -498,15 +445,12 @@
                             }
                         }
                         
-                        // Lógica de preenchimento para data/hora separadas
                         if ((currentSection === 'upcomingGames' || currentSection === 'recentResults')) {
                             const dateObj = new Date(data.date);
-                            // IDs dos campos
                             document.getElementById(`${currentSection}-date-input`).value = dateObj.toISOString().split('T')[0];
                             document.getElementById(`${currentSection}-time-input`).value = dateObj.toTimeString().split(' ')[0].substring(0, 5);
                         }
                         
-                        // Lógica de preenchimento para URL final
                         if ((currentSection === 'news' || currentSection === 'sponsors') && data.image) {
                             const baseUrlElement = document.getElementById(`${currentSection}-baseUrl`);
                             const urlFinalElement = document.getElementById(`${currentSection}-image-final`);
@@ -520,7 +464,7 @@
                             }
                         }
 
-                        window.scrollTo(0, 0); // Rola para o topo para ver o formulário
+                        window.scrollTo(0, 0); 
                     }
                 });
             };
@@ -533,11 +477,6 @@
                 }
             };
 
-            // --- FUNÇÕES DE BACKUP E RESTAURAÇÃO ---
-            window.backupData = async () => { /* ... código ... */ };
-            window.triggerRestore = () => { /* ... código ... */ };
-            window.restoreData = (event) => { /* ... código ... */ };
-            
             window.backupData = async () => {
                 try {
                     const snapshot = await get(ref(database));
@@ -576,11 +515,9 @@
                     try {
                         const data = JSON.parse(e.target.result);
                         if (confirm('ATENÇÃO: Restaurar o backup substituirá TODOS os dados existentes. Deseja continuar?')) {
-                            // Define o objeto raiz no Firebase com os dados do backup
                             set(ref(database), data)
                                 .then(() => {
                                     alert("Restauração concluída com sucesso!");
-                                    // Recarrega os dados da seção atual após a restauração
                                     loadData(currentSection); 
                                 })
                                 .catch(error => alert("Erro ao restaurar dados: " + error.message));
@@ -590,20 +527,15 @@
                     }
                 };
                 reader.readAsText(file);
-                // Limpa o input file para que o mesmo arquivo possa ser re-selecionado
                 event.target.value = ''; 
             };
             
-
             function setupFormNames() {
                 Object.keys(sections).forEach(sectionName => {
                     const form = document.getElementById(sections[sectionName].formId);
                     for (const element of form.elements) {
-                        // Atribui 'name' baseado no 'id', removendo o prefixo da seção e sufixos comuns
-                        // Ignora o input hidden de ID
                         if (element.id && !element.name && element.type !== 'hidden') { 
                            let name = element.id.replace(`${sectionName}-`, '').replace('-input', '');
-                           // Caso especial para textareas ou outros elementos sem sufixo padrão
                            if (name === element.id) name = element.id.replace(`${sectionName}-`, ''); 
                            element.name = name;
                         }
@@ -611,15 +543,12 @@
                 });
             }
             
-            // --- INICIALIZAÇÃO DO PAINEL ADMIN ---
-            setupFormNames(); // ESSA FUNÇÃO É IMPORTANTE
+            setupFormNames(); 
             Object.keys(sections).forEach(key => {
                 document.getElementById(sections[key].formId).addEventListener('submit', handleFormSubmit);
             });
-            showForm(currentSection); // Mostra o formulário inicial
+            showForm(currentSection); 
         }
-        // --- FIM DO CÓDIGO DO PAINEL ADMIN ---
     </script>
 </body>
 </html>
-
