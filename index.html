@@ -13,7 +13,6 @@
     <link rel="icon" href="favicon.png" type="https://i.postimg.cc/Twzwm9Bh/favicon.png">
 
     <link rel="apple-touch-icon" href="icone-tela-inicial-180x180.png">
-</head>
     
     <script>
         tailwind.config = {
@@ -570,22 +569,22 @@
         };
         const renderFooterSponsors = () => {
              const container = document.getElementById('footer-sponsors-list');
-             if (!container) return; // Se o container não for achado, para a função.
+             if (!container) return; 
 
              container.innerHTML = Object.values(dbData.sponsors).map(s => {
-                // Lógica da imagem:
-                // 1. Tenta usar a 's.imageFooter' (imagem do rodapé).
-                // 2. Se não existir, usa a 's.image' (imagem principal) como reserva.
                 const imageUrl = s.imageFooter || s.image;
 
-                // Se não tiver nenhuma imagem E nem instagram, não mostra
-                if (!imageUrl || !s.instagram) {
+                // CORREÇÃO DE COMPATIBILIDADE:
+                // Aceita 'instagram' OU 'link' para exibir o patrocinador.
+                // Apenas a imagem é estritamente obrigatória para aparecer.
+                if (!imageUrl) {
                     return ''; 
                 }
+                
+                const linkUrl = s.instagram || s.link || '#';
 
-                // Renderiza o link com a imagem
                 return `
-                    <a href="${s.instagram || '#'}" target="_blank" class="block" title="${s.name || 'Patrocinador'}">
+                    <a href="${linkUrl}" target="_blank" class="block" title="${s.name || 'Patrocinador'}">
                         <img src="${imageUrl}" alt="${s.name || 'Patrocinador'}" class="h-10 object-contain hover:opacity-75 transition-opacity">
                     </a>
                 `;
@@ -715,6 +714,3 @@
     </script>
 </body>
 </html>
-
-
-
