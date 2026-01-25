@@ -7,32 +7,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #1a202c; color: white; }
-        
-        /* --- ESTILOS DO LOGIN --- */
         #login-screen { background-color: rgba(26, 32, 44, 0.95); z-index: 50; }
-        .login-box { background-color: #2d3748; padding: 2.5rem; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+        .login-box { background-color: #2d3748; padding: 2.5rem; border-radius: 0.5rem; }
         .login-input { background-color: #4a5568; border: 1px solid #718096; color: white; border-radius: 0.375rem; padding: 0.75rem 1rem; }
-        .login-btn { background-color: #4299e1; color: white; padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s; }
-        .login-btn:hover { background-color: #2b6cb0; }
-        #login-error { color: #e53e3e; font-size: 0.875rem; margin-top: 0.5rem; display: none; }
-        
-        /* --- ESTILOS DO PAINEL ADMIN --- */
+        .login-btn { background-color: #4299e1; color: white; padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: bold; }
         #admin-panel { display: none; }
-        .form-section, .backup-section { background-color: #2d3748; padding: 2rem; border-radius: 0.5rem; margin-bottom: 2rem; }
+        .form-section { background-color: #2d3748; padding: 2rem; border-radius: 0.5rem; margin-bottom: 2rem; }
         .form-input { background-color: #4a5568; border: 1px solid #718096; color: white; border-radius: 0.375rem; }
-        .form-input::-webkit-calendar-picker-indicator { filter: invert(1); }
-        .btn { padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: bold; cursor: pointer; transition: background-color 0.2s; }
+        .btn { padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: bold; cursor: pointer; }
         .btn-primary { background-color: #4299e1; color: white; }
-        .btn-primary:hover { background-color: #2b6cb0; }
-        .btn-danger { background-color: #e53e3e; color: white; }
-        .btn-danger:hover { background-color: #c53030; }
         .btn-secondary { background-color: #718096; color: white; }
-        .btn-secondary:hover { background-color: #4a5568; }
-        .btn-success { background-color: #38a169; color: white; }
-        .btn-success:hover { background-color: #2f855a; }
-        #data-display { max-height: 400px; overflow-y: auto; background-color: #1a202c; padding: 1rem; border-radius: 0.5rem; border: 1px solid #4a5568; }
+        .btn-danger { background-color: #e53e3e; color: white; }
         .url-input-container { display: flex; align-items: center; border: 1px solid #718096; border-radius: 0.375rem; background-color: #4a5568; }
-        .url-base { background-color: #2d3748; padding: 0.5rem; white-space: nowrap; border-right: 1px solid #718096; }
+        .url-base { background-color: #2d3748; padding: 0.5rem; white-space: nowrap; border-right: 1px solid #718096; font-size: 0.8rem; }
         .url-final-input { border: none; outline: none; padding: 0.5rem; width: 100%; background-color: transparent; color: white; }
     </style>
 </head>
@@ -40,18 +27,18 @@
 
     <div id="login-screen" class="fixed inset-0 flex items-center justify-center">
         <div class="login-box w-full max-w-sm">
+            <img src="https://i.postimg.cc/0j9pxz9j/kendence-logo.png" alt="Brasão Kendence F.C." class="w-32 h-32 mx-auto mb-4 object-contain">
             <h1 class="text-3xl font-bold text-center mb-6">Admin Login</h1>
             <form id="login-form">
                 <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium mb-1">E-mail</label>
+                    <label class="block text-sm font-medium mb-1">E-mail</label>
                     <input type="email" id="email" class="login-input w-full" required>
                 </div>
                 <div class="mb-6">
-                    <label for="password" class="block text-sm font-medium mb-1">Senha</label>
+                    <label class="block text-sm font-medium mb-1">Senha</label>
                     <input type="password" id="password" class="login-input w-full" required>
                 </div>
                 <button type="submit" class="login-btn w-full">Entrar</button>
-                <p id="login-error">E-mail ou senha inválidos.</p> 
             </form>
         </div>
     </div>
@@ -61,45 +48,17 @@
             <button onclick="logout()" class="btn btn-danger py-1 px-3 text-sm">Sair</button>
         </div>
 
-        <h1 class="text-4xl font-bold text-center mb-8">Painel de Administração - Kendence F.C.</h1>
-
-        <div class="backup-section text-center">
-            <h2 class="text-2xl font-bold mb-4">Backup e Restauração</h2>
-            <div class="flex justify-center space-x-4">
-                <button onclick="backupData()" class="btn btn-success">Fazer Backup</button>
-                <button onclick="triggerRestore()" class="btn btn-danger">Restaurar Backup</button>
-                <input type="file" id="restore-file-input" class="hidden" accept=".json" onchange="restoreData(event)">
-            </div>
-        </div>
+        <h1 class="text-4xl font-bold text-center mb-8">Painel Admin - Kendence F.C.</h1>
 
         <div class="mb-8">
-            <label for="section-select" class="block mb-2 text-lg font-medium">Selecione a área para gerenciar:</label>
+            <label class="block mb-2 text-lg font-medium">Gerenciar Seção:</label>
             <select id="section-select" class="form-input w-full p-3" onchange="showForm(this.value)">
                 <option value="upcomingGames">Próximos Jogos</option>
-                <option value="recentResults">Resultados Recentes</option>
-                <option value="news">Notícias</option>
-                <option value="players">Jogadores</option>
                 <option value="sponsors">Patrocinadores</option>
             </select>
         </div>
 
         <div id="forms-container">
-            <div id="form-upcomingGames" class="form-section">
-                <h2 class="text-2xl font-bold mb-4">Gerenciar Próximos Jogos</h2>
-                <form id="upcomingGames-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="hidden" id="upcomingGames-id">
-                    <input type="date" id="upcomingGames-date-input" class="form-input p-2 w-full" required>
-                    <input type="time" id="upcomingGames-time-input" class="form-input p-2 w-full" required>
-                    <input type="text" id="upcomingGames-teams" placeholder="Times (ex: Kendence vs. Time B)" class="form-input p-2" required>
-                    <input type="text" id="upcomingGames-location" placeholder="Nome do Campo" class="form-input p-2" required>
-                    <input type="url" id="upcomingGames-mapLink" placeholder="Link do Google Maps" class="form-input p-2 col-span-1 md:col-span-2" required>
-                    <div class="col-span-1 md:col-span-2 flex space-x-2">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                        <button type="button" onclick="clearForm('upcomingGames')" class="btn btn-secondary">Limpar</button>
-                    </div>
-                </form>
-            </div>
-
             <div id="form-sponsors" class="form-section hidden">
                 <h2 class="text-2xl font-bold mb-4">Gerenciar Patrocinadores</h2>
                 <form id="sponsors-form" class="grid grid-cols-1 gap-4">
@@ -108,27 +67,27 @@
                     <input type="text" id="sponsors-name" placeholder="Nome do Patrocinador" class="form-input p-2" required>
                     
                     <div>
-                        <label for="sponsors-image-final" class="block text-sm font-medium mb-1">URL da Imagem</label>
+                        <label class="block text-sm font-medium mb-1">Final da URL da Imagem</label>
                         <div class="url-input-container">
-                            <span class="url-base" id="sponsors-baseUrl">https://lh3.googleusercontent.com/d/</span>
-                            <input type="text" id="sponsors-image-final" class="url-final-input" placeholder="cole o final da URL aqui" required>
+                            <span class="url-base" id="sponsors-baseUrl">https://i.postimg.cc/</span>
+                            <input type="text" id="sponsors-image-final" class="url-final-input" placeholder="ex: 0j9pxz9j/foto.png" required>
                         </div>
                     </div>
                     
-                    <input type="text" id="sponsors-phone" placeholder="Telefone (ex: 43 99999-9999)" class="form-input p-2">
+                    <input type="text" id="sponsors-phone" placeholder="Telefone" class="form-input p-2">
                     <input type="text" id="sponsors-address" placeholder="Endereço" class="form-input p-2">
-                    <input type="url" id="sponsors-instagram" placeholder="Link do Instagram (ex: https://instagram.com/usuario)" class="form-input p-2" required>
+                    <input type="url" id="sponsors-instagram" placeholder="Link Instagram" class="form-input p-2" required>
                     
                     <div class="flex space-x-2">
-                        <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
+                        <button type="submit" class="btn btn-primary" id="btn-save-sponsors">Adicionar / Salvar</button>
                         <button type="button" onclick="clearForm('sponsors')" class="btn btn-secondary">Limpar</button>
                     </div>
                 </form>
             </div>
-            </div>
+        </div>
 
         <h2 class="text-2xl font-bold mt-8 mb-4">Dados Atuais</h2>
-        <div id="data-display" class="mb-8"></div>
+        <div id="data-display" class="mb-8 bg-gray-800 p-4 rounded border border-gray-700"></div>
     </div>
     
     <script type="module">
@@ -151,78 +110,118 @@
 
         const sections = {
             upcomingGames: { dbRef: 'upcomingGames', formId: 'upcomingGames-form', titleField: 'teams' },
-            recentResults: { dbRef: 'recentResults', formId: 'recentResults-form', titleField: 'match' },
-            news: { dbRef: 'news', formId: 'news-form', titleField: 'title' },
-            players: { dbRef: 'players', formId: 'players-form', titleField: 'name' },
             sponsors: { dbRef: 'sponsors', formId: 'sponsors-form', titleField: 'name' }
         };
+
         let currentSection = 'upcomingGames';
 
-        // Lógica de Login/Logout e Manipulação de Dados (mantida conforme seu código original)
-        // ... (restante do seu script importado do arquivo original)
-        
-        window.logout = () => {
-            signOut(auth).then(() => {
-                document.getElementById('admin-panel').style.display = 'none';
-                document.getElementById('login-screen').style.display = 'flex'; 
-            });
-        };
-
-        const loginForm = document.getElementById('login-form');
-        loginForm.addEventListener('submit', (e) => {
+        // LOGIN
+        document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value)
                 .then(() => {
-                    document.getElementById('login-screen').style.display = 'none'; 
-                    document.getElementById('admin-panel').style.display = 'block'; 
+                    document.getElementById('login-screen').style.display = 'none';
+                    document.getElementById('admin-panel').style.display = 'block';
                     initializeAdminPanel();
-                }).catch(() => alert("Erro no login"));
+                }).catch(err => alert("Erro ao entrar: " + err.message));
         });
 
+        window.logout = () => signOut(auth).then(() => location.reload());
+
         function initializeAdminPanel() {
-            window.showForm = (sectionName) => {
-                currentSection = sectionName;
+            window.showForm = (s) => {
+                currentSection = s;
                 document.querySelectorAll('.form-section').forEach(f => f.classList.add('hidden'));
-                const target = document.getElementById(`form-${sectionName}`);
-                if(target) target.classList.remove('hidden');
-                loadData(sectionName);
+                document.getElementById(`form-${s}`).classList.remove('hidden');
+                loadData(s);
             };
 
-            window.clearForm = (sectionName) => {
-                document.getElementById(sections[sectionName].formId).reset();
-                document.getElementById(`${sectionName}-id`).value = '';
+            window.clearForm = (s) => {
+                const form = document.getElementById(sections[s].formId);
+                form.reset();
+                document.getElementById(`${s}-id`).value = '';
+                form.querySelector('button[type="submit"]').textContent = 'Adicionar / Salvar';
             };
 
-            window.loadData = (sectionName) => {
+            window.loadData = (s) => {
                 const display = document.getElementById('data-display');
-                onValue(ref(database, sections[sectionName].dbRef), (snapshot) => {
+                onValue(ref(database, sections[s].dbRef), (snapshot) => {
                     display.innerHTML = '';
                     if (snapshot.exists()) {
                         Object.entries(snapshot.val()).forEach(([key, val]) => {
                             const div = document.createElement('div');
                             div.className = 'bg-gray-700 p-3 rounded flex justify-between items-center mb-2';
-                            div.innerHTML = `<span>${val[sections[sectionName].titleField]}</span>
-                                <div><button onclick="editItem('${key}')" class="btn btn-secondary py-1 px-2 text-sm mr-2">Editar</button>
-                                <button onclick="deleteItem('${key}')" class="btn btn-danger py-1 px-2 text-sm">Excluir</button></div>`;
+                            div.innerHTML = `<span>${val[sections[s].titleField]}</span>
+                                <div>
+                                    <button onclick="editItem('${key}')" class="btn btn-secondary py-1 px-2 text-sm mr-2">Editar</button>
+                                    <button onclick="deleteItem('${key}')" class="btn btn-danger py-1 px-2 text-sm">Excluir</button>
+                                </div>`;
                             display.appendChild(div);
                         });
-                    }
+                    } else { display.innerHTML = 'Nenhum registro encontrado.'; }
                 });
             };
 
-            // Função para mapear campos e salvar no Firebase
-            function setupFormNames() {
-                Object.keys(sections).forEach(s => {
+            // EDITAR (Corrigido para preencher os novos campos)
+            window.editItem = async (key) => {
+                const s = currentSection;
+                const snap = await get(ref(database, `${sections[s].dbRef}/${key}`));
+                if (snap.exists()) {
+                    const data = snap.val();
                     const form = document.getElementById(sections[s].formId);
-                    if(!form) return;
-                    for (const el of form.elements) {
-                        if (el.id && !el.name) el.name = el.id.replace(`${s}-`, '').replace('-input', '');
-                    }
-                });
-            }
-            setupFormNames();
+                    document.getElementById(`${s}-id`).value = key;
+                    form.querySelector('button[type="submit"]').textContent = 'Salvar Edição';
 
-            // Adicione aqui a lógica de handleFormSubmit, editItem e deleteItem conforme seu original
+                    // Mapeia campos simples
+                    Object.keys(data).forEach(field => {
+                        const input = document.getElementById(`${s}-${field}`);
+                        if (input && field !== 'image') input.value = data[field];
+                    });
+
+                    // Trata URL da Imagem para o prefixo
+                    if (data.image) {
+                        const baseUrl = document.getElementById(`${s}-baseUrl`).innerText;
+                        const finalUrlInput = document.getElementById(`${s}-image-final`);
+                        finalUrlInput.value = data.image.replace(baseUrl, '');
+                    }
+                    window.scrollTo(0, 0);
+                }
+            };
+
+            // SALVAR
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const s = currentSection;
+                    const id = document.getElementById(`${s}-id`).value;
+                    const formData = {};
+                    
+                    // Captura campos do form
+                    const inputs = form.querySelectorAll('input:not([type="hidden"]), select, textarea');
+                    inputs.forEach(i => {
+                        const key = i.id.replace(`${s}-`, '').replace('-final', '');
+                        formData[key] = i.value;
+                    });
+
+                    // Monta URL completa da imagem
+                    if (formData.image) {
+                        const baseUrl = document.getElementById(`${s}-baseUrl`).innerText;
+                        formData.image = baseUrl + formData.image;
+                    }
+
+                    const dbRef = id ? ref(database, `${sections[s].dbRef}/${id}`) : push(ref(database, sections[s].dbRef));
+                    set(dbRef, formData).then(() => {
+                        alert("Sucesso!");
+                        clearForm(s);
+                    });
+                });
+            });
+
+            window.deleteItem = (key) => {
+                if (confirm("Excluir?")) remove(ref(database, `${sections[currentSection].dbRef}/${key}`));
+            };
+
+            showForm(currentSection);
         }
     </script>
 </body>
