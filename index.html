@@ -30,19 +30,41 @@
             }
         }
     </script>
-    <style>
+  <style>
         body {
             background-color: #f0f2f5; 
         }
         .screen {
             display: none;
-            min-height: calc(100vh - 10.5rem); /* Header + TopBar + Footer height */
+            min-height: calc(100vh - 10.5rem);
         }
         .screen.active {
             display: block;
         }
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Estilização da Barra de Rolagem Horizontal para PC */
+        @media (min-width: 1024px) {
+            .custom-scrollbar::-webkit-scrollbar {
+                height: 6px; /* Altura da barra horizontal */
+            }
+            .custom-scrollbar::-webkit-scrollbar-track {
+                background: #e2e8f0; /* Cor do fundo da trilha */
+                border-radius: 10px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-thumb {
+                background-color: #D31F37; /* Cor da barra (kendence-red) */
+                border-radius: 10px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                background-color: #1F3A79; /* Cor ao passar o mouse (kendence-blue) */
+            }
+        }
+
+        /* Mantém escondido no Mobile para um visual limpo */
+        @media (max-width: 1023px) {
+            .custom-scrollbar::-webkit-scrollbar { display: none; }
+            .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        }
     </style>
 </head>
 <body class="font-sans">
@@ -148,11 +170,11 @@
                     </section>
                     <section class="mt-12">
                         <h2 class="text-2xl font-black text-kendence-dark-blue uppercase mb-4">Nosso Elenco</h2>
-                        <div id="home-players-list" class="flex space-x-6 overflow-x-auto pb-4 scrollbar-hide"></div>
+                        <div id="home-players-list" class="flex space-x-6 overflow-x-auto pb-4 **custom-scrollbar**"></div>
                     </section>
                     <section class="mt-12">
                         <h2 class="text-2xl font-black text-kendence-dark-blue uppercase mb-4">Jogos</h2>
-                        <div id="home-games-list" class="flex space-x-4 overflow-x-auto pb-4 scrollbar-hide"></div>
+                        <div id="home-games-list" class="flex space-x-4 overflow-x-auto pb-4 **custom-scrollbar**"></div>
                     </section>
                 </div>
             </div>
