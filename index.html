@@ -90,35 +90,38 @@
                     </div>
                 </div>
             </div>
-            <nav class="bg-kendence-red text-white container mx-auto px-4 lg:px-6">
-                <div class="flex justify-between items-center h-16">
-                    <a href="https://i.postimg.cc/YCqbzcpH/brasao-1.png" onclick="navigateTo('home-screen', event)" class="flex items-center space-x-2">
-                        <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" alt="Brasão Kendence F.C." class="h-12 w-auto">
-                        <span class="font-black text-xl uppercase tracking-wider">Kendence F.C.</span>
-                    </a>
-                    <ul class="hidden lg:flex items-center space-x-8 text-sm font-bold uppercase tracking-wider">
-                        <li><a href="#" onclick="navigateTo('news-screen', event)" class="py-5 border-b-4 border-transparent hover:border-white">Notícias</a></li>
-                        <li><a href="#" onclick="navigateTo('games-screen', event)" class="py-5 border-b-4 border-transparent hover:border-white">Jogos</a></li>
-                        <li><a href="#" onclick="navigateTo('players-screen', event)" class="py-5 border-b-4 border-transparent hover:border-white">Jogadores</a></li>
-                        <li><a href="#" onclick="navigateTo('history-screen', event)" class="py-5 border-b-4 border-transparent hover:border-white">História</a></li>
-                        <li><a href="#" onclick="navigateTo('gallery-screen', event)" class="py-5 border-b-4 border-transparent hover:border-white">Galeria</a></li>
-                    </ul>
-                    <div class="lg:hidden">
-                        <button id="mobile-menu-button" class="text-white focus:outline-none">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                        </button>
-                    </div>
-                </div>
-                <div id="mobile-menu" class="hidden lg:hidden pb-4">
-                    <ul class="flex flex-col space-y-2 text-sm uppercase">
-                         <li><a href="#" onclick="navigateTo('news-screen', event)" class="block py-2 px-3 rounded hover:bg-red-700">Notícias</a></li>
-                         <li><a href="#" onclick="navigateTo('games-screen', event)" class="block py-2 px-3 rounded hover:bg-red-700">Jogos</a></li>
-                         <li><a href="#" onclick="navigateTo('players-screen', event)" class="block py-2 px-3 rounded hover:bg-red-700">Jogadores</a></li>
-                         <li><a href="#" onclick="navigateTo('history-screen', event)" class="block py-2 px-3 rounded hover:bg-red-700">História</a></li>
-                         <li><a href="#" onclick="navigateTo('gallery-screen', event)" class="block py-2 px-3 rounded hover:bg-red-700">Galeria</a></li>
-                    </ul>
-                </div>
-            </nav>
+<nav class="bg-kendence-red text-white w-full"> 
+    <div class="container mx-auto px-4 lg:px-6">
+        <div class="flex justify-between items-center h-16">
+            <a href="https://i.postimg.cc/YCqbzcpH/brasao-1.png" onclick="navigateTo('home-screen', event)" class="flex items-center space-x-2">
+                <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" alt="Brasão Kendence F.C." class="h-12 w-auto">
+                <span class="font-black text-xl uppercase tracking-wider">Kendence F.C.</span>
+            </a>
+            <ul class="hidden lg:flex items-center space-x-8 text-sm font-bold uppercase tracking-wider">
+                <li><a href="#" onclick="navigateTo('news-screen', event)" class="py-5 border-b-4 border-transparent hover:border-white">Notícias</a></li>
+                <li><a href="#" onclick="navigateTo('games-screen', event)" class="py-5 border-b-4 border-transparent hover:border-white">Jogos</a></li>
+                <li><a href="#" onclick="navigateTo('players-screen', event)" class="py-5 border-b-4 border-transparent hover:border-white">Jogadores</a></li>
+                <li><a href="#" onclick="navigateTo('history-screen', event)" class="py-5 border-b-4 border-transparent hover:border-white">História</a></li>
+                <li><a href="#" onclick="navigateTo('gallery-screen', event)" class="py-5 border-b-4 border-transparent hover:border-white">Galeria</a></li>
+            </ul>
+            <div class="lg:hidden">
+                <button id="mobile-menu-button" class="text-white focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden lg:hidden pb-4">
+            <ul class="flex flex-col space-y-2 text-sm uppercase">
+                 <li><a href="#" onclick="navigateTo('news-screen', event)" class="block py-2 px-3 rounded hover:bg-red-700">Notícias</a></li>
+                 <li><a href="#" onclick="navigateTo('games-screen', event)" class="block py-2 px-3 rounded hover:bg-red-700">Jogos</a></li>
+                 <li><a href="#" onclick="navigateTo('players-screen', event)" class="block py-2 px-3 rounded hover:bg-red-700">Jogadores</a></li>
+                 <li><a href="#" onclick="navigateTo('history-screen', event)" class="block py-2 px-3 rounded hover:bg-red-700">História</a></li>
+                 <li><a href="#" onclick="navigateTo('gallery-screen', event)" class="block py-2 px-3 rounded hover:bg-red-700">Galeria</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
         </header>
 
         <main>
@@ -736,3 +739,4 @@
     </script>
 </body>
 </html>
+
