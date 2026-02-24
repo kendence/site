@@ -27,14 +27,14 @@
     </script>
     
     <style>
-        body { background-color: #f0f2f5; color: #1a202c; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
-        #login-screen { background-color: #162B58; position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 100; }
-        .login-box { background-color: white; padding: 2.5rem; border-radius: 0.75rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); width: 100%; max-width: 24rem; }
+        body { background-color: #f0f2f5; color: #1a202c; font-family: 'Inter', sans-serif; }
+        #login-screen { background-color: #162B58; }
+        .login-box { background-color: white; padding: 2.5rem; border-radius: 0.75rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); }
         .login-input { background-color: #f8fafc; border: 1px solid #e2e8f0; color: #1a202c; border-radius: 0.5rem; padding: 0.75rem 1rem; width: 100%; margin-bottom: 1rem; }
-        .admin-header { background-color: #D31F37; color: white; padding: 1rem 0; }
+        .admin-header { background-color: #D31F37; color: white; padding: 1rem 0; margin-bottom: 2rem; }
         .form-section { background-color: white; padding: 2rem; border-radius: 0.5rem; border-top: 4px solid #D31F37; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .form-input { background-color: #ffffff; border: 1px solid #cbd5e1; color: #1a202c; border-radius: 0.375rem; padding: 0.6rem; width: 100%; margin-bottom: 1rem; }
-        .btn { padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; transition: all 0.2s; cursor: pointer; border: none; }
+        .btn { padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; transition: all 0.2s; cursor: pointer; }
         .btn-primary { background-color: #1F3A79; color: white; }
         .btn-primary:hover { background-color: #162B58; }
         .btn-danger { background-color: #D31F37; color: white; }
@@ -42,16 +42,14 @@
         #data-display { background-color: white; border-radius: 0.5rem; border: 1px solid #e2e8f0; margin-top: 1rem; }
         .url-input-container { display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 0.375rem; background-color: #f8fafc; overflow: hidden; margin-bottom: 1rem; }
         .url-base { background-color: #e2e8f0; padding: 0.6rem; font-size: 0.75rem; color: #475569; border-right: 1px solid #cbd5e1; white-space: nowrap; }
-        main { flex: 1; }
-        footer { background-color: #162B58; color: #9ca3af; padding: 1.5rem 0; text-align: center; font-size: 0.75rem; }
     </style>
 </head>
 <body>
 
-    <div id="login-screen">
-        <div class="login-box">
+    <div id="login-screen" class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="login-box w-full max-w-sm">
             <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" alt="Kendence" class="h-16 mx-auto mb-6">
-            <h1 class="text-xl font-black text-center mb-6 text-kendence-dark-blue uppercase tracking-tight">Admin Login</h1>
+            <h1 class="text-xl font-black text-center mb-6 text-kendence-dark-blue uppercase">Acesso Administrativo</h1>
             <form id="login-form">
                 <input type="email" id="email" class="login-input" placeholder="E-mail" required>
                 <input type="password" id="password" class="login-input" placeholder="Senha" required>
@@ -61,22 +59,22 @@
         </div>
     </div>
     
-    <div id="admin-panel" class="hidden"> 
+    <div id="admin-panel" class="hidden pb-20"> 
         <header class="admin-header shadow-lg">
             <div class="container mx-auto px-6 flex justify-between items-center">
                 <div class="flex items-center space-x-3">
                     <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" class="h-10">
-                    <span class="font-black uppercase tracking-tighter">Kendence F.C. Admin</span>
+                    <span class="font-black uppercase tracking-tighter">Admin - Kendence F.C.</span>
                 </div>
-                <button onclick="logout()" class="btn bg-white text-kendence-red hover:bg-gray-100">Sair</button>
+                <button onclick="logout()" class="btn bg-white text-kendence-red">Sair</button>
             </div>
         </header>
 
-        <main class="container mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-1 space-y-6">
-                <div class="form-section">
-                    <h2 class="text-sm font-black uppercase text-kendence-blue mb-4">Gerenciar</h2>
-                    <select id="section-select" class="form-input font-bold">
+        <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-1">
+                <div class="form-section mb-6">
+                    <h2 class="text-sm font-black uppercase text-kendence-blue mb-4">Navegação</h2>
+                    <select id="section-select" class="form-input font-bold" onchange="showForm(this.value)">
                         <option value="upcomingGames">Próximos Jogos</option>
                         <option value="recentResults">Resultados Recentes</option>
                         <option value="news">Notícias</option>
@@ -86,68 +84,69 @@
                 </div>
                 
                 <div class="form-section bg-kendence-dark-blue text-white border-none text-center">
-                    <h2 class="text-sm font-black uppercase mb-4">Sistema</h2>
-                    <button onclick="backupData()" class="btn bg-white text-kendence-dark-blue w-full mb-2">Backup</button>
-                    <button onclick="triggerRestore()" class="btn btn-danger w-full">Restaurar</button>
-                    <input type="file" id="restore-file-input" class="hidden" accept=".json">
+                    <h2 class="text-sm font-black uppercase mb-4">Backup e Restauração</h2>
+                    <button onclick="backupData()" class="btn bg-white text-kendence-dark-blue w-full mb-2">Fazer Backup</button>
+                    <button onclick="triggerRestore()" class="btn btn-danger w-full">Restaurar Backup</button>
+                    <input type="file" id="restore-file-input" class="hidden" accept=".json" onchange="restoreData(event)">
                 </div>
             </div>
 
             <div class="lg:col-span-2">
                 <div id="forms-container">
+                    
                     <div id="form-upcomingGames" class="form-section">
-                        <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Próximos Jogos</h2>
+                        <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Gerenciar Próximos Jogos</h2>
                         <form id="upcomingGames-form">
                             <input type="hidden" id="upcomingGames-id">
-                            <div class="grid grid-cols-2 gap-4">
-                                <input type="date" id="upcomingGames-date-input" class="form-input" required>
-                                <input type="time" id="upcomingGames-time-input" class="form-input" required>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div><label class="block text-xs font-bold text-gray-400 mb-1">Data</label><input type="date" id="upcomingGames-date-input" class="form-input" required></div>
+                                <div><label class="block text-xs font-bold text-gray-400 mb-1">Hora</label><input type="time" id="upcomingGames-time-input" class="form-input" required></div>
                             </div>
                             <input type="text" id="upcomingGames-teams" placeholder="Times (ex: Kendence vs. Time B)" class="form-input" required>
-                            <input type="text" id="upcomingGames-location" placeholder="Local" class="form-input" required>
-                            <input type="url" id="upcomingGames-mapLink" placeholder="Link Google Maps" class="form-input" required>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
-                            <button type="button" onclick="clearForm('upcomingGames')" class="btn btn-secondary ml-2">Limpar</button>
+                            <input type="text" id="upcomingGames-location" placeholder="Nome do Campo" class="form-input" required>
+                            <input type="url" id="upcomingGames-mapLink" placeholder="Link do Google Maps" class="form-input" required>
+                            <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
+                            <button type="button" onclick="clearForm('upcomingGames')" class="btn btn-secondary">Limpar</button>
                         </form>
                     </div>
 
                     <div id="form-recentResults" class="form-section hidden">
-                        <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Resultados</h2>
+                        <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Gerenciar Resultados</h2>
                         <form id="recentResults-form">
                             <input type="hidden" id="recentResults-id">
-                            <div class="grid grid-cols-2 gap-4">
-                                <input type="date" id="recentResults-date-input" class="form-input" required>
-                                <input type="time" id="recentResults-time-input" class="form-input" required>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div><label class="block text-xs font-bold text-gray-400 mb-1">Data</label><input type="date" id="recentResults-date-input" class="form-input" required></div>
+                                <div><label class="block text-xs font-bold text-gray-400 mb-1">Hora</label><input type="time" id="recentResults-time-input" class="form-input" required></div>
                             </div>
                             <input type="text" id="recentResults-match" placeholder="Resultado (ex: Kendence 3 x 2 Time B)" class="form-input" required>
-                            <input type="text" id="recentResults-location" placeholder="Local" class="form-input" required>
-                            <input type="url" id="recentResults-videoLink" placeholder="Link Mídia" class="form-input" required>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
-                            <button type="button" onclick="clearForm('recentResults')" class="btn btn-secondary ml-2">Limpar</button>
+                            <input type="text" id="recentResults-location" placeholder="Nome do Campo" class="form-input" required>
+                            <input type="url" id="recentResults-videoLink" placeholder="Link para Fotos/Vídeos" class="form-input" required>
+                            <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
+                            <button type="button" onclick="clearForm('recentResults')" class="btn btn-secondary">Limpar</button>
                         </form>
                     </div>
 
                     <div id="form-news" class="form-section hidden">
-                        <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Notícias</h2>
+                        <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Gerenciar Notícias</h2>
                         <form id="news-form">
                             <input type="hidden" id="news-id">
                             <input type="date" id="news-date" class="form-input" required>
-                            <input type="text" id="news-title" placeholder="Título" class="form-input" required>
+                            <input type="text" id="news-title" placeholder="Título da Notícia" class="form-input" required>
                             <div class="url-input-container">
                                 <span class="url-base" id="news-baseUrl">https://lh3.googleusercontent.com/d/</span>
-                                <input type="text" id="news-image-final" class="p-2 w-full outline-none" placeholder="ID da imagem" required>
+                                <input type="text" id="news-image-final" class="p-2 w-full outline-none" placeholder="cole o final da URL aqui" required>
                             </div>
                             <textarea id="news-text" class="form-input h-32" placeholder="Texto da Notícia" required></textarea>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
-                            <button type="button" onclick="clearForm('news')" class="btn btn-secondary ml-2">Limpar</button>
+                            <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
+                            <button type="button" onclick="clearForm('news')" class="btn btn-secondary">Limpar</button>
                         </form>
                     </div>
 
                     <div id="form-players" class="form-section hidden">
-                        <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Jogadores</h2>
+                        <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Gerenciar Jogadores e Comissão</h2>
                         <form id="players-form">
                             <input type="hidden" id="players-id">
-                            <input type="text" id="players-name" placeholder="Nome" class="form-input" required>
+                            <input type="text" id="players-name" placeholder="Nome do Jogador" class="form-input" required>
                             <select id="players-role" class="form-input" required>
                                 <option value="">Selecione a Função</option>
                                 <option value="Técnico">Técnico</option>
@@ -167,41 +166,36 @@
                                 <option value="Centroavante">Centroavante</option>
                                 <option value="Gandula">Gandula</option>
                             </select>
-                            <input type="url" id="players-image" placeholder="URL Foto" class="form-input">
-                            <input type="url" id="players-instagram" placeholder="Link Instagram" class="form-input">
-                            <textarea id="players-description" class="form-input h-24" placeholder="Descrição (Camisa, Peso, etc.)"></textarea>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
-                            <button type="button" onclick="clearForm('players')" class="btn btn-secondary ml-2">Limpar</button>
+                            <input type="url" id="players-image" placeholder="Link da Foto (URL)" class="form-input">
+                            <input type="url" id="players-instagram" placeholder="Link do Instagram" class="form-input">
+                            <textarea id="players-description" class="form-input h-24" placeholder="Descrição (Apelido, Camisa, Idade, etc.)"></textarea>
+                            <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
+                            <button type="button" onclick="clearForm('players')" class="btn btn-secondary">Limpar</button>
                         </form>
                     </div>
 
                     <div id="form-sponsors" class="form-section hidden">
-                        <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Patrocinadores</h2>
+                        <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Gerenciar Patrocinadores</h2>
                         <form id="sponsors-form">
                             <input type="hidden" id="sponsors-id">
-                            <input type="text" id="sponsors-name" placeholder="Empresa" class="form-input" required>
+                            <input type="text" id="sponsors-name" placeholder="Nome do Patrocinador" class="form-input" required>
                             <div class="url-input-container">
                                 <span class="url-base" id="sponsors-baseUrl">https://lh3.googleusercontent.com/d/</span>
-                                <input type="text" id="sponsors-image-final" class="p-2 w-full outline-none" placeholder="ID imagem" required>
+                                <input type="text" id="sponsors-image-final" class="p-2 w-full outline-none" placeholder="cole o final da URL aqui" required>
                             </div>
-                            <input type="text" id="sponsors-phone" placeholder="Telefone" class="form-input">
+                            <input type="text" id="sponsors-phone" placeholder="Telefone (ex: 43 99999-9999)" class="form-input">
                             <input type="text" id="sponsors-address" placeholder="Endereço" class="form-input">
-                            <input type="url" id="sponsors-instagram" placeholder="Link Site" class="form-input" required>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
-                            <button type="button" onclick="clearForm('sponsors')" class="btn btn-secondary ml-2">Limpar</button>
+                            <input type="url" id="sponsors-instagram" placeholder="Link do Patrocinador" class="form-input" required>
+                            <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
+                            <button type="button" onclick="clearForm('sponsors')" class="btn btn-secondary">Limpar</button>
                         </form>
                     </div>
                 </div>
 
-                <div id="data-display" class="p-4 mt-6"></div>
+                <h2 class="text-xl font-black text-kendence-dark-blue uppercase mt-8 mb-4">Dados Atuais</h2>
+                <div id="data-display" class="p-4"></div>
             </div>
-        </main>
-
-        <footer>
-            <div class="container mx-auto">
-                © 2025 Kendence F.C. Todos os direitos reservados. Design por An.Yoshi.
-            </div>
-        </footer>
+        </div>
     </div>
 
     <script type="module">
@@ -232,19 +226,14 @@
 
         let currentSection = 'upcomingGames';
 
-        // LOGIN LÓGICA
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            signInWithEmailAndPassword(auth, email, password)
-            .then(() => {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('admin-panel').classList.remove('hidden');
-            })
-            .catch(() => {
-                document.getElementById('login-error').textContent = "Dados incorretos.";
-                document.getElementById('login-error').classList.remove('hidden');
+            signInWithEmailAndPassword(auth, email, password).catch(err => {
+                const errP = document.getElementById('login-error');
+                errP.textContent = "Erro: E-mail ou senha inválidos.";
+                errP.classList.remove('hidden');
             });
         });
 
@@ -254,41 +243,48 @@
                 document.getElementById('admin-panel').classList.remove('hidden');
                 setupFormNames();
                 loadData(currentSection);
+            } else {
+                document.getElementById('login-screen').classList.remove('hidden');
+                document.getElementById('admin-panel').classList.add('hidden');
             }
         });
 
-        window.logout = () => signOut(auth).then(() => location.reload());
+        window.logout = () => signOut(auth);
 
-        // NAVEGAÇÃO
-        document.getElementById('section-select').addEventListener('change', (e) => {
-            currentSection = e.target.value;
-            document.querySelectorAll('.form-section').forEach(f => f.classList.add('hidden'));
-            document.getElementById(`form-${currentSection}`).classList.remove('hidden');
-            loadData(currentSection);
-        });
+        window.showForm = (name) => {
+            currentSection = name;
+            Object.keys(sections).forEach(k => document.getElementById(`form-${k}`).classList.add('hidden'));
+            document.getElementById(`form-${name}`).classList.remove('hidden');
+            clearForm(name);
+            loadData(name);
+        };
 
         window.clearForm = (name) => {
             const form = document.getElementById(sections[name].formId);
             form.reset();
-            form.querySelector(`[id$="-id"]`).value = '';
+            const idInput = form.querySelector(`[id$="-id"]`);
+            if (idInput) idInput.value = '';
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) submitBtn.textContent = 'Adicionar / Salvar';
         };
 
-        // DADOS
         window.loadData = (name) => {
             const display = document.getElementById('data-display');
-            onValue(ref(database, sections[name].dbRef), (snap) => {
+            onValue(ref(database, sections[name].dbRef), (snapshot) => {
                 display.innerHTML = '';
-                if (snap.exists()) {
-                    Object.entries(snap.val()).forEach(([key, val]) => {
-                        const row = document.createElement('div');
-                        row.className = 'flex justify-between items-center p-2 border-b';
-                        row.innerHTML = `<span class="text-sm font-bold text-kendence-dark-blue">${val[sections[name].titleField]}</span>
+                if (snapshot.exists()) {
+                    Object.entries(snapshot.val()).forEach(([key, val]) => {
+                        const item = document.createElement('div');
+                        item.className = 'flex justify-between items-center p-3 border-b hover:bg-gray-50';
+                        item.innerHTML = `<span class="font-medium text-sm">${val[sections[name].titleField]}</span>
                             <div>
-                                <button onclick="editItem('${key}')" class="text-blue-600 mr-4 font-bold text-xs uppercase">Editar</button>
-                                <button onclick="deleteItem('${key}')" class="text-red-600 font-bold text-xs uppercase">Excluir</button>
+                                <button onclick="editItem('${key}')" class="text-blue-600 mr-3 text-xs font-bold uppercase">Editar</button>
+                                <button onclick="deleteItem('${key}')" class="text-red-600 text-xs font-bold uppercase">Excluir</button>
                             </div>`;
-                        display.appendChild(row);
+                        display.appendChild(item);
                     });
+                } else {
+                    display.innerHTML = '<p class="text-gray-400 text-sm py-4">Nenhum dado encontrado.</p>';
                 }
             });
         };
@@ -298,35 +294,66 @@
             const form = e.target;
             const id = form.querySelector(`[id$="-id"]`).value;
             const data = {};
-            for (const el of form.elements) { if (el.name && el.name !== 'id') data[el.name] = el.value; }
+            
+            for (const el of form.elements) {
+                if (el.name && el.name !== 'id') {
+                    data[el.name] = el.value;
+                }
+            }
 
             if (currentSection === 'upcomingGames' || currentSection === 'recentResults') {
                 if (data.date && data.time) {
-                    data.date = new Date(`${data.date}T${data.time}:00`).getTime();
+                    const combined = new Date(`${data.date}T${data.time}:00`);
+                    data.date = combined.getTime();
                     delete data.time;
                 }
-            } else if (currentSection === 'news' && data.date) {
+            }
+            if (currentSection === 'news' && data.date) {
                 data.date = new Date(`${data.date}T00:00:00`).getTime();
             }
-
             if ((currentSection === 'news' || currentSection === 'sponsors') && data['image-final']) {
-                data.image = document.getElementById(`${currentSection}-baseUrl`).innerText + data['image-final'];
+                const base = document.getElementById(`${currentSection}-baseUrl`).innerText;
+                data.image = base + data['image-final'];
                 delete data['image-final'];
             }
 
             const path = id ? `${sections[currentSection].dbRef}/${id}` : sections[currentSection].dbRef;
-            id ? await set(ref(database, path), data) : await push(ref(database, path), data);
+            if (id) {
+                await set(ref(database, path), data);
+            } else {
+                await push(ref(database, path), data);
+            }
             clearForm(currentSection);
             alert("Sucesso!");
         }
 
         window.editItem = (key) => {
-            get(ref(database, `${sections[currentSection].dbRef}/${key}`)).then(snap => {
-                const data = snap.val();
-                const form = document.getElementById(sections[currentSection].formId);
-                form.querySelector(`[id$="-id"]`).value = key;
-                for (const el of form.elements) { if (el.name && data[el.name]) el.value = data[el.name]; }
-                window.scrollTo(0, 0);
+            const section = sections[currentSection];
+            get(ref(database, `${section.dbRef}/${key}`)).then(snap => {
+                if (snap.exists()) {
+                    const data = snap.val();
+                    const form = document.getElementById(section.formId);
+                    form.querySelector(`[id$="-id"]`).value = key;
+                    form.querySelector('button[type="submit"]').textContent = 'Salvar Edição';
+
+                    for (const el of form.elements) {
+                        if (el.name && data[el.name] !== undefined) el.value = data[el.name];
+                    }
+
+                    if (currentSection === 'upcomingGames' || currentSection === 'recentResults') {
+                        const d = new Date(data.date);
+                        form.querySelector(`[id$="-date-input"]`).value = d.toISOString().split('T')[0];
+                        form.querySelector(`[id$="-time-input"]`).value = d.toTimeString().split(' ')[0].substring(0, 5);
+                    }
+                    if (currentSection === 'news') {
+                        form.querySelector('#news-date').value = new Date(data.date).toISOString().split('T')[0];
+                    }
+                    if ((currentSection === 'news' || currentSection === 'sponsors') && data.image) {
+                        const base = document.getElementById(`${currentSection}-baseUrl`).innerText;
+                        if (data.image.startsWith(base)) form.querySelector(`[id$="-image-final"]`).value = data.image.substring(base.length);
+                    }
+                    window.scrollTo(0, 0);
+                }
             });
         };
 
@@ -335,7 +362,12 @@
         function setupFormNames() {
             Object.keys(sections).forEach(sec => {
                 const f = document.getElementById(sections[sec].formId);
-                Array.from(f.elements).forEach(el => { if (el.id) el.name = el.id.replace(`${sec}-`, '').replace('-input', ''); });
+                Array.from(f.elements).forEach(el => {
+                    if (el.id && !el.name && el.type !== 'hidden') {
+                        let n = el.id.replace(`${sec}-`, '').replace('-input', '');
+                        el.name = n;
+                    }
+                });
             });
         }
 
@@ -343,18 +375,26 @@
 
         window.backupData = async () => {
             const snap = await get(ref(database));
+            const blob = new Blob([JSON.stringify(snap.val(), null, 2)], {type: 'application/json'});
             const a = document.createElement('a');
-            a.href = URL.createObjectURL(new Blob([JSON.stringify(snap.val())], {type: 'application/json'}));
-            a.download = `backup_kendence.json`;
+            a.href = URL.createObjectURL(blob);
+            a.download = `backup_kendence_${new Date().toISOString().slice(0, 10)}.json`;
             a.click();
         };
 
         window.triggerRestore = () => document.getElementById('restore-file-input').click();
-        document.getElementById('restore-file-input').addEventListener('change', (e) => {
+        window.restoreData = (e) => {
+            const file = e.target.files[0];
             const reader = new FileReader();
-            reader.onload = async (ev) => { await set(ref(database), JSON.parse(ev.target.result)); alert("Restaurado!"); };
-            reader.readAsText(e.target.files[0]);
-        });
+            reader.onload = async (ev) => {
+                if(confirm("Substituir tudo?")) {
+                    await set(ref(database), JSON.parse(ev.target.result));
+                    alert("Concluído!");
+                    loadData(currentSection);
+                }
+            };
+            reader.readAsText(file);
+        };
     </script>
 </body>
 </html>
