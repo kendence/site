@@ -27,14 +27,14 @@
     </script>
     
     <style>
-        body { background-color: #f0f2f5; color: #1a202c; font-family: 'Inter', sans-serif; }
-        #login-screen { background-color: #162B58; }
-        .login-box { background-color: white; padding: 2.5rem; border-radius: 0.75rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); }
+        body { background-color: #f0f2f5; color: #1a202c; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+        #login-screen { background-color: #162B58; position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 100; }
+        .login-box { background-color: white; padding: 2.5rem; border-radius: 0.75rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); width: 100%; max-width: 24rem; }
         .login-input { background-color: #f8fafc; border: 1px solid #e2e8f0; color: #1a202c; border-radius: 0.5rem; padding: 0.75rem 1rem; width: 100%; margin-bottom: 1rem; }
-        .admin-header { background-color: #D31F37; color: white; padding: 1rem 0; margin-bottom: 2rem; }
+        .admin-header { background-color: #D31F37; color: white; padding: 1rem 0; }
         .form-section { background-color: white; padding: 2rem; border-radius: 0.5rem; border-top: 4px solid #D31F37; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .form-input { background-color: #ffffff; border: 1px solid #cbd5e1; color: #1a202c; border-radius: 0.375rem; padding: 0.6rem; width: 100%; margin-bottom: 1rem; }
-        .btn { padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; transition: all 0.2s; cursor: pointer; }
+        .btn { padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; transition: all 0.2s; cursor: pointer; border: none; }
         .btn-primary { background-color: #1F3A79; color: white; }
         .btn-primary:hover { background-color: #162B58; }
         .btn-danger { background-color: #D31F37; color: white; }
@@ -42,14 +42,16 @@
         #data-display { background-color: white; border-radius: 0.5rem; border: 1px solid #e2e8f0; margin-top: 1rem; }
         .url-input-container { display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 0.375rem; background-color: #f8fafc; overflow: hidden; margin-bottom: 1rem; }
         .url-base { background-color: #e2e8f0; padding: 0.6rem; font-size: 0.75rem; color: #475569; border-right: 1px solid #cbd5e1; white-space: nowrap; }
+        main { flex: 1; }
+        footer { background-color: #162B58; color: #9ca3af; padding: 1.5rem 0; text-align: center; font-size: 0.75rem; }
     </style>
 </head>
 <body>
 
-    <div id="login-screen" class="fixed inset-0 flex items-center justify-center z-50">
-        <div class="login-box w-full max-w-sm">
+    <div id="login-screen">
+        <div class="login-box">
             <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" alt="Kendence" class="h-16 mx-auto mb-6">
-            <h1 class="text-xl font-black text-center mb-6 text-kendence-dark-blue uppercase">Acesso Administrativo</h1>
+            <h1 class="text-xl font-black text-center mb-6 text-kendence-dark-blue uppercase tracking-tight">Acesso Administrativo</h1>
             <form id="login-form">
                 <input type="email" id="email" class="login-input" placeholder="E-mail" required>
                 <input type="password" id="password" class="login-input" placeholder="Senha" required>
@@ -59,20 +61,20 @@
         </div>
     </div>
     
-    <div id="admin-panel" class="hidden pb-20"> 
+    <div id="admin-panel" class="hidden"> 
         <header class="admin-header shadow-lg">
             <div class="container mx-auto px-6 flex justify-between items-center">
                 <div class="flex items-center space-x-3">
                     <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" class="h-10">
-                    <span class="font-black uppercase tracking-tighter">Admin - Kendence F.C.</span>
+                    <span class="font-black uppercase tracking-tighter">Kendence F.C. Admin</span>
                 </div>
-                <button onclick="logout()" class="btn bg-white text-kendence-red">Sair</button>
+                <button onclick="logout()" class="btn bg-white text-kendence-red hover:bg-gray-100">Sair</button>
             </div>
         </header>
 
-        <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-1">
-                <div class="form-section mb-6">
+        <main class="container mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-1 space-y-6">
+                <div class="form-section">
                     <h2 class="text-sm font-black uppercase text-kendence-blue mb-4">Navegação</h2>
                     <select id="section-select" class="form-input font-bold" onchange="showForm(this.value)">
                         <option value="upcomingGames">Próximos Jogos</option>
@@ -106,7 +108,7 @@
                             <input type="text" id="upcomingGames-location" placeholder="Nome do Campo" class="form-input" required>
                             <input type="url" id="upcomingGames-mapLink" placeholder="Link do Google Maps" class="form-input" required>
                             <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
-                            <button type="button" onclick="clearForm('upcomingGames')" class="btn btn-secondary">Limpar</button>
+                            <button type="button" onclick="clearForm('upcomingGames')" class="btn btn-secondary ml-2">Limpar</button>
                         </form>
                     </div>
 
@@ -122,7 +124,7 @@
                             <input type="text" id="recentResults-location" placeholder="Nome do Campo" class="form-input" required>
                             <input type="url" id="recentResults-videoLink" placeholder="Link para Fotos/Vídeos" class="form-input" required>
                             <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
-                            <button type="button" onclick="clearForm('recentResults')" class="btn btn-secondary">Limpar</button>
+                            <button type="button" onclick="clearForm('recentResults')" class="btn btn-secondary ml-2">Limpar</button>
                         </form>
                     </div>
 
@@ -134,11 +136,11 @@
                             <input type="text" id="news-title" placeholder="Título da Notícia" class="form-input" required>
                             <div class="url-input-container">
                                 <span class="url-base" id="news-baseUrl">https://lh3.googleusercontent.com/d/</span>
-                                <input type="text" id="news-image-final" class="p-2 w-full outline-none" placeholder="cole o final da URL aqui" required>
+                                <input type="text" id="news-image-final" class="p-2 w-full outline-none" placeholder="final da URL" required>
                             </div>
                             <textarea id="news-text" class="form-input h-32" placeholder="Texto da Notícia" required></textarea>
                             <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
-                            <button type="button" onclick="clearForm('news')" class="btn btn-secondary">Limpar</button>
+                            <button type="button" onclick="clearForm('news')" class="btn btn-secondary ml-2">Limpar</button>
                         </form>
                     </div>
 
@@ -168,9 +170,9 @@
                             </select>
                             <input type="url" id="players-image" placeholder="Link da Foto (URL)" class="form-input">
                             <input type="url" id="players-instagram" placeholder="Link do Instagram" class="form-input">
-                            <textarea id="players-description" class="form-input h-24" placeholder="Descrição (Apelido, Camisa, Idade, etc.)"></textarea>
+                            <textarea id="players-description" class="form-input h-24" placeholder="Descrição (Apelido, Camisa, etc.)"></textarea>
                             <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
-                            <button type="button" onclick="clearForm('players')" class="btn btn-secondary">Limpar</button>
+                            <button type="button" onclick="clearForm('players')" class="btn btn-secondary ml-2">Limpar</button>
                         </form>
                     </div>
 
@@ -181,21 +183,29 @@
                             <input type="text" id="sponsors-name" placeholder="Nome do Patrocinador" class="form-input" required>
                             <div class="url-input-container">
                                 <span class="url-base" id="sponsors-baseUrl">https://lh3.googleusercontent.com/d/</span>
-                                <input type="text" id="sponsors-image-final" class="p-2 w-full outline-none" placeholder="cole o final da URL aqui" required>
+                                <input type="text" id="sponsors-image-final" class="p-2 w-full outline-none" placeholder="final da URL" required>
                             </div>
                             <input type="text" id="sponsors-phone" placeholder="Telefone (ex: 43 99999-9999)" class="form-input">
                             <input type="text" id="sponsors-address" placeholder="Endereço" class="form-input">
                             <input type="url" id="sponsors-instagram" placeholder="Link do Patrocinador" class="form-input" required>
                             <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
-                            <button type="button" onclick="clearForm('sponsors')" class="btn btn-secondary">Limpar</button>
+                            <button type="button" onclick="clearForm('sponsors')" class="btn btn-secondary ml-2">Limpar</button>
                         </form>
                     </div>
                 </div>
 
-                <h2 class="text-xl font-black text-kendence-dark-blue uppercase mt-8 mb-4">Dados Atuais</h2>
-                <div id="data-display" class="p-4"></div>
+                <h2 class="text-xl font-black text-kendence-dark-blue uppercase mt-10 mb-4 flex items-center">
+                    <span class="bg-kendence-red w-2 h-6 mr-3"></span> Dados Atuais
+                </h2>
+                <div id="data-display" class="p-4 shadow-inner"></div>
             </div>
-        </div>
+        </main>
+
+        <footer>
+            <div class="container mx-auto px-4">
+                © 2025 Kendence F.C. Todos os direitos reservados. Design por An.Yoshi.
+            </div>
+        </footer>
     </div>
 
     <script type="module">
@@ -226,6 +236,7 @@
 
         let currentSection = 'upcomingGames';
 
+        // LOGIN
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
@@ -251,6 +262,7 @@
 
         window.logout = () => signOut(auth);
 
+        // NAVEGAÇÃO
         window.showForm = (name) => {
             currentSection = name;
             Object.keys(sections).forEach(k => document.getElementById(`form-${k}`).classList.add('hidden'));
@@ -268,6 +280,7 @@
             if (submitBtn) submitBtn.textContent = 'Adicionar / Salvar';
         };
 
+        // CARREGAR DADOS
         window.loadData = (name) => {
             const display = document.getElementById('data-display');
             onValue(ref(database, sections[name].dbRef), (snapshot) => {
@@ -276,23 +289,25 @@
                     Object.entries(snapshot.val()).forEach(([key, val]) => {
                         const item = document.createElement('div');
                         item.className = 'flex justify-between items-center p-3 border-b hover:bg-gray-50';
-                        item.innerHTML = `<span class="font-medium text-sm">${val[sections[name].titleField]}</span>
+                        item.innerHTML = `<span class="font-medium text-sm text-kendence-dark-blue">${val[sections[name].titleField]}</span>
                             <div>
-                                <button onclick="editItem('${key}')" class="text-blue-600 mr-3 text-xs font-bold uppercase">Editar</button>
-                                <button onclick="deleteItem('${key}')" class="text-red-600 text-xs font-bold uppercase">Excluir</button>
+                                <button onclick="editItem('${key}')" class="text-kendence-blue mr-4 text-xs font-bold uppercase hover:underline">Editar</button>
+                                <button onclick="deleteItem('${key}')" class="text-kendence-red text-xs font-bold uppercase hover:underline">Excluir</button>
                             </div>`;
                         display.appendChild(item);
                     });
                 } else {
-                    display.innerHTML = '<p class="text-gray-400 text-sm py-4">Nenhum dado encontrado.</p>';
+                    display.innerHTML = '<p class="text-gray-400 text-sm py-4 text-center italic">Nenhum dado encontrado.</p>';
                 }
             });
         };
 
+        // SALVAR DADOS
         async function handleFormSubmit(e) {
             e.preventDefault();
             const form = e.target;
-            const id = form.querySelector(`[id$="-id"]`).value;
+            const idInput = form.querySelector(`[id$="-id"]`);
+            const id = idInput ? idInput.value : '';
             const data = {};
             
             for (const el of form.elements) {
@@ -301,6 +316,7 @@
                 }
             }
 
+            // TRATAR DATAS
             if (currentSection === 'upcomingGames' || currentSection === 'recentResults') {
                 if (data.date && data.time) {
                     const combined = new Date(`${data.date}T${data.time}:00`);
@@ -318,15 +334,18 @@
             }
 
             const path = id ? `${sections[currentSection].dbRef}/${id}` : sections[currentSection].dbRef;
-            if (id) {
-                await set(ref(database, path), data);
-            } else {
-                await push(ref(database, path), data);
-            }
-            clearForm(currentSection);
-            alert("Sucesso!");
+            try {
+                if (id) {
+                    await set(ref(database, path), data);
+                } else {
+                    await push(ref(database, path), data);
+                }
+                clearForm(currentSection);
+                alert("Salvo com sucesso!");
+            } catch (err) { alert("Erro ao salvar: " + err.message); }
         }
 
+        // EDITAR
         window.editItem = (key) => {
             const section = sections[currentSection];
             get(ref(database, `${section.dbRef}/${key}`)).then(snap => {
@@ -357,15 +376,14 @@
             });
         };
 
-        window.deleteItem = (key) => { if(confirm("Excluir?")) remove(ref(database, `${sections[currentSection].dbRef}/${key}`)); };
+        window.deleteItem = (key) => { if(confirm("Excluir este item permanentemente?")) remove(ref(database, `${sections[currentSection].dbRef}/${key}`)); };
 
         function setupFormNames() {
             Object.keys(sections).forEach(sec => {
                 const f = document.getElementById(sections[sec].formId);
                 Array.from(f.elements).forEach(el => {
                     if (el.id && !el.name && el.type !== 'hidden') {
-                        let n = el.id.replace(`${sec}-`, '').replace('-input', '');
-                        el.name = n;
+                        el.name = el.id.replace(`${sec}-`, '').replace('-input', '');
                     }
                 });
             });
@@ -373,6 +391,7 @@
 
         Object.keys(sections).forEach(k => document.getElementById(sections[k].formId).addEventListener('submit', handleFormSubmit));
 
+        // BACKUP
         window.backupData = async () => {
             const snap = await get(ref(database));
             const blob = new Blob([JSON.stringify(snap.val(), null, 2)], {type: 'application/json'});
@@ -387,9 +406,9 @@
             const file = e.target.files[0];
             const reader = new FileReader();
             reader.onload = async (ev) => {
-                if(confirm("Substituir tudo?")) {
+                if(confirm("Substituir TODOS os dados atuais por este backup?")) {
                     await set(ref(database), JSON.parse(ev.target.result));
-                    alert("Concluído!");
+                    alert("Dados restaurados com sucesso!");
                     loadData(currentSection);
                 }
             };
@@ -398,4 +417,3 @@
     </script>
 </body>
 </html>
-
