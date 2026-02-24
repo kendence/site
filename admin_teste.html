@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Kendence F.C.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="icon" href="favicon.png" type="https://i.postimg.cc/Twzwm9Bh/favicon.png">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        'kendence-red': '#D31F37',
+                        'kendence-blue': '#1F3A79',
+                        'kendence-dark-blue': '#162B58',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { background-color: #f0f2f5; color: #1a202c; font-family: 'Inter', sans-serif; }
+        
+        /* --- LOGIN SCREEN --- */
+        #login-screen { background-color: #162B58; }
+        .login-box { background-color: white; padding: 2.5rem; border-radius: 0.75rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2); }
+        .login-input { background-color: #f8fafc; border: 1px solid #e2e8f0; color: #1a202c; border-radius: 0.5rem; padding: 0.75rem 1rem; }
+        .login-input:focus { border-color: #D31F37; outline: none; ring: 2px ring-kendence-red; }
+        
+        /* --- ADMIN PANEL --- */
+        .admin-header { background-color: #D31F37; color: white; }
+        .form-section { background-color: white; padding: 2rem; border-radius: 0.5rem; border-top: 4px solid #D31F37; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .form-input { background-color: #ffffff; border: 1px solid #cbd5e1; color: #1a202c; border-radius: 0.375rem; }
+        .form-input:focus { border-color: #1F3A79; outline: none; }
+        
+        .btn { padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; transition: all 0.2s; }
+        .btn-primary { background-color: #1F3A79; color: white; }
+        .btn-primary:hover { background-color: #162B58; }
+        .btn-danger { background-color: #D31F37; color: white; }
+        .btn-danger:hover { background-color: #b01a2d; }
+        .btn-secondary { background-color: #64748b; color: white; }
+        .btn-success { background-color: #10b981; color: white; }
+
+        #data-display { background-color: white; border-radius: 0.5rem; border: 1px solid #e2e8f0; }
+        .data-item { border-bottom: 1px solid #f1f5f9; transition: background 0.2s; }
+        .data-item:hover { background-color: #f8fafc; }
+
+        .url-input-container { display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 0.375rem; background-color: #f8fafc; overflow: hidden; }
+        .url-base { background-color: #e2e8f0; padding: 0.5rem; font-size: 0.75rem; color: #475569; border-right: 1px solid #cbd5e1; }
+    </style>
+</head>
+<body class="font-sans">
+
+    <div id="login-screen" class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="login-box w-full max-w-sm">
+            <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" alt="Kendence F.C." class="h-20 mx-auto mb-6">
+            <h1 class="text-2xl font-black text-center mb-6 text-kendence-dark-blue uppercase tracking-tight">Painel Admin</h1>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">E-mail</label>
+                    <input type="email" id="email" class="login-input w-full" placeholder="admin@kendence.com" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Senha</label>
+                    <input type="password" id="password" class="login-input w-full" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-full py-3">Acessar Sistema</button>
+                <p id="login-error" class="text-red-600 text-xs mt-3 text-center hidden font-bold"></p> 
+            </form>
+        </div>
+    </div>
+    
+    <div id="admin-panel" class="hidden pb-12"> 
+        <header class="admin-header shadow-md mb-8">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" alt="Brasão" class="h-10">
+                    <span class="font-black uppercase tracking-wider text-lg">Kendence F.C. <span class="font-light opacity-75">| Admin</span></span>
+                </div>
+                <button onclick="logout()" class="btn bg-white text-kendence-red hover:bg-gray-100 py-2 px-4">Sair</button>
+            </div>
+        </header>
+
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <div class="lg:col-span-1 space-y-6">
+                    <div class="form-section">
+                        <h2 class="text-lg font-black text-kendence-dark-blue uppercase mb-4">Gerenciamento</h2>
+                        <label class="block mb-2 text-xs font-bold text-gray-400 uppercase">Selecione a Categoria:</label>
+                        <select id="section-select" class="form-input w-full p-3 font-bold text-kendence-blue" onchange="showForm(this.value)">
+                            <option value="upcomingGames">Próximos Jogos</option>
+                            <option value="recentResults">Resultados Recentes</option>
+                            <option value="news">Notícias</option>
+                            <option value="players">Jogadores</option>
+                            <option value="sponsors">Patrocinadores</option>
+                        </select>
+                    </div>
+
+                    <div class="form-section bg-kendence-dark-blue text-white border-none">
+                        <h2 class="text-lg font-black uppercase mb-2">Sistema</h2>
+                        <p class="text-xs opacity-70 mb-4">Mantenha seus dados seguros fazendo backups regulares.</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="backupData()" class="btn btn-success text-[10px]">Backup</button>
+                            <button onclick="triggerRestore()" class="btn btn-danger text-[10px]">Restaurar</button>
+                        </div>
+                        <input type="file" id="restore-file-input" class="hidden" accept=".json" onchange="restoreData(event)">
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2">
+                    <div id="forms-container">
+                        <div id="form-upcomingGames" class="form-section">
+                            <h2 class="text-xl font-black text-kendence-dark-blue uppercase mb-6">Próximos Jogos</h2>
+                            <form id="upcomingGames-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input type="hidden" id="upcomingGames-id">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Data</label>
+                                    <input type="date" id="upcomingGames-date-input" class="form-input p-2 w-full" required>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Hora</label>
+                                    <input type="time" id="upcomingGames-time-input" class="form-input p-2 w-full" required>
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Confronto</label>
+                                    <input type="text" id="upcomingGames-teams" placeholder="Ex: Kendence vs. Time B" class="form-input p-2 w-full" required>
+                                </div>
+                                <input type="text" id="upcomingGames-location" placeholder="Nome do Campo" class="form-input p-2" required>
+                                <input type="url" id="upcomingGames-mapLink" placeholder="Link do Google Maps" class="form-input p-2" required>
+                                <div class="col-span-2 flex space-x-2 pt-4">
+                                    <button type="submit" class="btn btn-primary">Salvar Jogo</button>
+                                    <button type="button" onclick="clearForm('upcomingGames')" class="btn btn-secondary">Limpar</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="form-news" class="form-section hidden">
+                            <h2 class="text-xl font-black text-kendence-dark-blue uppercase mb-6">Notícias</h2>
+                            <form id="news-form" class="grid grid-cols-1 gap-4">
+                                <input type="hidden" id="news-id">
+                                <input type="date" id="news-date" class="form-input p-2" required>
+                                <input type="text" id="news-title" placeholder="Título da Notícia" class="form-input p-2" required>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Final da URL da Imagem</label>
+                                    <div class="url-input-container">
+                                        <span class="url-base" id="news-baseUrl">https://lh3.googleusercontent.com/d/</span>
+                                        <input type="text" id="news-image-final" class="url-final-input p-2 w-full outline-none text-sm" placeholder="Ex: abcde123" required>
+                                    </div>
+                                </div>
+                                <textarea id="news-text" placeholder="Conteúdo da notícia..." rows="5" class="form-input p-2" required></textarea>
+                                <div class="flex space-x-2">
+                                    <button type="submit" class="btn btn-primary">Publicar</button>
+                                    <button type="button" onclick="clearForm('news')" class="btn btn-secondary">Limpar</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        </div>
+
+                    <h2 class="text-xl font-black text-kendence-dark-blue uppercase mt-12 mb-4 flex items-center">
+                        <span class="bg-kendence-red w-2 h-6 mr-3"></span>
+                        Itens Cadastrados
+                    </h2>
+                    <div id="data-display" class="overflow-hidden">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+</html>
