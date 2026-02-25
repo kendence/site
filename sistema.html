@@ -598,7 +598,7 @@
 
         window.abrirFichaComissao = function(id) {
             const i = getDados(KEYS.COMISSAO).find(x => x.id === id); if(!i) return;
-            document.getElementById('conteudoFicha').innerHTML = `<div class="ficha-header"><div class="ficha-foto">${i.foto ? `<img src="${i.foto}" style="width:100%; height:100%; object-fit:cover; border-radius: 0.3rem;">` : 'SEM FOTO'}</div><div class="ficha-dados"><h2>${i.nome}</h2><h3 style="color: var(--kendence-blue); font-style: normal;">${i.cargo}</h3><p><strong>Status:</strong> ${i.status}</p><p><strong>Membro Desde:</strong> ${formatarData(i.entrada)}</p></div></div><div class="ficha-grid"><div class="ficha-section"><h4>Dados Pessoais</h4><p><strong>CPF:</strong> ${i.cpf || '-'}</p><p><strong>Telefone:</strong> ${i.telefone || '-'}</p><p><strong>WhatsApp:</strong> ${i.whatsapp || '-'}</p></div><div class="ficha-section"><h4>Administrativo</h4><p><strong>Remuneração:</strong> ${i.salario ? 'R$ ' + i.salario : 'Não informado'}</p><p><strong>Observações:</strong><br> ${i.obs || 'Nenhum registro.'}</p></div></div>`;
+            document.getElementById('conteudoFicha').innerHTML = `<div class="ficha-header"><div class="ficha-foto">${i.foto ? `<img src="${i.foto}" style="width:100%; height:100%; object-fit:cover; border-radius: 0.3rem;">` : 'SEM FOTO'}</div><div class="ficha-dados"><h2>${i.nome}</h2><h3 style="color: var(--kendence-blue); font-style: normal;">${i.cargo}</h3><p><strong>Status:</strong> ${i.status}</p><p><strong>Membro Desde:</strong> ${formatarData(i.entrada)}</p></div></div><div class="ficha-grid"><div class="ficha-section"><h4>Dados Pessoais</h4><p><strong>CPF:</strong> ${i.cpf || '-'}</p><p><strong>Endereço:</strong> ${i.telefone || '-'}</p><p><strong>WhatsApp:</strong> ${i.whatsapp || '-'}</p></div><div class="ficha-section"><h4>Administrativo</h4><p><strong>Remuneração:</strong> ${i.salario ? 'R$ ' + i.salario : 'Não informado'}</p><p><strong>Observações:</strong><br> ${i.obs || 'Nenhum registro.'}</p></div></div>`;
             document.getElementById('modalFicha').style.display = 'block';
         }
 
@@ -727,5 +727,6 @@
 </body>
 
 </html>
+
 
 
