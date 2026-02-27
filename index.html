@@ -446,44 +446,42 @@
         };
         
         const renderHomeGames = () => {
-            const container = document.getElementById('home-games-list');
-            const upcoming = Object.values(dbData.upcomingGames).sort((a,b) => new Date(a.date) - new Date(b.date));
-            const recent = Object.values(dbData.recentResults).sort((a,b) => new Date(b.date) - new Date(a.date));
-            
-            let htmlContent = upcoming.map(g => {
-                const teams = (g.teams && typeof g.teams === 'string') ? g.teams.split('vs') : [];
-                const teamA = (teams[0] || 'A definir').trim();
-                const teamB = (teams[1] || 'A definir').trim();
-                return `<div class="flex-shrink-0 w-64 bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between">
-                            <div>
-                                <p class="text-xs font-bold text-kendence-blue">${formatDateTime(g.date)}</p>
-                                <p class="font-bold text-center my-2">${teamA} <span class="font-normal">vs</span> ${teamB}</p>
-                                <p class="text-xs text-gray-600 text-center truncate"><i class="fas fa-map-marker-alt mr-1"></i>${g.location || 'Local a definir'}</p>
-                            </div>
-                            <a href="${g.mapLink || '#'}" target="_blank" class="mt-4 w-full text-center bg-yellow-400 text-black font-bold py-2 px-2 rounded-lg text-sm hover:bg-yellow-500">
-                                Ver no Mapa
-                            </a>
-                        </div>`;
-            }).join('');
-
-            htmlContent += recent.map(g => `
-                <div class="flex-shrink-0 w-64 bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between text-center">
+    const container = document.getElementById('home-games-list');
+    const upcoming = Object.values(dbData.upcomingGames || {}).sort((a,b) => new Date(a.date) - new Date(b.date));
+    const recent = Object.values(dbData.recentResults || {}).sort((a,b) => new Date(b.date) - new Date(a.date));
+    
+    let htmlContent = upcoming.map(g => {
+        const teams = (g.teams && typeof g.teams === 'string') ? g.teams.split('vs') : [];
+        const teamA = (teams[0] || 'A definir').trim();
+        const teamB = (teams[1] || 'A definir').trim();
+        return `<div class="flex-shrink-0 w-64 bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between">
                     <div>
-                        <p class="text-xs font-bold text-kendence-dark-blue">FIM DE JOGO - ${formatDateTime(g.date, false)}</p>
-                        <p class="text-xl font-bold my-2">${g.match || 'Resultado indisponível'}</p>
-                        <p class="text-xs text-gray-600 truncate"><i class="fas fa-map-marker-alt mr-1"></i>${g.location || 'Local não informado'}</p>
+                        <p class="text-[10px] font-black text-kendence-red uppercase mb-1">${g.competition || 'Amistoso'}</p>
+                        <p class="text-xs font-bold text-kendence-blue">${formatDateTime(g.date)}</p>
+                        <p class="font-bold text-center my-2">${teamA} <span class="font-normal">vs</span> ${teamB}</p>
+                        <p class="text-xs text-gray-600 text-center truncate"><i class="fas fa-map-marker-alt mr-1"></i>${g.location || 'Local a definir'}</p>
                     </div>
-                    <a href="${g.videoLink || '#'}" target="_blank" class="mt-4 w-full text-center bg-kendence-red text-white font-bold py-2 px-2 rounded-lg text-sm hover:bg-red-700">
-                        Ver Mídia
+                    <a href="${g.mapLink || '#'}" target="_blank" class="mt-4 w-full text-center bg-yellow-400 text-black font-bold py-2 px-2 rounded-lg text-sm hover:bg-yellow-500">
+                        Ver no Mapa
                     </a>
-                </div>`).join('');
-            
-            if (htmlContent.trim()) {
-                 container.innerHTML = htmlContent;
-            } else {
-                 container.innerHTML = '<p class="text-gray-500">Nenhum jogo para exibir.</p>';
-            }
-        };
+                </div>`;
+    }).join('');
+
+    htmlContent += recent.map(g => `
+        <div class="flex-shrink-0 w-64 bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between text-center">
+            <div>
+                <p class="text-[10px] font-black text-kendence-red uppercase mb-1">${g.competition || 'Amistoso'}</p>
+                <p class="text-xs font-bold text-kendence-dark-blue">FIM DE JOGO - ${formatDateTime(g.date, false)}</p>
+                <p class="text-xl font-bold my-2">${g.match || 'Resultado indisponível'}</p>
+                <p class="text-xs text-gray-600 truncate"><i class="fas fa-map-marker-alt mr-1"></i>${g.location || 'Local não informado'}</p>
+            </div>
+            <a href="${g.videoLink || '#'}" target="_blank" class="mt-4 w-full text-center bg-kendence-red text-white font-bold py-2 px-2 rounded-lg text-sm hover:bg-red-700">
+                Ver Mídia
+            </a>
+        </div>`).join('');
+    
+    container.innerHTML = htmlContent.trim() ? htmlContent : '<p class="text-gray-500">Nenhum jogo para exibir.</p>';
+};
 
         const renderAllNews = (filter = '') => {
             const container = document.getElementById('news-list-container');
@@ -518,51 +516,53 @@
                 </div>`).join('');
         };
         
-        const renderGamesPage = () => {
-            const container = document.getElementById('games-page-container');
-            const upcoming = Object.values(dbData.upcomingGames).sort((a, b) => new Date(a.date) - new Date(b.date));
-            const recent = Object.values(dbData.recentResults).sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            let htmlContent = '<h2 class="text-2xl font-black text-kendence-dark-blue uppercase mb-4">Próximos Jogos</h2>';
-            
-            if (upcoming.length > 0) {
-                htmlContent += upcoming.map(g => {
-                    const teams = (g.teams && typeof g.teams === 'string') ? g.teams.split('vs') : [];
-                    const teamA = (teams[0] || 'A definir').trim();
-                    const teamB = (teams[1] || 'A definir').trim();
-                    return `
-                    <div class="bg-white shadow-lg p-4 mb-4 flex items-center justify-between">
-                        <div>
-                            <p class="text-sm text-gray-500">${formatDateTime(g.date)}</p>
-                            <p class="font-bold text-lg">${teamA} vs ${teamB}</p>
-                            <p class="text-sm text-gray-600">${g.location || 'Local a definir'}</p>
-                        </div>
-                        <a href="${g.mapLink || '#'}" target="_blank" class="bg-yellow-400 text-black font-bold text-xs uppercase px-4 py-2 rounded hover:bg-yellow-500">Ver Mapa</a>
-                    </div>`;
-                }).join('');
-            } else {
-                htmlContent += '<p class="text-gray-500 mb-8">Nenhum jogo agendado.</p>';
-            }
+const renderGamesPage = () => {
+    const container = document.getElementById('games-page-container');
+    const upcoming = Object.values(dbData.upcomingGames || {}).sort((a, b) => new Date(a.date) - new Date(b.date));
+    const recent = Object.values(dbData.recentResults || {}).sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    let htmlContent = '<h2 class="text-2xl font-black text-kendence-dark-blue uppercase mb-4">Próximos Jogos</h2>';
+    
+    if (upcoming.length > 0) {
+        htmlContent += upcoming.map(g => {
+            const teams = (g.teams && typeof g.teams === 'string') ? g.teams.split('vs') : [];
+            const teamA = (teams[0] || 'A definir').trim();
+            const teamB = (teams[1] || 'A definir').trim();
+            return `
+            <div class="bg-white shadow-lg p-4 mb-4 flex items-center justify-between border-l-4 border-kendence-red">
+                <div>
+                    <p class="text-[10px] font-black text-kendence-red uppercase">${g.competition || 'Amistoso'}</p>
+                    <p class="text-sm text-gray-500">${formatDateTime(g.date)}</p>
+                    <p class="font-bold text-lg">${teamA} vs ${teamB}</p>
+                    <p class="text-sm text-gray-600">${g.location || 'Local a definir'}</p>
+                </div>
+                <a href="${g.mapLink || '#'}" target="_blank" class="bg-yellow-400 text-black font-bold text-xs uppercase px-4 py-2 rounded hover:bg-yellow-500">Ver Mapa</a>
+            </div>`;
+        }).join('');
+    } else {
+        htmlContent += '<p class="text-gray-500 mb-8">Nenhum jogo agendado.</p>';
+    }
 
-            htmlContent += '<h2 class="text-2xl font-black text-kendence-dark-blue uppercase mb-4 mt-8">Resultados Recentes</h2>';
+    htmlContent += '<h2 class="text-2xl font-black text-kendence-dark-blue uppercase mb-4 mt-8">Resultados Recentes</h2>';
 
-            if (recent.length > 0) {
-                htmlContent += recent.map(g => `
-                    <div class="bg-white shadow-lg p-4 mb-4 flex items-center justify-between">
-                        <div>
-                            <p class="text-sm text-gray-500">${formatDateTime(g.date, false)}</p>
-                            <p class="font-bold text-lg">${g.match || 'Resultado indisponível'}</p>
-                            <p class="text-sm text-gray-600">${g.location || 'Local não informado'}</p>
-                        </div>
-                        <a href="${g.videoLink || '#'}" target="_blank" class="bg-kendence-red text-white font-bold text-xs uppercase px-4 py-2 rounded hover:bg-red-700">Ver Mídia</a>
-                    </div>
-                `).join('');
-            } else {
-                htmlContent += '<p class="text-gray-500">Nenhum resultado recente.</p>';
-            }
+    if (recent.length > 0) {
+        htmlContent += recent.map(g => `
+            <div class="bg-white shadow-lg p-4 mb-4 flex items-center justify-between border-l-4 border-gray-400">
+                <div>
+                    <p class="text-[10px] font-black text-kendence-red uppercase">${g.competition || 'Amistoso'}</p>
+                    <p class="text-sm text-gray-500">${formatDateTime(g.date, false)}</p>
+                    <p class="font-bold text-lg">${g.match || 'Resultado indisponível'}</p>
+                    <p class="text-sm text-gray-600">${g.location || 'Local não informado'}</p>
+                </div>
+                <a href="${g.videoLink || '#'}" target="_blank" class="bg-kendence-red text-white font-bold text-xs uppercase px-4 py-2 rounded hover:bg-red-700">Ver Mídia</a>
+            </div>
+        `).join('');
+    } else {
+        htmlContent += '<p class="text-gray-500">Nenhum resultado recente.</p>';
+    }
 
-            container.innerHTML = htmlContent;
-        };
+    container.innerHTML = htmlContent;
+};
 
         const renderSponsorsPage = () => {
              const container = document.getElementById('sponsors-grid-container');
