@@ -99,7 +99,7 @@
     <form id="upcomingGames-form">
         <input type="hidden" id="upcomingGames-id">
         <!-- NOVO CAMPO ABAIXO -->
-        <input type="text" id="upcomingGames-competition" placeholder="Nome do Campeonato (ex: Copa Puro Sangue)" class="form-input">
+        <textarea id="upcomingGames-competition" placeholder="Nome do Campeonato (Pode pular linha)" class="form-input h-16"></textarea>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div><label class="block text-xs font-bold text-gray-400 mb-1">Data</label><input type="date" id="upcomingGames-date-input" class="form-input" required></div>
@@ -118,7 +118,7 @@
     <form id="recentResults-form">
         <input type="hidden" id="recentResults-id">
         <!-- NOVO CAMPO ABAIXO -->
-        <input type="text" id="recentResults-competition" placeholder="Nome do Campeonato (ex: Copa Puro Sangue)" class="form-input">
+        <textarea id="recentResults-competition" placeholder="Nome do Campeonato (Pode pular linha)" class="form-input h-16"></textarea>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div><label class="block text-xs font-bold text-gray-400 mb-1">Data</label><input type="date" id="recentResults-date-input" class="form-input" required></div>
@@ -404,3 +404,4 @@
     </script>
 </body>
 </html>
+
