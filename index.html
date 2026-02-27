@@ -469,7 +469,7 @@
             htmlContent += recent.map(g => `
                 <div class="flex-shrink-0 w-64 bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between text-center">
                     <div>
-                        <p class="text-xs font-bold text-kendence-dark-blue">FINAL - ${formatDateTime(g.date, false)}</p>
+                        <p class="text-xs font-bold text-kendence-dark-blue">FIM DE JOGO - ${formatDateTime(g.date, false)}</p>
                         <p class="text-xl font-bold my-2">${g.match || 'Resultado indisponível'}</p>
                         <p class="text-xs text-gray-600 truncate"><i class="fas fa-map-marker-alt mr-1"></i>${g.location || 'Local não informado'}</p>
                     </div>
@@ -739,4 +739,5 @@
     </script>
 </body>
 </html>
+
 
