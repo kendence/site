@@ -127,6 +127,16 @@
         <input type="text" id="recentResults-match" placeholder="Resultado (ex: Kendence 3 x 2 Time B)" class="form-input" required>
         <input type="text" id="recentResults-location" placeholder="Nome do Campo" class="form-input" required>
         <input type="url" id="recentResults-videoLink" placeholder="Link para Fotos/Vídeos" class="form-input" required>
+<div class="grid grid-cols-2 gap-4 mb-2">
+    <div>
+        <label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase">Ocorrências Kendence</label>
+        <textarea id="recentResults-occurrencesA" placeholder="Gols: Atleta X (2), Atleta Y" class="form-input text-xs h-16"></textarea>
+    </div>
+    <div>
+        <label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase">Ocorrências Adversário</label>
+        <textarea id="recentResults-occurrencesB" placeholder="Cartão Amarelo: Jogador Z" class="form-input text-xs h-16"></textarea>
+    </div>
+</div>
         <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
         <button type="button" onclick="clearForm('recentResults')" class="btn btn-secondary">Limpar</button>
     </form>
@@ -404,4 +414,3 @@
     </script>
 </body>
 </html>
-
