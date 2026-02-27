@@ -95,36 +95,42 @@
                 <div id="forms-container">
                     
                     <div id="form-upcomingGames" class="form-section">
-                        <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Gerenciar Próximos Jogos</h2>
-                        <form id="upcomingGames-form">
-                            <input type="hidden" id="upcomingGames-id">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div><label class="block text-xs font-bold text-gray-400 mb-1">Data</label><input type="date" id="upcomingGames-date-input" class="form-input" required></div>
-                                <div><label class="block text-xs font-bold text-gray-400 mb-1">Hora</label><input type="time" id="upcomingGames-time-input" class="form-input" required></div>
-                            </div>
-                            <input type="text" id="upcomingGames-teams" placeholder="Times (ex: Kendence vs. Time B)" class="form-input" required>
-                            <input type="text" id="upcomingGames-location" placeholder="Nome do Campo" class="form-input" required>
-                            <input type="url" id="upcomingGames-mapLink" placeholder="Link do Google Maps" class="form-input" required>
-                            <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
-                            <button type="button" onclick="clearForm('upcomingGames')" class="btn btn-secondary">Limpar</button>
-                        </form>
-                    </div>
+    <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Gerenciar Próximos Jogos</h2>
+    <form id="upcomingGames-form">
+        <input type="hidden" id="upcomingGames-id">
+        <!-- NOVO CAMPO ABAIXO -->
+        <input type="text" id="upcomingGames-competition" placeholder="Nome do Campeonato (ex: Copa Puro Sangue)" class="form-input">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div><label class="block text-xs font-bold text-gray-400 mb-1">Data</label><input type="date" id="upcomingGames-date-input" class="form-input" required></div>
+            <div><label class="block text-xs font-bold text-gray-400 mb-1">Hora</label><input type="time" id="upcomingGames-time-input" class="form-input" required></div>
+        </div>
+        <input type="text" id="upcomingGames-teams" placeholder="Times (ex: Kendence vs. Time B)" class="form-input" required>
+        <input type="text" id="upcomingGames-location" placeholder="Nome do Campo" class="form-input" required>
+        <input type="url" id="upcomingGames-mapLink" placeholder="Link do Google Maps" class="form-input" required>
+        <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
+        <button type="button" onclick="clearForm('upcomingGames')" class="btn btn-secondary">Limpar</button>
+    </form>
+</div>
 
                     <div id="form-recentResults" class="form-section hidden">
-                        <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Gerenciar Resultados</h2>
-                        <form id="recentResults-form">
-                            <input type="hidden" id="recentResults-id">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div><label class="block text-xs font-bold text-gray-400 mb-1">Data</label><input type="date" id="recentResults-date-input" class="form-input" required></div>
-                                <div><label class="block text-xs font-bold text-gray-400 mb-1">Hora</label><input type="time" id="recentResults-time-input" class="form-input" required></div>
-                            </div>
-                            <input type="text" id="recentResults-match" placeholder="Resultado (ex: Kendence 3 x 2 Time B)" class="form-input" required>
-                            <input type="text" id="recentResults-location" placeholder="Nome do Campo" class="form-input" required>
-                            <input type="url" id="recentResults-videoLink" placeholder="Link para Fotos/Vídeos" class="form-input" required>
-                            <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
-                            <button type="button" onclick="clearForm('recentResults')" class="btn btn-secondary">Limpar</button>
-                        </form>
-                    </div>
+    <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Gerenciar Resultados</h2>
+    <form id="recentResults-form">
+        <input type="hidden" id="recentResults-id">
+        <!-- NOVO CAMPO ABAIXO -->
+        <input type="text" id="recentResults-competition" placeholder="Nome do Campeonato (ex: Copa Puro Sangue)" class="form-input">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div><label class="block text-xs font-bold text-gray-400 mb-1">Data</label><input type="date" id="recentResults-date-input" class="form-input" required></div>
+            <div><label class="block text-xs font-bold text-gray-400 mb-1">Hora</label><input type="time" id="recentResults-time-input" class="form-input" required></div>
+        </div>
+        <input type="text" id="recentResults-match" placeholder="Resultado (ex: Kendence 3 x 2 Time B)" class="form-input" required>
+        <input type="text" id="recentResults-location" placeholder="Nome do Campo" class="form-input" required>
+        <input type="url" id="recentResults-videoLink" placeholder="Link para Fotos/Vídeos" class="form-input" required>
+        <button type="submit" class="btn btn-primary">Adicionar / Salvar</button>
+        <button type="button" onclick="clearForm('recentResults')" class="btn btn-secondary">Limpar</button>
+    </form>
+</div>
 
                     <div id="form-news" class="form-section hidden">
                         <h2 class="text-lg font-black uppercase text-kendence-dark-blue mb-4">Gerenciar Notícias</h2>
