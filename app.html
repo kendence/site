@@ -10,7 +10,385 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        body {<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>app-Kendence F.C.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
         body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .screen { display: none; }
+        .screen.active { display: block; }
+        .snap-x { scroll-snap-type: x mandatory; }
+        .snap-center { scroll-snap-align: center; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- TELA DE CARREGAMENTO -->
+    <div id="loading-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/d/18sK3WuyG-9IbMH8kWXiNOewFjIixSAtT');">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div> 
+        <div class="text-center z-10">
+            <img src="https://lh3.googleusercontent.com/d/1c5dDZYwAcdPoD8H-_5pBbkgwISvSG63l" alt="Brasão" class="w-39 h-32 mx-auto animate-pulse">
+            <p class="text-white text-lg font-semibold mt-4">Carregando...</p>
+        </div>
+    </div>
+
+    <div id="app-container" class="max-w-md mx-auto min-h-screen shadow-lg relative pb-16" 
+         style="background-image: url('https://lh3.googleusercontent.com/d/1GQpEIDFVHtlZVkiSm7Li_Ri-G9kXIzMO'); background-size: cover; background-position: center; background-attachment: fixed;"> 
+    
+        <!-- HOME SCREEN -->
+        <div id="home-screen" class="screen active">
+            <div class="w-full">
+                <img src="https://lh3.googleusercontent.com/d/1GXO2ouZOgNklPx7LNCnl2KCqF5gXUvPG" alt="Banner" class="w-full h-auto object-cover">
+            </div>
+
+            <main>
+                <div class="p-4 pb-0">
+                    <h2 class="font-bold text-lg mb-2">Últimas Notícias</h2>
+                </div>
+                
+                <div id="news-banner-scroll" class="overflow-x-auto snap-x flex no-scrollbar w-full"></div>
+
+                <div class="p-4">
+                    <div class="grid grid-cols-2 gap-3 mt-4">
+                        <button onclick="navigateTo('news-screen')" class="bg-white/90 backdrop-blur-sm p-3 rounded-xl flex items-center text-left shadow-sm">
+                            <i class="fa fa-newspaper text-xl text-red-600 mr-3"></i>
+                            <span class="font-semibold text-sm">Notícias</span>
+                        </button>
+                        <button onclick="navigateTo('socials-screen')" class="bg-white/90 backdrop-blur-sm p-3 rounded-xl flex items-center text-left shadow-sm">
+                            <i class="fa fa-hashtag text-xl text-blue-600 mr-3"></i>
+                            <span class="font-semibold text-sm">Redes Sociais</span>
+                        </button>
+                        <button onclick="navigateTo('history-screen')" class="bg-white/90 backdrop-blur-sm p-3 rounded-xl flex items-center text-left shadow-sm">
+                            <i class="fa fa-book-open text-xl text-gray-600 mr-3"></i>
+                            <span class="font-semibold text-sm">História</span>
+                        </button>
+                        <button onclick="navigateTo('sponsors-screen')" class="bg-white/90 backdrop-blur-sm p-3 rounded-xl flex items-center text-left shadow-sm">
+                            <i class="fa fa-handshake text-xl text-yellow-600 mr-3"></i>
+                            <span class="font-semibold text-sm">Patrocínios</span>
+                        </button>
+                        <button onclick="navigateTo('games-screen')" class="bg-white/90 backdrop-blur-sm p-3 rounded-xl flex items-center text-left shadow-sm">
+                            <i class="fa fa-calendar-alt text-xl text-green-600 mr-3"></i>
+                            <span class="font-semibold text-sm">Jogos</span>
+                        </button>
+                        <button onclick="navigateTo('gallery-screen')" class="bg-white/90 backdrop-blur-sm p-3 rounded-xl flex items-center text-left shadow-sm">
+                            <i class="fa fa-images text-xl text-purple-600 mr-3"></i>
+                            <span class="font-semibold text-sm">Galeria</span>
+                        </button>
+                    </div>
+
+                    <section class="mt-8">
+                        <h2 class="font-bold text-lg">Jogadores</h2>
+                        <div id="players-list-home" class="flex overflow-x-auto gap-4 mt-4 no-scrollbar pb-2"></div>
+                    </section>
+                    
+                    <section class="mt-8">
+                        <h2 class="font-bold text-lg">Próximos Jogos</h2>
+                        <div id="upcoming-games-home" class="flex overflow-x-auto gap-4 mt-4 no-scrollbar pb-2"></div>
+                    </section>
+                    
+                    <section class="mt-8">
+                        <h2 class="font-bold text-lg">Resultados Recentes</h2>
+                        <div id="recent-results-home" class="flex overflow-x-auto gap-4 mt-4 no-scrollbar pb-2"></div>
+                    </section>
+                </div>
+            </main>
+            
+            <footer class="p-4 bg-gray-200 text-center text-gray-700 text-xs mt-8">
+                <p class="mb-2 italic">Para agendar jogos ou campeonatos, entre em contato pelo nosso WhatsApp.</p>
+                <p class="font-bold">© 2025 Kendence F.C. • Design por An.Yoshi.</p>
+            </footer>
+        </div>
+
+        <!-- OUTRAS TELAS -->
+        <div id="news-screen" class="screen">
+            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20 shadow-sm">
+                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
+                <h2 class="font-bold text-lg mx-auto text-red-600 uppercase tracking-tighter">Notícias</h2>
+                <div class="w-6"></div>
+            </header>
+            <main class="p-4 space-y-4" id="news-list-content"></main>
+        </div>
+        
+        <div id="news-detail-screen" class="screen">
+             <header class="p-4 border-b flex items-center justify-between sticky top-0 bg-white z-10 shadow-sm">
+                <button onclick="goBack()"><i class="fa fa-arrow-left text-xl"></i></button>
+                <h2 class="font-bold text-lg mx-auto" id="news-detail-title-header">Notícia</h2>
+                <div class="w-6"></div>
+            </header>
+            <main class="p-4" id="news-detail-content"></main>
+        </div>
+
+        <div id="games-screen" class="screen">
+            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20 shadow-sm">
+                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
+                <h2 class="font-bold text-lg mx-auto text-blue-900 uppercase">Calendário</h2>
+                <div class="w-6"></div>
+            </header>
+            <main class="p-4">
+                <section id="upcoming-games-section">
+                    <h3 class="font-black text-gray-400 text-[10px] mb-3 uppercase tracking-[0.2em]">Próximos Compromissos</h3>
+                    <div id="upcoming-games-list" class="space-y-4"></div>
+                </section>
+                <section id="recent-results-section" class="mt-8">
+                    <h3 class="font-black text-gray-400 text-[10px] mb-3 uppercase tracking-[0.2em]">Resultados Anteriores</h3>
+                    <div id="recent-results-list" class="space-y-4"></div>
+                </section>
+            </main>
+        </div>
+
+        <!-- TELAS DE DETALHE GENÉRICAS -->
+        <div id="player-detail-screen" class="screen"><main id="player-detail-content" class="p-4"></main><footer id="player-detail-footer" class="p-4 border-t sticky bottom-0 bg-white"></footer></div>
+        <div id="sponsor-detail-screen" class="screen"><main id="sponsor-detail-content" class="p-4"></main><footer id="sponsor-detail-footer" class="p-4 border-t sticky bottom-0 bg-white"></footer></div>
+        
+        <div id="sponsors-screen" class="screen">
+            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20 shadow-sm">
+                <button onclick="goBack()"><i class="fa fa-arrow-left text-xl"></i></button>
+                <h2 class="font-bold text-lg mx-auto">Parceiros</h2>
+                <div class="w-6"></div>
+            </header>
+            <main class="p-4 grid grid-cols-2 gap-4" id="sponsors-grid"></main>
+        </div>
+
+        <!-- GALERIA (Mantendo a estrutura do seu código original) -->
+        <div id="gallery-screen" class="screen">
+            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20 shadow-sm">
+                <button onclick="goBack()"><i class="fa fa-arrow-left text-xl"></i></button>
+                <h2 class="font-bold text-lg mx-auto uppercase">Galeria</h2>
+                <div class="w-6"></div>
+            </header>
+            <main class="p-4 space-y-4" id="gallery-container-app">
+                <p class="text-center text-gray-400 py-10">Use os links da web para acessar a galeria completa.</p>
+            </main>
+        </div>
+
+        <!-- MODAL -->
+        <div id="image-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 hidden" onclick="closeImageModal()">
+            <img id="modal-image-src" src="" class="max-w-full max-h-full object-contain p-4">
+        </div>
+
+    </div>
+
+    <!-- WHATSAPP -->
+    <a href="https://wa.me/5543998202218" target="_blank" class="fixed bottom-4 right-4 z-30 bg-green-500 text-white rounded-full p-3 shadow-lg"><i class="fa-brands fa-whatsapp text-2xl"></i></a>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAz1fgGgpB7F05-watfO69vi6Mpzgw1uMs",
+            authDomain: "kendencefc-66b8b.firebaseapp.com",
+            projectId: "kendencefc-66b8b",
+            storageBucket: "kendencefc-66b8b.firebasestorage.app",
+            messagingSenderId: "405923587103",
+            appId: "1:405923587103:web:b74f3a37deff2f07bc212a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        let navigationStack = ['home-screen'];
+        let dbData = { news: {}, players: {}, upcomingGames: {}, recentResults: {}, sponsors: {} };
+
+        // NAVEGAÇÃO
+        window.navigateTo = (id) => {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if (navigationStack[navigationStack.length-1] !== id) navigationStack.push(id);
+            window.scrollTo(0,0);
+            if (id === 'news-screen') renderNewsList();
+            if (id === 'games-screen') renderGamesLists();
+            if (id === 'sponsors-screen') renderSponsorsGrid();
+        };
+        window.goBack = () => {
+            if (navigationStack.length > 1) {
+                navigationStack.pop();
+                const last = navigationStack[navigationStack.length-1];
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                document.getElementById(last).classList.add('active');
+            }
+        };
+
+        function formatDateTime(iso, includeTime = true) {
+            if (!iso) return '---';
+            const d = new Date(iso);
+            return d.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: includeTime ? '2-digit' : undefined, minute: includeTime ? '2-digit' : undefined });
+        }
+
+        // --- RENDERIZADORES DE NOTÍCIAS (COM ORDENAÇÃO CORRIGIDA) ---
+        function renderHomeNewsSlider() {
+            const container = document.getElementById('news-banner-scroll');
+            // ORDENAÇÃO: Garante que as datas sejam tratadas como número/data antes de subtrair
+            const items = Object.entries(dbData.news).sort(([,a],[,b]) => new Date(b.date) - new Date(a.date)).slice(0, 5);
+            
+            container.innerHTML = items.map(([key, n]) => `
+                <div class="flex-shrink-0 w-full snap-center cursor-pointer" onclick="showNewsItem('${key}')">
+                    <div class="h-48 bg-cover bg-center relative mx-4 rounded-2xl overflow-hidden shadow-lg" style="background-image: url('${n.image}');">
+                        <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+                            <p class="text-white font-bold text-sm leading-tight line-clamp-2">${n.title}</p>
+                            <p class="text-[9px] text-gray-300 mt-1 uppercase font-bold">${formatDateTime(n.date, false)}</p>
+                        </div>
+                    </div>
+                </div>`).join('');
+        }
+
+        function renderNewsList() {
+            const container = document.getElementById('news-list-content');
+            // ORDENAÇÃO: Mais nova para mais antiga
+            const items = Object.entries(dbData.news).sort(([,a],[,b]) => new Date(b.date) - new Date(a.date));
+            
+            container.innerHTML = items.map(([key, n]) => `
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm flex h-28 border border-gray-100" onclick="showNewsItem('${key}')">
+                    <img src="${n.image}" class="w-28 h-full object-cover">
+                    <div class="p-3 flex flex-col justify-center">
+                        <p class="text-[9px] text-red-600 uppercase font-black mb-1">${formatDateTime(n.date, false)}</p>
+                        <p class="font-bold text-sm line-clamp-2 leading-snug">${n.title}</p>
+                    </div>
+                </div>`).join('');
+        }
+
+        // --- JOGOS E RESULTADOS (COM CAMPEONATO E OCORRÊNCIAS) ---
+        function renderHomeUpcomingGames() {
+            const container = document.getElementById('upcoming-games-home');
+            const games = Object.values(dbData.upcomingGames).sort((a,b) => new Date(a.date) - new Date(b.date));
+            container.innerHTML = games.map(g => `
+                <div class="flex-shrink-0 w-64 border rounded-2xl p-4 bg-white shadow-sm border-l-4 border-red-600">
+                    <p class="text-[9px] font-black text-red-600 uppercase mb-1 whitespace-pre-wrap leading-tight">${g.competition || 'Amistoso'}</p>
+                    <p class="font-bold text-sm truncate">${g.teams}</p>
+                    <p class="text-[11px] text-gray-500 mt-1"><i class="fa fa-calendar-alt mr-1"></i> ${formatDateTime(g.date)}</p>
+                    <a href="${g.mapLink}" target="_blank" class="block w-full text-center bg-yellow-400 text-black font-black py-2 rounded-lg mt-3 text-[10px] uppercase">Como Chegar</a>
+                </div>`).join('');
+        }
+
+        function renderHomeRecentResults() {
+            const container = document.getElementById('recent-results-home');
+            const results = Object.values(dbData.recentResults).sort((a,b) => new Date(b.date) - new Date(a.date));
+            container.innerHTML = results.map(g => `
+                <div class="flex-shrink-0 w-64 border rounded-2xl p-4 bg-white shadow-sm border-l-4 border-gray-400">
+                    <p class="text-[9px] font-black text-red-600 uppercase mb-1 whitespace-pre-wrap leading-tight">${g.competition || 'Amistoso'}</p>
+                    <p class="font-black text-lg text-center my-1">${g.match}</p>
+                    <div class="flex justify-between gap-2 text-[8px] text-gray-400 uppercase italic border-t pt-2 mb-2">
+                        <div class="w-1/2 whitespace-pre-wrap">${g.occurrencesA || ''}</div>
+                        <div class="w-1/2 text-right whitespace-pre-wrap">${g.occurrencesB || ''}</div>
+                    </div>
+                    <a href="${g.videoLink}" target="_blank" class="block w-full text-center bg-gray-800 text-white font-bold py-2 rounded-lg text-[10px] uppercase">Ver Mídia</a>
+                </div>`).join('');
+        }
+
+        function renderGamesLists() {
+            const upcomingList = document.getElementById('upcoming-games-list');
+            const recentList = document.getElementById('recent-results-list');
+            
+            const up = Object.values(dbData.upcomingGames).sort((a,b) => new Date(a.date) - new Date(b.date));
+            const re = Object.values(dbData.recentResults).sort((a,b) => new Date(b.date) - new Date(a.date));
+
+            upcomingList.innerHTML = up.map(g => `
+                <div class="border rounded-2xl p-4 bg-white shadow-sm border-l-4 border-red-600">
+                    <p class="text-[10px] font-black text-red-600 uppercase mb-1 whitespace-pre-wrap leading-tight">${g.competition || 'Amistoso'}</p>
+                    <p class="font-bold text-lg leading-tight mb-2">${g.teams}</p>
+                    <p class="text-xs text-gray-500 mb-3">${formatDateTime(g.date)} • ${g.location}</p>
+                    <a href="${g.mapLink}" target="_blank" class="inline-block bg-yellow-400 text-black font-black text-[10px] px-4 py-2 rounded-lg uppercase">Mapa</a>
+                </div>`).join('');
+
+            recentList.innerHTML = re.map(g => `
+                <div class="border rounded-2xl p-4 bg-white shadow-sm border-l-4 border-gray-400">
+                    <p class="text-[10px] font-black text-red-600 uppercase mb-1 whitespace-pre-wrap leading-tight">${g.competition || 'Amistoso'}</p>
+                    <p class="font-black text-xl mb-2">${g.match}</p>
+                    <div class="flex justify-between gap-4 text-[9px] text-gray-400 uppercase italic border-t pt-2 mb-3">
+                        <div class="w-1/2"><strong>Kendence:</strong><br>${g.occurrencesA || '---'}</div>
+                        <div class="w-1/2 text-right"><strong>Adversário:</strong><br>${g.occurrencesB || '---'}</div>
+                    </div>
+                    <a href="${g.videoLink}" target="_blank" class="text-blue-600 text-xs font-bold uppercase underline">Ver Mídia</a>
+                </div>`).join('');
+        }
+
+        // --- DETALHES E UI ---
+        function renderHomePlayers() {
+            const container = document.getElementById('players-list-home');
+            container.innerHTML = Object.entries(dbData.players).map(([key, p]) => `
+                <div class="text-center w-20 flex-shrink-0" onclick="showPlayer('${key}')">
+                    <img src="${p.image}" class="w-16 h-16 object-cover rounded-full mx-auto border-2 border-red-600 p-0.5">
+                    <p class="text-[9px] font-bold mt-2 truncate uppercase">${p.name}</p>
+                </div>`).join('');
+        }
+
+        window.showNewsItem = (key) => {
+            const n = dbData.news[key];
+            document.getElementById('news-detail-title-header').textContent = "Notícia";
+            document.getElementById('news-detail-content').innerHTML = `
+                <img src="${n.image}" class="w-full h-56 object-cover rounded-2xl mb-4 shadow-md" onclick="openImageModal('${n.image}')">
+                <p class="text-[10px] font-black text-red-600 uppercase mb-1">${formatDateTime(n.date)}</p>
+                <h2 class="text-xl font-black mb-4 leading-tight">${n.title}</h2>
+                <div class="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">${n.text}</div>`;
+            navigateTo('news-detail-screen');
+        };
+
+        window.showPlayer = (key) => {
+            const p = dbData.players[key];
+            document.getElementById('player-detail-content').innerHTML = `
+                <div class="text-center py-10"><header class="mb-4 flex items-center"><button onclick="goBack()"><i class="fa fa-arrow-left"></i></button></header>
+                <img src="${p.image}" class="w-40 h-40 object-cover rounded-full mx-auto border-4 border-red-600 mb-4 shadow-xl">
+                <h2 class="text-2xl font-black uppercase">${p.name}</h2>
+                <p class="text-red-600 font-bold uppercase text-xs tracking-widest">${p.role}</p>
+                <p class="mt-6 text-gray-600 text-sm italic px-4">${p.description || ''}</p></div>`;
+            document.getElementById('player-detail-footer').innerHTML = `<a href="${p.instagram}" target="_blank" class="w-full bg-black text-white font-bold py-4 rounded-xl flex justify-center items-center uppercase text-xs tracking-widest">Instagram</a>`;
+            navigateTo('player-detail-screen');
+        };
+
+        function renderSponsorsGrid() {
+            document.getElementById('sponsors-grid').innerHTML = Object.entries(dbData.sponsors).map(([key, s]) => `
+                <div class="bg-white rounded-2xl p-4 shadow-sm text-center border border-gray-100" onclick="showSponsor('${key}')">
+                    <img src="${s.image}" class="h-12 w-full object-contain mb-2">
+                    <p class="text-[9px] font-bold uppercase truncate">${s.name}</p>
+                </div>`).join('');
+        }
+
+        window.showSponsor = (key) => {
+            const s = dbData.sponsors[key];
+            document.getElementById('sponsor-detail-content').innerHTML = `<header class="mb-4"><button onclick="goBack()"><i class="fa fa-arrow-left"></i></button></header>
+                <div class="bg-gray-50 rounded-2xl p-8 mb-6 flex justify-center"><img src="${s.image}" class="max-h-24"></div>
+                <h2 class="text-2xl font-black uppercase mb-4">${s.name}</h2>
+                <div class="space-y-4 text-xs text-gray-500">
+                    <p><i class="fa fa-map-marker-alt text-red-600 mr-2"></i> ${s.address || '---'}</p>
+                    <p><i class="fa fa-phone text-red-600 mr-2"></i> ${s.phone || '---'}</p>
+                </div>`;
+            document.getElementById('sponsor-detail-footer').innerHTML = `<a href="${s.instagram}" target="_blank" class="w-full bg-black text-white font-bold py-4 rounded-xl flex justify-center items-center uppercase text-xs tracking-widest">Ver Redes Sociais</a>`;
+            navigateTo('sponsor-detail-screen');
+        };
+
+        window.openImageModal = (url) => { document.getElementById('modal-image-src').src = url; document.getElementById('image-modal').classList.remove('hidden'); };
+        window.closeImageModal = () => document.getElementById('image-modal').classList.add('hidden');
+
+        // SYNC DATA
+        function setupDataSync() {
+            onValue(ref(database, 'news'), (s) => { dbData.news = s.val() || {}; renderHomeNewsSlider(); });
+            onValue(ref(database, 'players'), (s) => { dbData.players = s.val() || {}; renderHomePlayers(); });
+            onValue(ref(database, 'upcomingGames'), (s) => { dbData.upcomingGames = s.val() || {}; renderHomeUpcomingGames(); });
+            onValue(ref(database, 'recentResults'), (s) => { dbData.recentResults = s.val() || {}; renderHomeRecentResults(); });
+            onValue(ref(database, 'sponsors'), (s) => { dbData.sponsors = s.val() || {}; renderSponsorsGrid(); });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; }, 2000);
+            setupDataSync();
+        });
+    </script>
+</body>
+</html>
+
             font-family: 'Inter', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
@@ -806,5 +1184,6 @@
 </body>
 
 </html>
+
 
 
