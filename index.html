@@ -456,7 +456,7 @@
         const teamB = (teams[1] || 'A definir').trim();
         return `<div class="flex-shrink-0 w-64 bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between">
                     <div>
-                        <p class="text-[10px] font-black text-kendence-red uppercase mb-1">${g.competition || 'Amistoso'}</p>
+                        <p class="text-[10px] font-black text-kendence-red uppercase mb-1 whitespace-pre-wrap leading-tight">${g.competition || 'Amistoso'}</p>
                         <p class="text-xs font-bold text-kendence-blue">${formatDateTime(g.date)}</p>
                         <p class="font-bold text-center my-2">${teamA} <span class="font-normal">vs</span> ${teamB}</p>
                         <p class="text-xs text-gray-600 text-center truncate"><i class="fas fa-map-marker-alt mr-1"></i>${g.location || 'Local a definir'}</p>
@@ -470,7 +470,7 @@
     htmlContent += recent.map(g => `
         <div class="flex-shrink-0 w-64 bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between text-center">
             <div>
-                <p class="text-[10px] font-black text-kendence-red uppercase mb-1">${g.competition || 'Amistoso'}</p>
+                <p class="text-[10px] font-black text-kendence-red uppercase mb-1 whitespace-pre-wrap leading-tight">${g.competition || 'Amistoso'}</p>
                 <p class="text-xs font-bold text-kendence-dark-blue">FIM DE JOGO - ${formatDateTime(g.date, false)}</p>
                 <p class="text-xl font-bold my-2">${g.match || 'Resultado indisponível'}</p>
                 <p class="text-xs text-gray-600 truncate"><i class="fas fa-map-marker-alt mr-1"></i>${g.location || 'Local não informado'}</p>
@@ -531,7 +531,7 @@ const renderGamesPage = () => {
             return `
             <div class="bg-white shadow-lg p-4 mb-4 flex items-center justify-between border-l-4 border-kendence-red">
                 <div>
-                    <p class="text-[10px] font-black text-kendence-red uppercase">${g.competition || 'Amistoso'}</p>
+                    <p class="text-[10px] font-black text-kendence-red uppercase whitespace-pre-wrap leading-tight">${g.competition || 'Amistoso'}</p>
                     <p class="text-sm text-gray-500">${formatDateTime(g.date)}</p>
                     <p class="font-bold text-lg">${teamA} vs ${teamB}</p>
                     <p class="text-sm text-gray-600">${g.location || 'Local a definir'}</p>
@@ -549,7 +549,7 @@ const renderGamesPage = () => {
         htmlContent += recent.map(g => `
             <div class="bg-white shadow-lg p-4 mb-4 flex items-center justify-between border-l-4 border-gray-400">
                 <div>
-                    <p class="text-[10px] font-black text-kendence-red uppercase">${g.competition || 'Amistoso'}</p>
+                    <p class="text-[10px] font-black text-kendence-red uppercase whitespace-pre-wrap leading-tight">${g.competition || 'Amistoso'}</p>
                     <p class="text-sm text-gray-500">${formatDateTime(g.date, false)}</p>
                     <p class="font-bold text-lg">${g.match || 'Resultado indisponível'}</p>
                     <p class="text-sm text-gray-600">${g.location || 'Local não informado'}</p>
