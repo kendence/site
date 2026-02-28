@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Diretoria - Kendence F.C.</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #eef2f3; padding: 20px; }
+        .header { background: #1a237e; color: white; padding: 25px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .card { background: white; padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 8px solid #d32f2f; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .card h3 { margin-top: 0; color: #1a237e; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .tag { padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: white; text-transform: uppercase; }
+        .JOGADOR { background: #2ecc71; }
+        .MEMBRO { background: #f1c40f; color: #333; }
+        .PATROCINADOR { background: #9b59b6; }
+        .btn-clear { background: #c0392b; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; margin-top: 15px; }
+        .info-item { font-size: 13px; line-height: 1.6; background: #f9f9f9; padding: 8px; border-radius: 4px; }
+        .info-item b { color: #d32f2f; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div>
+        <h1 style="margin:0">Diretoria Kendence F.C.</h1>
+        <small>Gestão de Atletas, Membros e Parceiros</small>
+    </div>
+    <button class="btn-clear" onclick="limparBanco()">Apagar Todos os Registros</button>
+</div>
+
+<div id="painel-lista"></div>
+
+<script>
+    function carregarDados() {
+        const painel = document.getElementById('painel-lista');
+        const dados = JSON.parse(localStorage.getItem('kendence_pro_db') || '[]');
+
+        if(dados.length === 0) {
+            painel.innerHTML = "<div style='text-align:center; padding:50px; color:#999'><h2>Nenhum cadastro recebido até o momento.</h2></div>";
+            return;
+        }
+
+        painel.innerHTML = dados.reverse().map((registro, index) => `
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; align-items:center">
+                    <span class="tag ${registro.TIPO_DE_CADASTRO}">${registro.TIPO_DE_CADASTRO}</span>
+                    <small>📅 ${registro.DATA_DO_REGISTRO}</small>
+                </div>
+                <h3>${registro.Nome_Completo || registro.Membro_Nome || registro.Empresa_Nome || 'Sem Nome'}</h3>
+                <div class="info-grid">
+                    ${Object.entries(registro).map(([chave, valor]) => {
+                        if(chave === 'TIPO_DE_CADASTRO' || chave === 'DATA_DO_REGISTRO') return '';
+                        return `<div class="info-item"><b>${chave.replace(/_/g, ' ')}:</b> ${valor}</div>`;
+                    }).join('')}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function limparBanco() {
+        if(confirm("ATENÇÃO: Isso apagará todos os cadastros permanentemente. Confirma?")) {
+            localStorage.removeItem('kendence_pro_db');
+            carregarDados();
+        }
+    }
+
+    carregarDados();
+</script>
+
+</body>
+</html>
