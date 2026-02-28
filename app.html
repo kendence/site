@@ -3,186 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>app-Kendence F.C.</title>
+    <title>Kendence F.C. - Site Oficial</title>  
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>app-Kendence F.C.</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            -webkit-tap-highlight-color: transparent;
+    <link rel="icon" href="https://i.postimg.cc/Twzwm9Bh/favicon.png" type="image/png">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'kendence-red': '#D31F37',
+                        'kendence-blue': '#1F3A79',
+                        'kendence-dark-blue': '#162B58',
+                    }
+                }
+            }
         }
-        .screen { display: none; }
+    </script>
+    <style>
+        body { background-color: #f0f2f5; }
+        .screen { display: none; min-height: calc(100vh - 10.5rem); }
         .screen.active { display: block; }
-        .snap-x { scroll-snap-type: x mandatory; }
-        .snap-center { scroll-snap-align: center; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @media (min-width: 1024px) {
+            .custom-scrollbar::-webkit-scrollbar { height: 6px; }
+            .custom-scrollbar::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 10px; }
+            .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #D31F37; border-radius: 10px; }
+            .custom-scrollbar::-webkit-scrollbar-thumb:hover { background-color: #1F3A79; }
+        }
+
+        @media (max-width: 1023px) {
+            .custom-scrollbar::-webkit-scrollbar { display: none; }
+            .custom-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        }
     </style>
 </head>
-<body class="bg-white">
+<body class="font-sans">
 
     <!-- TELA DE CARREGAMENTO -->
-    <div id="loading-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/d/18sK3WuyG-9IbMH8kWXiNOewFjIixSAtT');">
-        <div class="absolute inset-0 bg-black bg-opacity-50"></div> 
+    <div id="loading-screen" class="fixed inset-0 z-[100] flex items-center justify-center bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/d/18sK3WuyG-9IbMH8kWXiNOewFjIixSAtT');">
+        <div class="absolute inset-0 bg-black bg-opacity-60"></div> 
         <div class="text-center z-10">
-            <img src="https://lh3.googleusercontent.com/d/1c5dDZYwAcdPoD8H-_5pBbkgwISvSG63l" alt="Brasão" class="w-39 h-32 mx-auto animate-pulse">
+            <img src="https://lh3.googleusercontent.com/d/1c5dDZYwAcdPoD8H-_5pBbkgwISvSG63l" alt="Brasão" class="w-32 h-26 mx-auto animate-pulse">
             <p class="text-white text-lg font-semibold mt-4">Carregando...</p>
         </div>
     </div>
 
-    <div id="app-container" class="max-w-md mx-auto min-h-screen shadow-lg relative pb-16" 
-         style="background-image: url('https://lh3.googleusercontent.com/d/1GQpEIDFVHtlZVkiSm7Li_Ri-G9kXIzMO'); background-size: cover; background-position: center; background-attachment: fixed;"> 
-    
-        <!-- HOME SCREEN -->
-        <div id="home-screen" class="screen active">
-            <div class="w-full">
-                <img src="https://lh3.googleusercontent.com/d/1GXO2ouZOgNklPx7LNCnl2KCqF5gXUvPG" alt="Banner" class="w-full h-auto object-cover">
+        <header class="shadow-lg sticky top-0 z-50">
+            <div class="bg-kendence-dark-blue text-white">
+                <div class="container mx-auto px-4 py-2 flex flex-wrap justify-center sm:justify-end items-center gap-x-6">
+                    <p class="text-[10px] font-bold text-gray-300">Agendar jogos e campeonatos? Entre em contato!</p>
+                    <div class="flex items-center space-x-4">
+                        <a href="https://wa.me/5543998202218" target="_blank" class="hover:opacity-75"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/kendence2015/" target="_blank" class="hover:opacity-75"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@KendenceFC" target="_blank" class="hover:opacity-75"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <nav class="bg-kendence-red text-white w-full"> 
+                <div class="container mx-auto px-4">
+                    <div class="flex justify-between items-center h-16">
+                        <a href="#" onclick="navigateTo('home-screen', event)" class="flex items-center space-x-2">
+                            <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" alt="Brasão" class="h-10 w-auto">
+                            <span class="font-black text-lg uppercase tracking-wider">Kendence F.C.</span>
+                        </a>
+                        <button id="mobile-menu-button" class="lg:hidden text-white">
+                            <i class="fa fa-bars text-xl"></i>
+                        </button>
+                        <ul class="hidden lg:flex items-center space-x-6 text-xs font-bold uppercase">
+                            <li><a href="#" onclick="navigateTo('news-screen', event)">Notícias</a></li>
+                            <li><a href="#" onclick="navigateTo('games-screen', event)">Jogos</a></li>
+                            <li><a href="#" onclick="navigateTo('players-screen', event)">Jogadores</a></li>
+                            <li><a href="#" onclick="navigateTo('history-screen', event)">História</a></li>
+                            <li><a href="#" onclick="navigateTo('gallery-screen', event)">Galeria</a></li>
+                        </ul>
+                    </div>
+                    <div id="mobile-menu" class="hidden lg:hidden pb-4">
+                        <ul class="flex flex-col space-y-2 text-sm uppercase">
+                             <li><a href="#" onclick="navigateTo('news-screen', event)" class="block py-2">Notícias</a></li>
+                             <li><a href="#" onclick="navigateTo('games-screen', event)" class="block py-2">Jogos</a></li>
+                             <li><a href="#" onclick="navigateTo('players-screen', event)" class="block py-2">Jogadores</a></li>
+                             <li><a href="#" onclick="navigateTo('history-screen', event)" class="block py-2">História</a></li>
+                             <li><a href="#" onclick="navigateTo('gallery-screen', event)" class="block py-2">Galeria</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <!-- HOME SCREEN -->
+            <div id="home-screen" class="screen active">
+                 <div class="container mx-auto px-4 py-8">
+                    <section class="grid grid-cols-1 gap-6">
+                        <a href="#" class="group block" id="hero-news-link">
+                            <div class="relative bg-white p-2 shadow-lg rounded-lg overflow-hidden">
+                                <div class="relative w-full aspect-[16/10] overflow-hidden">
+                                    <img id="hero-news-image" src="https://placehold.co/800x500?text=Carregando..." class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent flex items-end p-4">
+                                        <h2 id="hero-news-title" class="text-white text-lg font-black leading-tight"></h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </section>
+                    <section class="mt-8">
+                        <h2 class="text-xl font-black text-kendence-dark-blue uppercase mb-4 border-l-4 border-kendence-red pl-2">Elenco</h2>
+                        <div id="home-players-list" class="flex space-x-4 overflow-x-auto pb-4 custom-scrollbar"></div>
+                    </section>
+                    <section class="mt-8">
+                        <h2 class="text-xl font-black text-kendence-dark-blue uppercase mb-4 border-l-4 border-kendence-red pl-2">Últimos Jogos</h2>
+                        <div id="home-games-list" class="flex space-x-4 overflow-x-auto pb-4 custom-scrollbar"></div>
+                    </section>
+                </div>
             </div>
 
-            <main>
-                <div class="p-4 pb-0">
-                    <h2 class="font-bold text-lg mb-2">Últimas Notícias</h2>
+            <!-- NEWS SCREEN -->
+            <div id="news-screen" class="screen">
+                <div class="container mx-auto px-4 py-8">
+                    <h1 class="text-2xl font-black text-kendence-dark-blue uppercase mb-6">Notícias</h1>
+                    <div id="news-list-container" class="space-y-4"></div>
                 </div>
-                
-                <div id="news-banner-scroll" class="overflow-x-auto snap-x flex no-scrollbar w-full"></div>
+            </div>
 
-                <div class="p-4">
-                    <div class="grid grid-cols-2 gap-3 mt-4">
-                        <button onclick="navigateTo('news-screen')" class="bg-white/90 backdrop-blur-sm p-3 rounded-xl flex items-center text-left shadow-sm">
-                            <i class="fa fa-newspaper text-xl text-red-600 mr-3"></i>
-                            <span class="font-semibold text-sm">Notícias</span>
-                        </button>
-                        <button onclick="navigateTo('socials-screen')" class="bg-white/90 backdrop-blur-sm p-3 rounded-xl flex items-center text-left shadow-sm">
-                            <i class="fa fa-hashtag text-xl text-blue-600 mr-3"></i>
-                            <span class="font-semibold text-sm">Redes Sociais</span>
-                        </button>
-                        <button onclick="navigateTo('history-screen')" class="bg-white/90 backdrop-blur-sm p-3 rounded-xl flex items-center text-left shadow-sm">
-                            <i class="fa fa-book-open text-xl text-gray-600 mr-3"></i>
-                            <span class="font-semibold text-sm">História</span>
-                        </button>
-                        <button onclick="navigateTo('sponsors-screen')" class="bg-white/90 backdrop-blur-sm p-3 rounded-xl flex items-center text-left shadow-sm">
-                            <i class="fa fa-handshake text-xl text-yellow-600 mr-3"></i>
-                            <span class="font-semibold text-sm">Patrocínios</span>
-                        </button>
-                        <button onclick="navigateTo('games-screen')" class="bg-white/90 backdrop-blur-sm p-3 rounded-xl flex items-center text-left shadow-sm">
-                            <i class="fa fa-calendar-alt text-xl text-green-600 mr-3"></i>
-                            <span class="font-semibold text-sm">Jogos</span>
-                        </button>
-                        <button onclick="navigateTo('gallery-screen')" class="bg-white/90 backdrop-blur-sm p-3 rounded-xl flex items-center text-left shadow-sm">
-                            <i class="fa fa-images text-xl text-purple-600 mr-3"></i>
-                            <span class="font-semibold text-sm">Galeria</span>
-                        </button>
+            <!-- GAMES SCREEN -->
+            <div id="games-screen" class="screen">
+                 <div class="container mx-auto px-4 py-8">
+                    <h1 class="text-2xl font-black text-kendence-dark-blue uppercase mb-6">Calendário</h1>
+                    <div id="games-page-container"></div>
+                </div>
+            </div>
+
+            <!-- PLAYERS SCREEN -->
+            <div id="players-screen" class="screen">
+                <div class="container mx-auto px-4 py-8">
+                    <h1 class="text-2xl font-black text-kendence-dark-blue uppercase mb-6">Jogadores</h1>
+                    <div id="players-grid-container" class="grid grid-cols-2 gap-4"></div>
+                </div>
+            </div>
+
+            <!-- HISTORY SCREEN -->
+            <div id="history-screen" class="screen">
+                <div class="container mx-auto px-4 py-8">
+                     <h1 class="text-2xl font-black text-kendence-dark-blue uppercase mb-6">Nossa História</h1>
+                     <div class="bg-white p-4 shadow-lg rounded-lg">
+                        <img src="https://lh3.googleusercontent.com/d/10Mk2FghUvdHucNN1dEo1QsrE9PecaKzV" class="w-full rounded mb-4">
+                        <div class="text-sm text-gray-700 space-y-3">
+                            <p class="font-bold">Kendence Futebol Clube 🔴🔵</p>
+                            <p>Desde 1987, o time que nasceu como Meninos do Kennedy carrega a paixão do bairro John Kennedy dentro de campo.</p>
+                            <ul class="list-disc list-inside">
+                                <li>Campeão Bronze 2017 🏆</li>
+                                <li>Vice Municipal Prata 2024 🥈</li>
+                            </ul>
+                        </div>
+                     </div>
+                </div>
+            </div>
+
+            <!-- GALLERY SCREEN -->
+            <div id="gallery-screen" class="screen">
+                <div class="container mx-auto px-4 py-8">
+                     <h1 class="text-2xl font-black text-kendence-dark-blue uppercase mb-6">Galeria</h1>
+                     <div id="gallery-container" class="grid grid-cols-1 gap-4"></div>
+                </div>
+            </div>
+
+            <!-- SPONSORS SCREEN -->
+            <div id="sponsors-screen" class="screen">
+                <div class="container mx-auto px-4 py-8">
+                     <h1 class="text-2xl font-black text-kendence-dark-blue uppercase mb-6">Patrocinadores</h1>
+                     <div id="sponsors-grid-container" class="grid grid-cols-2 gap-4"></div>
+                </div>
+            </div>
+
+            <!-- DETAIL SCREENS -->
+            <div id="news-detail-screen" class="screen">
+                <div class="container mx-auto px-4 py-8">
+                    <button onclick="goBack()" class="mb-4 text-xs font-bold uppercase"><i class="fa fa-arrow-left mr-1"></i> Voltar</button>
+                    <div id="news-detail-content" class="bg-white p-4 shadow-lg rounded-lg"></div>
+                </div>
+            </div>
+
+            <div id="player-detail-screen" class="screen">
+                <div class="container mx-auto px-4 py-8">
+                    <button onclick="goBack()" class="mb-4 text-xs font-bold uppercase"><i class="fa fa-arrow-left mr-1"></i> Voltar</button>
+                    <div id="player-detail-content" class="bg-white p-6 shadow-lg rounded-lg text-center">
+                        <img id="player-detail-image" class="w-48 h-48 rounded-full mx-auto object-cover border-4 border-kendence-red mb-4">
+                        <h1 id="player-detail-name" class="text-2xl font-black text-kendence-dark-blue"></h1>
+                        <p id="player-detail-role" class="text-kendence-red font-bold uppercase mb-4"></p>
+                        <p id="player-detail-description" class="text-gray-600 text-sm"></p>
+                        <a id="player-detail-instagram" href="#" target="_blank" class="mt-6 inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-full text-xs font-bold">INSTAGRAM</a>
                     </div>
-
-                    <section class="mt-8">
-                        <h2 class="font-bold text-lg">Jogadores</h2>
-                        <div id="players-list-home" class="flex overflow-x-auto gap-4 mt-4 no-scrollbar pb-2"></div>
-                    </section>
-                    
-                    <section class="mt-8">
-                        <h2 class="font-bold text-lg">Próximos Jogos</h2>
-                        <div id="upcoming-games-home" class="flex overflow-x-auto gap-4 mt-4 no-scrollbar pb-2"></div>
-                    </section>
-                    
-                    <section class="mt-8">
-                        <h2 class="font-bold text-lg">Resultados Recentes</h2>
-                        <div id="recent-results-home" class="flex overflow-x-auto gap-4 mt-4 no-scrollbar pb-2"></div>
-                    </section>
                 </div>
-            </main>
-            
-            <footer class="p-4 bg-gray-200 text-center text-gray-700 text-xs mt-8">
-                <p class="mb-2 italic">Para agendar jogos ou campeonatos, entre em contato pelo nosso WhatsApp.</p>
-                <p class="font-bold">© 2025 Kendence F.C. • Design por An.Yoshi.</p>
-            </footer>
-        </div>
+            </div>
+        </main>
 
-        <!-- OUTRAS TELAS -->
-        <div id="news-screen" class="screen">
-            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20 shadow-sm">
-                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
-                <h2 class="font-bold text-lg mx-auto text-red-600 uppercase tracking-tighter">Notícias</h2>
-                <div class="w-6"></div>
-            </header>
-            <main class="p-4 space-y-4" id="news-list-content"></main>
-        </div>
-        
-        <div id="news-detail-screen" class="screen">
-             <header class="p-4 border-b flex items-center justify-between sticky top-0 bg-white z-10 shadow-sm">
-                <button onclick="goBack()"><i class="fa fa-arrow-left text-xl"></i></button>
-                <h2 class="font-bold text-lg mx-auto" id="news-detail-title-header">Notícia</h2>
-                <div class="w-6"></div>
-            </header>
-            <main class="p-4" id="news-detail-content"></main>
-        </div>
-
-        <div id="games-screen" class="screen">
-            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20 shadow-sm">
-                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
-                <h2 class="font-bold text-lg mx-auto text-blue-900 uppercase">Calendário</h2>
-                <div class="w-6"></div>
-            </header>
-            <main class="p-4">
-                <section id="upcoming-games-section">
-                    <h3 class="font-black text-gray-400 text-[10px] mb-3 uppercase tracking-[0.2em]">Próximos Compromissos</h3>
-                    <div id="upcoming-games-list" class="space-y-4"></div>
-                </section>
-                <section id="recent-results-section" class="mt-8">
-                    <h3 class="font-black text-gray-400 text-[10px] mb-3 uppercase tracking-[0.2em]">Resultados Anteriores</h3>
-                    <div id="recent-results-list" class="space-y-4"></div>
-                </section>
-            </main>
-        </div>
-
-        <!-- TELAS DE DETALHE GENÉRICAS -->
-        <div id="player-detail-screen" class="screen"><main id="player-detail-content" class="p-4"></main><footer id="player-detail-footer" class="p-4 border-t sticky bottom-0 bg-white"></footer></div>
-        <div id="sponsor-detail-screen" class="screen"><main id="sponsor-detail-content" class="p-4"></main><footer id="sponsor-detail-footer" class="p-4 border-t sticky bottom-0 bg-white"></footer></div>
-        
-        <div id="sponsors-screen" class="screen">
-            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20 shadow-sm">
-                <button onclick="goBack()"><i class="fa fa-arrow-left text-xl"></i></button>
-                <h2 class="font-bold text-lg mx-auto">Parceiros</h2>
-                <div class="w-6"></div>
-            </header>
-            <main class="p-4 grid grid-cols-2 gap-4" id="sponsors-grid"></main>
-        </div>
-
-        <!-- GALERIA (Mantendo a estrutura do seu código original) -->
-        <div id="gallery-screen" class="screen">
-            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20 shadow-sm">
-                <button onclick="goBack()"><i class="fa fa-arrow-left text-xl"></i></button>
-                <h2 class="font-bold text-lg mx-auto uppercase">Galeria</h2>
-                <div class="w-6"></div>
-            </header>
-            <main class="p-4 space-y-4" id="gallery-container-app">
-                <p class="text-center text-gray-400 py-10">Use os links da web para acessar a galeria completa.</p>
-            </main>
-        </div>
-
-        <!-- MODAL -->
-        <div id="image-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 hidden" onclick="closeImageModal()">
-            <img id="modal-image-src" src="" class="max-w-full max-h-full object-contain p-4">
-        </div>
-
+        <footer class="bg-kendence-dark-blue text-white mt-10">
+            <div class="container mx-auto px-4 py-6">
+                <div id="footer-sponsors-list" class="flex justify-center gap-6 flex-wrap opacity-60 grayscale hover:grayscale-0 transition-all"></div>
+                <p class="text-center text-[10px] text-gray-400 mt-6">© 2025 Kendence F.C. Design by An.Yoshi.</p>
+            </div>
+        </footer>
     </div>
 
-    <!-- WHATSAPP -->
-    <a href="https://wa.me/5543998202218" target="_blank" class="fixed bottom-4 right-4 z-30 bg-green-500 text-white rounded-full p-3 shadow-lg"><i class="fa-brands fa-whatsapp text-2xl"></i></a>
+    <!-- MODAL DE IMAGEM -->
+    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-95 z-[200] hidden items-center justify-center p-4" onclick="closeImageModal()">
+        <img id="modal-image" class="max-w-full max-h-full">
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
@@ -200,990 +234,145 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
+        // --- FUNÇÕES DE NAVEGAÇÃO ---
         let navigationStack = ['home-screen'];
-        let dbData = { news: {}, players: {}, upcomingGames: {}, recentResults: {}, sponsors: {} };
-
-        // NAVEGAÇÃO
-        window.navigateTo = (id) => {
+        window.navigateTo = (screenId, event) => {
+            if (event) event.preventDefault();
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            if (navigationStack[navigationStack.length-1] !== id) navigationStack.push(id);
-            window.scrollTo(0,0);
-            if (id === 'news-screen') renderNewsList();
-            if (id === 'games-screen') renderGamesLists();
-            if (id === 'sponsors-screen') renderSponsorsGrid();
-        };
+            document.getElementById(screenId).classList.add('active');
+            if (navigationStack[navigationStack.length - 1] !== screenId) navigationStack.push(screenId);
+            window.scrollTo(0, 0);
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
         window.goBack = () => {
             if (navigationStack.length > 1) {
                 navigationStack.pop();
-                const last = navigationStack[navigationStack.length-1];
+                const prev = navigationStack[navigationStack.length - 1];
                 document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-                document.getElementById(last).classList.add('active');
+                document.getElementById(prev).classList.add('active');
             }
         };
 
-        function formatDateTime(iso, includeTime = true) {
-            if (!iso) return '---';
-            const d = new Date(iso);
-            return d.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: includeTime ? '2-digit' : undefined, minute: includeTime ? '2-digit' : undefined });
-        }
+        document.getElementById('mobile-menu-button').onclick = () => document.getElementById('mobile-menu').classList.toggle('hidden');
 
-        // --- RENDERIZADORES DE NOTÍCIAS (COM ORDENAÇÃO CORRIGIDA) ---
-        function renderHomeNewsSlider() {
-            const container = document.getElementById('news-banner-scroll');
-            // ORDENAÇÃO: Garante que as datas sejam tratadas como número/data antes de subtrair
-            const items = Object.entries(dbData.news).sort(([,a],[,b]) => new Date(b.date) - new Date(a.date)).slice(0, 5);
+        // --- DADOS E RENDERIZAÇÃO ---
+        let dbData = { news: {}, players: {}, upcomingGames: {}, recentResults: {}, sponsors: {} };
+
+        const hideLoading = () => {
+            const loader = document.getElementById('loading-screen');
+            if(loader) loader.style.display = 'none';
+        };
+
+        const formatDateTime = (iso) => new Date(iso).toLocaleDateString('pt-BR');
+
+        onValue(ref(database, '/'), (snapshot) => {
+            const data = snapshot.val();
+            if(!data) return;
+            dbData = data;
             
-            container.innerHTML = items.map(([key, n]) => `
-                <div class="flex-shrink-0 w-full snap-center cursor-pointer" onclick="showNewsItem('${key}')">
-                    <div class="h-48 bg-cover bg-center relative mx-4 rounded-2xl overflow-hidden shadow-lg" style="background-image: url('${n.image}');">
-                        <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
-                            <p class="text-white font-bold text-sm leading-tight line-clamp-2">${n.title}</p>
-                            <p class="text-[9px] text-gray-300 mt-1 uppercase font-bold">${formatDateTime(n.date, false)}</p>
-                        </div>
-                    </div>
-                </div>`).join('');
-        }
-
-        function renderNewsList() {
-            const container = document.getElementById('news-list-content');
-            // ORDENAÇÃO: Mais nova para mais antiga
-            const items = Object.entries(dbData.news).sort(([,a],[,b]) => new Date(b.date) - new Date(a.date));
+            renderHero();
+            renderPlayers();
+            renderGames();
+            renderSponsors();
+            renderGalleryPage();
             
-            container.innerHTML = items.map(([key, n]) => `
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm flex h-28 border border-gray-100" onclick="showNewsItem('${key}')">
-                    <img src="${n.image}" class="w-28 h-full object-cover">
-                    <div class="p-3 flex flex-col justify-center">
-                        <p class="text-[9px] text-red-600 uppercase font-black mb-1">${formatDateTime(n.date, false)}</p>
-                        <p class="font-bold text-sm line-clamp-2 leading-snug">${n.title}</p>
-                    </div>
-                </div>`).join('');
-        }
+            // ESCONDE O CARREGAMENTO APÓS A PRIMEIRA CARGA DE DADOS
+            setTimeout(hideLoading, 800);
+        });
 
-        // --- JOGOS E RESULTADOS (COM CAMPEONATO E OCORRÊNCIAS) ---
-        function renderHomeUpcomingGames() {
-            const container = document.getElementById('upcoming-games-home');
-            const games = Object.values(dbData.upcomingGames).sort((a,b) => new Date(a.date) - new Date(b.date));
-            container.innerHTML = games.map(g => `
-                <div class="flex-shrink-0 w-64 border rounded-2xl p-4 bg-white shadow-sm border-l-4 border-red-600">
-                    <p class="text-[9px] font-black text-red-600 uppercase mb-1 whitespace-pre-wrap leading-tight">${g.competition || 'Amistoso'}</p>
-                    <p class="font-bold text-sm truncate">${g.teams}</p>
-                    <p class="text-[11px] text-gray-500 mt-1"><i class="fa fa-calendar-alt mr-1"></i> ${formatDateTime(g.date)}</p>
-                    <a href="${g.mapLink}" target="_blank" class="block w-full text-center bg-yellow-400 text-black font-black py-2 rounded-lg mt-3 text-[10px] uppercase">Como Chegar</a>
-                </div>`).join('');
-        }
+        const renderHero = () => {
+            const news = Object.entries(dbData.news || {}).sort((a,b) => new Date(b[1].date) - new Date(a[1].date))[0];
+            if(news) {
+                document.getElementById('hero-news-image').src = news[1].image;
+                document.getElementById('hero-news-title').textContent = news[1].title;
+                document.getElementById('hero-news-link').onclick = () => showNewsDetail(news[0]);
+            }
+        };
 
-        function renderHomeRecentResults() {
-            const container = document.getElementById('recent-results-home');
-            const results = Object.values(dbData.recentResults).sort((a,b) => new Date(b.date) - new Date(a.date));
-            container.innerHTML = results.map(g => `
-                <div class="flex-shrink-0 w-64 border rounded-2xl p-4 bg-white shadow-sm border-l-4 border-gray-400">
-                    <p class="text-[9px] font-black text-red-600 uppercase mb-1 whitespace-pre-wrap leading-tight">${g.competition || 'Amistoso'}</p>
-                    <p class="font-black text-lg text-center my-1">${g.match}</p>
-                    <div class="flex justify-between gap-2 text-[8px] text-gray-400 uppercase italic border-t pt-2 mb-2">
-                        <div class="w-1/2 whitespace-pre-wrap">${g.occurrencesA || ''}</div>
-                        <div class="w-1/2 text-right whitespace-pre-wrap">${g.occurrencesB || ''}</div>
-                    </div>
-                    <a href="${g.videoLink}" target="_blank" class="block w-full text-center bg-gray-800 text-white font-bold py-2 rounded-lg text-[10px] uppercase">Ver Mídia</a>
-                </div>`).join('');
-        }
-
-        function renderGamesLists() {
-            const upcomingList = document.getElementById('upcoming-games-list');
-            const recentList = document.getElementById('recent-results-list');
-            
-            const up = Object.values(dbData.upcomingGames).sort((a,b) => new Date(a.date) - new Date(b.date));
-            const re = Object.values(dbData.recentResults).sort((a,b) => new Date(b.date) - new Date(a.date));
-
-            upcomingList.innerHTML = up.map(g => `
-                <div class="border rounded-2xl p-4 bg-white shadow-sm border-l-4 border-red-600">
-                    <p class="text-[10px] font-black text-red-600 uppercase mb-1 whitespace-pre-wrap leading-tight">${g.competition || 'Amistoso'}</p>
-                    <p class="font-bold text-lg leading-tight mb-2">${g.teams}</p>
-                    <p class="text-xs text-gray-500 mb-3">${formatDateTime(g.date)} • ${g.location}</p>
-                    <a href="${g.mapLink}" target="_blank" class="inline-block bg-yellow-400 text-black font-black text-[10px] px-4 py-2 rounded-lg uppercase">Mapa</a>
-                </div>`).join('');
-
-            recentList.innerHTML = re.map(g => `
-                <div class="border rounded-2xl p-4 bg-white shadow-sm border-l-4 border-gray-400">
-                    <p class="text-[10px] font-black text-red-600 uppercase mb-1 whitespace-pre-wrap leading-tight">${g.competition || 'Amistoso'}</p>
-                    <p class="font-black text-xl mb-2">${g.match}</p>
-                    <div class="flex justify-between gap-4 text-[9px] text-gray-400 uppercase italic border-t pt-2 mb-3">
-                        <div class="w-1/2"><strong>Kendence:</strong><br>${g.occurrencesA || '---'}</div>
-                        <div class="w-1/2 text-right"><strong>Adversário:</strong><br>${g.occurrencesB || '---'}</div>
-                    </div>
-                    <a href="${g.videoLink}" target="_blank" class="text-blue-600 text-xs font-bold uppercase underline">Ver Mídia</a>
-                </div>`).join('');
-        }
-
-        // --- DETALHES E UI ---
-        function renderHomePlayers() {
-            const container = document.getElementById('players-list-home');
-            container.innerHTML = Object.entries(dbData.players).map(([key, p]) => `
-                <div class="text-center w-20 flex-shrink-0" onclick="showPlayer('${key}')">
-                    <img src="${p.image}" class="w-16 h-16 object-cover rounded-full mx-auto border-2 border-red-600 p-0.5">
-                    <p class="text-[9px] font-bold mt-2 truncate uppercase">${p.name}</p>
-                </div>`).join('');
-        }
-
-        window.showNewsItem = (key) => {
+        window.showNewsDetail = (key) => {
             const n = dbData.news[key];
-            document.getElementById('news-detail-title-header').textContent = "Notícia";
             document.getElementById('news-detail-content').innerHTML = `
-                <img src="${n.image}" class="w-full h-56 object-cover rounded-2xl mb-4 shadow-md" onclick="openImageModal('${n.image}')">
-                <p class="text-[10px] font-black text-red-600 uppercase mb-1">${formatDateTime(n.date)}</p>
-                <h2 class="text-xl font-black mb-4 leading-tight">${n.title}</h2>
-                <div class="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">${n.text}</div>`;
+                <img src="${n.image}" class="w-full rounded mb-4">
+                <p class="text-xs text-gray-400 mb-2">${formatDateTime(n.date)}</p>
+                <h2 class="text-xl font-black mb-4">${n.title}</h2>
+                <p class="text-sm text-gray-700 whitespace-pre-wrap">${n.text}</p>
+            `;
             navigateTo('news-detail-screen');
         };
 
-        window.showPlayer = (key) => {
+        const renderPlayers = () => {
+            const container = document.getElementById('home-players-list');
+            const grid = document.getElementById('players-grid-container');
+            const items = Object.entries(dbData.players || {}).map(([key, p]) => `
+                <div onclick="showPlayerDetail('${key}')" class="flex-shrink-0 w-24 text-center cursor-pointer">
+                    <img src="${p.image}" class="w-20 h-20 rounded-full mx-auto object-cover border-2 border-white shadow">
+                    <p class="text-[10px] font-bold mt-1 truncate">${p.name}</p>
+                </div>
+            `).join('');
+            container.innerHTML = items;
+            grid.innerHTML = items.replace(/w-24/g, 'w-full').replace(/w-20 h-20/g, 'w-full h-32 rounded-lg');
+        };
+
+        window.showPlayerDetail = (key) => {
             const p = dbData.players[key];
-            document.getElementById('player-detail-content').innerHTML = `
-                <div class="text-center py-10"><header class="mb-4 flex items-center"><button onclick="goBack()"><i class="fa fa-arrow-left"></i></button></header>
-                <img src="${p.image}" class="w-40 h-40 object-cover rounded-full mx-auto border-4 border-red-600 mb-4 shadow-xl">
-                <h2 class="text-2xl font-black uppercase">${p.name}</h2>
-                <p class="text-red-600 font-bold uppercase text-xs tracking-widest">${p.role}</p>
-                <p class="mt-6 text-gray-600 text-sm italic px-4">${p.description || ''}</p></div>`;
-            document.getElementById('player-detail-footer').innerHTML = `<a href="${p.instagram}" target="_blank" class="w-full bg-black text-white font-bold py-4 rounded-xl flex justify-center items-center uppercase text-xs tracking-widest">Instagram</a>`;
+            document.getElementById('player-detail-image').src = p.image;
+            document.getElementById('player-detail-name').textContent = p.name;
+            document.getElementById('player-detail-role').textContent = p.role;
+            document.getElementById('player-detail-description').textContent = p.description;
+            document.getElementById('player-detail-instagram').href = p.instagram || '#';
             navigateTo('player-detail-screen');
         };
 
-        function renderSponsorsGrid() {
-            document.getElementById('sponsors-grid').innerHTML = Object.entries(dbData.sponsors).map(([key, s]) => `
-                <div class="bg-white rounded-2xl p-4 shadow-sm text-center border border-gray-100" onclick="showSponsor('${key}')">
-                    <img src="${s.image}" class="h-12 w-full object-contain mb-2">
-                    <p class="text-[9px] font-bold uppercase truncate">${s.name}</p>
-                </div>`).join('');
-        }
-
-        window.showSponsor = (key) => {
-            const s = dbData.sponsors[key];
-            document.getElementById('sponsor-detail-content').innerHTML = `<header class="mb-4"><button onclick="goBack()"><i class="fa fa-arrow-left"></i></button></header>
-                <div class="bg-gray-50 rounded-2xl p-8 mb-6 flex justify-center"><img src="${s.image}" class="max-h-24"></div>
-                <h2 class="text-2xl font-black uppercase mb-4">${s.name}</h2>
-                <div class="space-y-4 text-xs text-gray-500">
-                    <p><i class="fa fa-map-marker-alt text-red-600 mr-2"></i> ${s.address || '---'}</p>
-                    <p><i class="fa fa-phone text-red-600 mr-2"></i> ${s.phone || '---'}</p>
-                </div>`;
-            document.getElementById('sponsor-detail-footer').innerHTML = `<a href="${s.instagram}" target="_blank" class="w-full bg-black text-white font-bold py-4 rounded-xl flex justify-center items-center uppercase text-xs tracking-widest">Ver Redes Sociais</a>`;
-            navigateTo('sponsor-detail-screen');
+        const renderGames = () => {
+            const container = document.getElementById('home-games-list');
+            const upcoming = Object.values(dbData.upcomingGames || {});
+            const recent = Object.values(dbData.recentResults || {});
+            
+            container.innerHTML = [...upcoming, ...recent].map(g => `
+                <div class="flex-shrink-0 w-48 bg-white p-3 rounded-lg shadow-sm border-t-2 border-kendence-red">
+                    <p class="text-[9px] font-bold text-gray-400 mb-1">${formatDateTime(g.date)}</p>
+                    <p class="text-xs font-black truncate">${g.teams || g.match}</p>
+                    <p class="text-[10px] text-gray-500 mt-2"><i class="fa fa-map-marker-alt"></i> ${g.location || 'A definir'}</p>
+                </div>
+            `).join('');
         };
 
-        window.openImageModal = (url) => { document.getElementById('modal-image-src').src = url; document.getElementById('image-modal').classList.remove('hidden'); };
+        const renderSponsors = () => {
+            const list = Object.values(dbData.sponsors || {});
+            document.getElementById('sponsors-grid-container').innerHTML = list.map(s => `
+                <div class="bg-white p-4 rounded shadow text-center">
+                    <img src="${s.image}" class="h-12 mx-auto object-contain mb-2">
+                    <p class="text-[10px] font-bold">${s.name}</p>
+                </div>
+            `).join('');
+            document.getElementById('footer-sponsors-list').innerHTML = list.map(s => `<img src="${s.image}" class="h-6">`).join('');
+        };
+
+        window.toggleGallerySection = (el) => {
+            const content = el.nextElementSibling;
+            content.classList.toggle('hidden');
+            el.querySelector('.fa-chevron-down').classList.toggle('rotate-180');
+        };
+
+        const renderGalleryPage = () => {
+            const container = document.getElementById('gallery-container');
+            const items = [
+                { name: 'Brasão do Time', url: 'https://drive.google.com/drive/folders/1BNs1TjGhXATk8STdXLheeV3UIsTzaAkE', icon: 'fa-shield-alt' },
+                { name: 'Wallpapers', url: 'https://drive.google.com/drive/folders/1ujHIcc87gguhfM5-aZTzCI9MoJ-u4a-p', icon: 'fa-mobile-alt' }
+            ];
+            container.innerHTML = items.map(i => `
+                <a href="${i.url}" target="_blank" class="bg-white p-4 rounded-lg shadow flex items-center space-x-4">
+                    <i class="fa ${i.icon} text-kendence-red text-xl"></i>
+                    <span class="font-bold text-sm">${i.name}</span>
+                </a>
+            `).join('');
+        };
+
         window.closeImageModal = () => document.getElementById('image-modal').classList.add('hidden');
 
-        // SYNC DATA
-        function setupDataSync() {
-            onValue(ref(database, 'news'), (s) => { dbData.news = s.val() || {}; renderHomeNewsSlider(); });
-            onValue(ref(database, 'players'), (s) => { dbData.players = s.val() || {}; renderHomePlayers(); });
-            onValue(ref(database, 'upcomingGames'), (s) => { dbData.upcomingGames = s.val() || {}; renderHomeUpcomingGames(); });
-            onValue(ref(database, 'recentResults'), (s) => { dbData.recentResults = s.val() || {}; renderHomeRecentResults(); });
-            onValue(ref(database, 'sponsors'), (s) => { dbData.sponsors = s.val() || {}; renderSponsorsGrid(); });
-        }
+        // FALLBACK: Se o Firebase falhar ou demorar demais, remove o loader em 5 segundos
+        setTimeout(hideLoading, 5000);
 
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; }, 2000);
-            setupDataSync();
-        });
     </script>
 </body>
 </html>
-
-            font-family: 'Inter', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .screen {
-            display: none;
-        }
-        .screen.active {
-            display: block;
-        }
-        .snap-x {
-            scroll-snap-type: x mandatory;
-        }
-        .snap-center {
-            scroll-snap-align: center;
-        }
-        /* Hide scrollbar for Chrome, Safari and Opera */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        /* Hide scrollbar for IE, Edge and Firefox */
-        .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-    </style>
-</head>
-<body class="bg-white">
-
-    <div id="loading-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/d/18sK3WuyG-9IbMH8kWXiNOewFjIixSAtT');">
-        <div class="absolute inset-0 bg-black bg-opacity-50"></div> 
-        
-        <div class="text-center z-10">
-            <img src="https://lh3.googleusercontent.com/d/1c5dDZYwAcdPoD8H-_5pBbkgwISvSG63l" alt="Brasão do Time" class="w-39 h-32 mx-auto animate-pulse">
-            
-            <p class="text-white text-lg font-semibold mt-4">Carregando...</p>
-        </div>
-    </div>
-
-
-    <div id="app-container"
-         class="max-w-md mx-auto min-h-screen shadow-lg relative pb-16" 
-         style="background-image: url('https://lh3.googleusercontent.com/d/1GQpEIDFVHtlZVkiSm7Li_Ri-G9kXIzMO'); 
-                background-size: cover; 
-                background-position: center; 
-                background-attachment: fixed;"> 
-    
-        <div id="home-screen" class="screen active">
-            <div class="w-full">
-                <img src="https://lh3.googleusercontent.com/d/1GXO2ouZOgNklPx7LNCnl2KCqF5gXUvPG" alt="Banner do Time" class="w-full h-auto object-cover">
-            </div>
-
-            <main>
-                <div class="p-4">
-                    <h2 class="font-bold text-lg mb-4">Últimas Notícias</h2>
-                </div>
-                
-                <div id="news-banner-scroll" class="overflow-x-auto snap-x flex no-scrollbar w-full">
-                    </div>
-
-                <div class="p-4">
-                    <div class="grid grid-cols-2 gap-3 mt-6">
-                        <button onclick="navigateTo('news-screen')" class="bg-gray-100 p-3 rounded-lg flex items-center text-left">
-                            <i class="fa fa-newspaper text-xl text-gray-600 mr-3"></i>
-                            <span class="font-semibold">Notícias</span>
-                        </button>
-                        <button onclick="navigateTo('socials-screen')" class="bg-gray-100 p-3 rounded-lg flex items-center text-left">
-                            <i class="fa fa-hashtag text-xl text-gray-600 mr-3"></i>
-                            <span class="font-semibold">Redes Sociais</span>
-                        </button>
-                        <button onclick="navigateTo('history-screen')" class="bg-gray-100 p-3 rounded-lg flex items-center text-left">
-                            <i class="fa fa-book-open text-xl text-gray-600 mr-3"></i>
-                            <span class="font-semibold">História</span>
-                        </button>
-                        <button onclick="navigateTo('sponsors-screen')" class="bg-gray-100 p-3 rounded-lg flex items-center text-left">
-                            <i class="fa fa-handshake text-xl text-gray-600 mr-3"></i>
-                            <span class="font-semibold">Patrocínios</span>
-                        </button>
-                        <button onclick="navigateTo('games-screen')" class="bg-gray-100 p-3 rounded-lg flex items-center text-left">
-                            <i class="fa fa-calendar-alt text-xl text-gray-600 mr-3"></i>
-                            <span class="font-semibold">Jogos</span>
-                        </button>
-                        <button onclick="navigateTo('gallery-screen')" class="bg-gray-100 p-3 rounded-lg flex items-center text-left">
-                            <i class="fa fa-images text-xl text-gray-600 mr-3"></i>
-                            <span class="font-semibold">Galeria</span>
-                        </button>
-                    </div>
-
-                    <section class="mt-8">
-                        <h2 class="font-bold text-lg">Jogadores</h2>
-                        <div id="players-list-home" class="flex overflow-x-auto gap-4 mt-4 no-scrollbar pb-2">
-                            </div>
-                    </section>
-                    
-                    <section class="mt-8">
-                        <h2 class="font-bold text-lg">Próximos Jogos</h2>
-                        <div id="upcoming-games-home" class="flex overflow-x-auto gap-4 mt-4 no-scrollbar pb-2">
-                            </div>
-                    </section>
-                    
-                    <section class="mt-8">
-                        <h2 class="font-bold text-lg">Resultados Recentes</h2>
-                        <div id="recent-results-home" class="flex overflow-x-auto gap-4 mt-4 no-scrollbar pb-2">
-                            </div>
-                    </section>
-                </div>
-            </main>
-            
-            <footer class="p-4 bg-gray-200 text-center text-gray-700 text-sm mt-8">
-                <p class="mb-2"> Para jogos ou campeonato, entrar em contato pelo nosso WhatsApp.</p>
-                <p class="font-semibold">© 2025 Kendence F.C. Todos os direitos reservados. Design por An.Yoshi.</p>
-            </footer>
-        </div>
-
-        <div id="news-screen" class="screen">
-            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20">
-                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
-                <h2 class="font-bold text-lg mx-auto">Notícias</h2>
-                <div class="w-6"></div> </header>
-            <main class="p-4 space-y-4" id="news-list-content">
-                </main>
-        </div>
-        
-        <div id="news-detail-screen" class="screen">
-             <header class="p-4 border-b flex items-center justify-between sticky top-0 bg-white z-10">
-                <button onclick="goBack()"><i class="fa fa-arrow-left text-xl"></i></button>
-                <h2 class="font-bold text-lg mx-auto" id="news-detail-title-header">Notícia</h2>
-                <div class="w-6"></div> </header>
-            <main class="p-4" id="news-detail-content">
-                </main>
-        </div>
-
-        <div id="socials-screen" class="screen">
-            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20">
-                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
-                <h2 class="font-bold text-lg mx-auto">Redes Sociais</h2>
-                <div class="w-6"></div> 
-            </header>
-            <main class="p-4 space-y-4">
-                <a href="https://www.youtube.com/channel/UCVG6kWDq2JIdurnN7LIgmPQ" target="_blank" class="block w-full bg-red-600 text-white p-4 rounded-lg flex items-center justify-center font-semibold text-lg hover:bg-red-700 transition">
-                    <i class="fa-brands fa-youtube text-2xl mr-3"></i>
-                    YouTube
-                    </a>
-                
-                <a href="https://www.instagram.com/kendence2015/?__pwa=1" target="_blank" class="block w-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white p-4 rounded-lg flex items-center justify-center font-semibold text-lg hover:opacity-90 transition">
-                    <i class="fa-brands fa-instagram text-2xl mr-3"></i>
-                    Instagram
-                     </a>
-
-                <a href="https://github.com/kendence/site/blob/main/admin" target="_blank" class="block w-full bg-gray-800 text-white p-4 rounded-lg flex items-center justify-center font-semibold text-lg hover:bg-gray-900 transition">
-                    <i class="fa fa-users text-2xl mr-3"></i>
-                    Acesso à Diretoria
-                    </a>
-            </main>
-        </div>
-
-        <div id="games-screen" class="screen">
-            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20">
-                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
-                <h2 class="font-bold text-lg mx-auto">Jogos</h2>
-                <div class="w-6"></div> </header>
-            <main class="p-4">
-                <section id="upcoming-games-section">
-                    <h3 class="font-bold text-gray-500 text-sm mb-3">PRÓXIMOS JOGOS</h3>
-                    <div id="upcoming-games-list" class="space-y-3">
-                        </div>
-                </section>
-                <section id="recent-results-section" class="mt-8">
-                    <h3 class="font-bold text-gray-500 text-sm mb-3">RESULTADOS RECENTES</h3>
-                    <div id="recent-results-list" class="space-y-3">
-                        </div>
-                </section>
-            </main>
-        </div>
-
-        <div id="sponsors-screen" class="screen">
-            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20">
-                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
-                <h2 class="font-bold text-lg mx-auto">Patrocínios</h2>
-                <div class="w-6"></div> </header>
-            <main class="p-4">
-                <div id="sponsors-grid" class="grid grid-cols-2 gap-4">
-                    </div>
-            </main>
-        </div>
-
-        <div id="player-detail-screen" class="screen">
-             <header class="p-4 border-b flex items-center justify-between sticky top-0 bg-white z-10">
-                <button onclick="goBack()"><i class="fa fa-arrow-left text-xl"></i></button>
-                <h2 class="font-bold text-lg mx-auto">Jogador</h2>
-                <div class="w-6"></div> </header>
-            <main class="p-4" id="player-detail-content">
-                </main>
-            <footer class="p-4 border-t sticky bottom-0 bg-white" id="player-detail-footer">
-                </footer>
-        </div>
-
-        <div id="sponsor-detail-screen" class="screen">
-             <header class="p-4 border-b flex items-center justify-between sticky top-0 bg-white z-10">
-                <button onclick="goBack()"><i class="fa fa-arrow-left text-xl"></i></button>
-                <h2 class="font-bold text-lg mx-auto">Patrocinador</h2>
-                <div class="w-6"></div> </header>
-            <main class="p-4" id="sponsor-detail-content">
-                </main>
-            <footer class="p-4 border-t sticky bottom-0 bg-white" id="sponsor-detail-footer">
-                </footer>
-        </div>
-
-        <div id="history-screen" class="screen">
-            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20">
-                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
-                <h2 class="font-bold text-lg mx-auto">História</h2>
-                <div class="w-6"></div> 
-            </header>
-            <main class="p-4">
-                <img src="https://lh3.googleusercontent.com/d/19tMWJUs5rl403bm4Qz7R3Vep8Lg14qYV" alt="História do Kendence F.C." class="w-full h-48 object-cover rounded-lg mb-4 bg-gray-200">
-                
-                <h2 class="text-2xl font-bold mb-3">Nossa Trajetória</h2>
-                <div class="text-gray-700 space-y-4">
-                    <p>Kendence Futebol Clube 🔴🔵</p>
-                    </p>Desde 1987, o time que nasceu como Meninos do Kennedy carrega a paixão do bairro John Kennedy dentro de campo. Em 2015, passou por uma reformulação e ganhou o nome Kendence, em homenagem à comunidade que o viu crescer.</p>
-
-</p>Com uma história marcada por garra e tradição, o Kendence soma títulos e conquistas:</p>
-</p>Campeão Bronze 2017 🥇🏆,</p>
-</p>Vice-campeão Jataizinho 2018 🥈,</p>
-</p>Vice-campeão Motor Parts Prata 2023 🥈 e</p>
-</p>Vice-campeão Municipal Divisão Prata 2024 🥈.</p>
-</p>Um time que honra seu bairro, sua história e o amor pelo futebol! ⚽🔥</p>
-                   
-                </div>
-            </main>
-        </div>
-
-        <div id="gallery-screen" class="screen">
-            <header class="p-4 border-b flex items-center sticky top-0 bg-white z-20">
-                <button onclick="goBack()" class="mr-4"><i class="fa fa-arrow-left text-xl"></i></button>
-                <h2 class="font-bold text-lg mx-auto">Galeria</h2>
-                <div class="w-6"></div> 
-            </header>
-            <main class="p-4 space-y-4">
-                <a href="https://drive.google.com/drive/folders/1ujHIcc87gguhfM5-aZTzCI9MoJ-u4a-p?usp=drive_link" target="_blank" class="block w-full bg-gray-100 p-4 rounded-lg flex items-center text-left text-lg font-semibold hover:bg-gray-200 transition">
-                    <i class="fa fa-mobile-alt text-2xl text-gray-600 mr-4 w-6 text-center"></i>
-                    Wallpapers
-                    </a>
-
- <a href="https://drive.google.com/drive/folders/1BNs1TjGhXATk8STdXLheeV3UIsTzaAkE?usp=drive_link" target="_blank" class="block w-full bg-gray-100 p-4 rounded-lg flex items-center text-left text-lg font-semibold hover:bg-gray-200 transition">
-                    <i class="fa fa-shield-alt text-2xl text-gray-600 mr-4 w-6 text-center"></i>
-                    Brasão do time
-                    </a>
-
-                <a href="https://drive.google.com/drive/folders/1Z3PidCFqvr9FggAzUEdJkNqgLWtrd-eD?usp=drive_link" target="_blank" class="block w-full bg-gray-100 p-4 rounded-lg flex items-center text-left text-lg font-semibold hover:bg-gray-200 transition">
-                    <i class="fa fa-tshirt text-2xl text-gray-600 mr-4 w-6 text-center"></i>
-                    Camisetas
-                    </a>
-
-                <a href="https://drive.google.com/drive/folders/1BTOeKlLyKpi8or4u2p5a3kxVI-KIQ5AG?usp=drive_link" target="_blank" class="block w-full bg-gray-100 p-4 rounded-lg flex items-center text-left text-lg font-semibold hover:bg-gray-200 transition">
-                    <i class="fa fa-sticky-note text-2xl text-gray-600 mr-4 w-6 text-center"></i> 
-                    Figurinhas
-                    </a>
-
-                 <div class="w-full bg-gray-100 rounded-lg">
-                    <button onclick="toggleCollapse('fotos-sub')" class="w-full p-4 flex items-center justify-between text-left text-lg font-semibold">
-                        <span class="flex items-center">
-                            <i class="fa fa-camera-retro text-2xl text-gray-600 mr-4 w-6 text-center"></i>
-                            Fotos e vídeos
-                        </span>
-                        <i id="fotos-sub-icon" class="fa fa-chevron-down text-gray-500 transition-transform"></i>
-                    </button>
-                    <div id="fotos-sub" class="hidden pl-8 pr-4 pb-4 space-y-2">
-                        
-                        <div class="w-full bg-gray-200 rounded-lg">
-                             <button onclick="toggleCollapse('amistoso-sub')" class="w-full p-3 flex items-center justify-between text-left text-md font-semibold">
-                                <span>Amistoso</span>
-                                <i id="amistoso-sub-icon" class="fa fa-chevron-down text-gray-500 text-sm transition-transform"></i>
-                             </button>
-                             <div id="amistoso-sub" class="hidden pl-6 pr-3 pb-3 space-y-2 mt-1">
-                                <a href="https://drive.google.com/drive/folders/1P9Ls-u-ZZkWhUhSj1TW2-5_OKPqUjMjs?usp=drive_link" target="_blank" class="block p-2 rounded hover:bg-gray-300 transition">Instagran</a>
-                               
-                             </div>
-                        </div>
-                        
-                        <div class="w-full bg-gray-200 rounded-lg">
-                             <button onclick="toggleCollapse('campeonato-sub')" class="w-full p-3 flex items-center justify-between text-left text-md font-semibold">
-                                <span>Campeonato</span>
-                                <i id="campeonato-sub-icon" class="fa fa-chevron-down text-gray-500 text-sm transition-transform"></i>
-                             </button>
-                             <div id="campeonato-sub" class="hidden pl-4 pr-3 pb-3 space-y-2 mt-1">
-                                
-                                <div class="w-full bg-gray-300 rounded-lg">
-                                     <button onclick="toggleCollapse('purosangue-sub')" class="w-full p-2 flex items-center justify-between text-left text-sm font-semibold">
-                                        <span>Copa Puro sangue 2025</span>
-                                        <i id="purosangue-sub-icon" class="fa fa-chevron-down text-gray-500 text-xs transition-transform"></i>
-                                     </button>
-                                     <div id="purosangue-sub" class="hidden pl-6 pr-2 pb-2 space-y-2 mt-1">
-                                        <a href="https://drive.google.com/drive/folders/1fEnOzkYfJNuEqlZfWuT9wA8iP1OZdcC8?usp=drive_link" target="_blank" class="block p-2 rounded hover:bg-gray-400 transition text-sm">Kendence X D'Fiori - 1º jogo Chave B</a>
-                                        <a href="https://drive.google.com/drive/folders/1-FxljDek7aO-Mu4DO3GOp516QwTq1Ss_?usp=drive_link" target="_blank" class="block p-2 rounded hover:bg-gray-400 transition text-sm">Kendence X Juventus - 2º jogo Chave B</a>
-                                        <a href="https://drive.google.com/drive/folders/1mGU6qLrcD_sv7jX3lUga3v5ZmC3pk03j?usp=drive_link" target="_blank" class="block p-2 rounded hover:bg-gray-400 transition text-sm">Kendence X A.E.Altitude - 3º jogo Chave B</a>
-                                        <a href="https://drive.google.com/drive/folders/1HbbdVM-JBEWz3wbdHkNdPOd0rMPOypEM?usp=drive_link" target="_blank" class="block p-2 rounded hover:bg-gray-400 transition text-sm">Kendence X Inter Santa Paula - 4º jogo Chave B</a>
-                                        <a href="https://drive.google.com/drive/folders/1z3ELkvEIlNcrsxvQ_93uuoraT1DB_ybV?usp=drive_link" target="_blank" class="block p-2 rounded hover:bg-gray-400 transition text-sm">Kendence X D.E.R Futebol Club - 8° de Final</a>
-                                        <a href="https://drive.google.com/drive/folders/10gEeh0VWfAWYOG3FxSjw70mYoR4cHsOu?usp=drive_link" target="_blank" class="block p-2 rounded hover:bg-gray-400 transition text-sm">Kendence X Inter Santa Paula - 4º de Final</a>
-
-                                     </div>
-                                </div> 
-                                
-                                <div class="w-full bg-gray-300 rounded-lg">
-                                     <button onclick="toggleCollapse('agroterra-sub')" class="w-full p-2 flex items-center justify-between text-left text-sm font-semibold">
-                                        <span>Copa Agroterra 2026</span>
-                                        <i id="agroterra-sub-icon" class="fa fa-chevron-down text-gray-500 text-xs transition-transform"></i>
-                                     </button>
-                                     <div id="agroterra-sub" class="hidden pl-6 pr-2 pb-2 space-y-2 mt-1">
-                                        <a href="https://drive.google.com/drive/folders/12nianq0pcOdiYzaMShBk6JwdqRoJX0rL?usp=drive_link" target="_blank" class="block p-2 rounded hover:bg-gray-400 transition text-sm">Kendence X Limitados - 1º jogo Chave A</a>
-                                       
-                             </div>
-                        </div>
-
-                    </div>
-                </div>
-
-            </main>
-        </div>
-
-        <div id="image-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 cursor-pointer hidden" onclick="closeImageModal()">
-            <img id="modal-image-src" src="" alt="Imagem em tela cheia" class="max-w-full max-h-full object-contain p-4">
-        </div>
-
-    </div>
-
-    <a href="https://wa.me/5543998202218?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%21" 
-       target="_blank" 
-       class="fixed bottom-4 right-4 z-30 bg-green-500 text-white rounded-full p-3 shadow-lg hover:bg-green-600 transition"
-       aria-label="Contato via WhatsApp">
-        <i class="fa-brands fa-whatsapp text-2xl"></i>
-    </a>
-    <script type="module">
-        // Importar funções necessárias do Firebase SDK
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-database.js";
-
-        
-        // --- SEU CÓDIGO DE CONFIGURAÇÃO DO FIREBASE (ATUALIZADO) ---
-        const firebaseConfig = {
-            apiKey: "AIzaSyAz1fgGgpB7F05-watfO69vi6Mpzgw1uMs",
-            authDomain: "kendencefc-66b8b.firebaseapp.com",
-            projectId: "kendencefc-66b8b",
-            storageBucket: "kendencefc-66b8b.firebasestorage.app",
-            messagingSenderId: "405923587103",
-            appId: "1:405923587103:web:b74f3a37deff2f07bc212a",
-            measurementId: "G-HLVLC7D0VD"
-        };
-        // -----------------------------------------------------------------
-
-        // Inicializar o Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app); 
-        const analytics = getAnalytics(app); 
-
-
-        let navigationStack = ['home-screen'];
-        let dbData = {
-            news: {},
-            players: {},
-            upcomingGames: {},
-            recentResults: {},
-            sponsors: {}
-        };
-        let dataLoaded = {
-            news: false,
-            players: false,
-            upcomingGames: false,
-            recentResults: false,
-            sponsors: false
-        };
-
-        // --- NAVEGAÇÃO ---
-        function navigateTo(screenId) {
-            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-            
-            if (navigationStack[navigationStack.length - 1] !== screenId) {
-                navigationStack.push(screenId);
-            }
-            window.scrollTo(0, 0);
-
-            // Carrega dados específicos da tela se necessário
-            if (screenId === 'news-screen') renderNewsList();
-            if (screenId === 'games-screen') renderGamesLists();
-            if (screenId === 'sponsors-screen') renderSponsorsGrid();
-        }
-
-        function goBack() {
-            if (navigationStack.length > 1) {
-                navigationStack.pop();
-                const lastScreen = navigationStack[navigationStack.length - 1];
-                document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
-                document.getElementById(lastScreen).classList.add('active');
-                 window.scrollTo(0, 0);
-            }
-        }
-        
-        // Expor as funções de navegação ao escopo global (window)
-        window.navigateTo = navigateTo;
-        window.goBack = goBack;
-        // -------------------------
-
-        // --- RENDERIZAÇÃO (DADOS DO FIREBASE) ---
-
-        // Função para formatar data (ex: 18/10/2025 às 15:10)
-        function formatDateTime(isoString) {
-            if (!isoString) return 'Data indefinida';
-            const date = new Date(isoString);
-            const optionsDate = { day: '2-digit', month: '2-digit', year: 'numeric' };
-            const optionsTime = { hour: '2-digit', minute: '2-digit' };
-            return `${date.toLocaleDateString('pt-BR', optionsDate)} às ${date.toLocaleTimeString('pt-BR', optionsTime)}`;
-        }
-
-        // Home: Slider de Notícias
-        function renderHomeNewsSlider() {
-            const container = document.getElementById('news-banner-scroll');
-            container.innerHTML = '';
-            const newsItems = Object.entries(dbData.news).sort(([,a],[,b]) => new Date(b.date) - new Date(a.date)); // Ordena por data
-            
-            if (newsItems.length === 0) {
-                // Adiciona padding de volta se não houver notícias
-                container.innerHTML = `<div class="p-4"><p class="text-gray-500">Nenhuma notícia encontrada.</p></div>`;
-                return;
-            }
-
-            // Pega apenas as 5 mais recentes para o banner
-            newsItems.slice(0, 5).forEach(([key, news]) => {
-                container.innerHTML += `
-                    <div class="flex-shrink-0 w-full snap-center cursor-pointer" onclick="showNewsItem('${key}')">
-                        <div class="h-48 bg-cover bg-center relative" style="background-image: url('${news.image}');">
-                            <div class="absolute bottom-0 left-0 w-full p-3 bg-black bg-opacity-60">
-                                <p class="text-white font-semibold truncate">${news.title}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            // autoScrollBanner(); // Scroll automático desativado
-        }
-
-        // Home: Lista de Jogadores
-        function renderHomePlayers() {
-            const container = document.getElementById('players-list-home');
-            container.innerHTML = '';
-            const players = Object.entries(dbData.players);
-
-            if (players.length === 0) {
-                container.innerHTML = `<p class="text-gray-500">Nenhum jogador encontrado.</p>`;
-                return;
-            }
-
-            players.forEach(([key, player]) => {
-                container.innerHTML += `
-                    <div class="text-center w-28 flex-shrink-0 cursor-pointer" onclick="showPlayer('${key}')">
-                        <img src="${player.image}" alt="${player.name}" class="w-24 h-24 object-cover rounded-full bg-gray-200 p-1 mx-auto border-2 border-gray-300">
-                        <p class="text-xs font-semibold mt-2 truncate">${player.name}</p>
-                        <p class="text-xs text-gray-500">${player.role}</p>
-                    </div>
-                `;
-            });
-        }
-
-        // Home: Próximos Jogos (Horizontal)
-        function renderHomeUpcomingGames() {
-            const container = document.getElementById('upcoming-games-home');
-            container.innerHTML = '';
-            const upcomingGames = Object.entries(dbData.upcomingGames).sort(([,a],[,b]) => new Date(a.date) - new Date(b.date));
-
-            if (upcomingGames.length === 0) {
-                container.innerHTML = `<p class="text-gray-500">Nenhum jogo agendado.</p>`;
-                return;
-            }
-
-            upcomingGames.forEach(([key, game]) => {
-                container.innerHTML += `
-                    <div class="flex-shrink-0 w-64 border rounded-lg p-3 shadow-sm bg-gray-50">
-                        <p class="font-bold text-md text-center truncate">${game.teams}</p>
-                        <p class="text-sm text-gray-600 text-center"><i class="fa fa-calendar-alt mr-1"></i> ${formatDateTime(game.date)}</p>
-                        <p class="text-sm text-gray-600 text-center"><i class="fa fa-map-marker-alt mr-1"></i> ${game.location}</p>
-                        <a href="${game.mapLink}" target="_blank" class="block w-full text-center bg-yellow-400 text-black font-semibold py-1 px-2 rounded-lg mt-2 text-sm">
-                            <i class="fa fa-map-location-dot mr-1"></i> Ver no Mapa
-                        </a>
-                    </div>
-                `;
-            });
-        }
-        
-        // Home: Resultados Recentes (Horizontal)
-        function renderHomeRecentResults() {
-            const container = document.getElementById('recent-results-home');
-            container.innerHTML = '';
-            const recentResults = Object.entries(dbData.recentResults).sort(([,a],[,b]) => new Date(b.date) - new Date(a.date));
-
-            if (recentResults.length === 0) {
-                container.innerHTML = `<p class="text-gray-500">Nenhum resultado recente.</p>`;
-                return;
-            }
-
-            recentResults.forEach(([key, game]) => {
-                container.innerHTML += `
-                    <div class="flex-shrink-0 w-64 border rounded-lg p-3 shadow-sm bg-gray-50">
-                        <p class="font-bold text-lg text-center truncate">${game.match}</p>
-                        <p class="text-sm text-gray-600 text-center"><i class="fa fa-calendar-alt mr-1"></i> ${formatDateTime(game.date)}</D>
-                        <p class="text-sm text-gray-600 text-center"><i class="fa fa-map-marker-alt mr-1"></i> ${game.location}</p>
-                        <a href="${game.videoLink}" target="_blank" class="block w-full text-center bg-gray-800 text-white font-semibold py-1 px-2 rounded-lg mt-2 text-sm">
-                            <i class="fa fa-video mr-1"></i> Ver Fotos/Vídeos
-                        </a>
-                    </div>
-                `;
-            });
-        }
-
-        // Tela Notícias: Lista Completa
-        function renderNewsList() {
-            const container = document.getElementById('news-list-content');
-            container.innerHTML = '';
-            const newsItems = Object.entries(dbData.news).sort(([,a],[,b]) => new Date(b.date) - new Date(a.date));
-
-            if (newsItems.length === 0) {
-                container.innerHTML = `<p class="text-gray-500 text-center">Nenhuma notícia encontrada.</p>`;
-                return;
-            }
-
-            newsItems.forEach(([key, news]) => {
-                container.innerHTML += `
-                    <div class="cursor-pointer border rounded-lg overflow-hidden shadow-sm" onclick="showNewsItem('${key}')">
-                        <img src="${news.image}" alt="${news.title}" class="w-full h-48 object-cover">
-                        <div class="p-3">
-                            <p class="font-semibold text-lg">${news.title}</p>
-                            <p class="text-sm text-gray-500 mb-2">${new Date(news.date).toLocaleDateString('pt-BR')}</p>
-                            <p class="text-sm text-gray-700">${(news.text || '').substring(0, 100)}...</p>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        // Tela Jogos: Próximos e Resultados
-        function renderGamesLists() {
-            const upcomingContainer = document.getElementById('upcoming-games-list');
-            const recentContainer = document.getElementById('recent-results-list');
-            upcomingContainer.innerHTML = '';
-            recentContainer.innerHTML = '';
-
-            const upcomingGames = Object.entries(dbData.upcomingGames).sort(([,a],[,b]) => new Date(a.date) - new Date(b.date));
-            const recentResults = Object.entries(dbData.recentResults).sort(([,a],[,b]) => new Date(b.date) - new Date(a.date));
-
-            if (upcomingGames.length > 0) {
-                upcomingGames.forEach(([key, game]) => {
-                    upcomingContainer.innerHTML += `
-                        <div class="border rounded-lg p-3 shadow-sm">
-                            <p class="font-bold text-lg text-center">${game.teams}</p>
-                            <p class="text-sm text-gray-600 text-center"><i class="fa fa-calendar-alt mr-1"></i> ${formatDateTime(game.date)}</p>
-                            <p class="text-sm text-gray-600 text-center"><i class="fa fa-map-marker-alt mr-1"></i> ${game.location}</p>
-                            <a href="${game.mapLink}" target="_blank" class="block w-full text-center bg-yellow-400 text-black font-semibold py-2 rounded-lg mt-3">
-                                <i class="fa fa-map-location-dot mr-1"></i> Ver no Mapa
-                            </a>
-                        </div>
-                    `;
-                });
-            } else {
-                upcomingContainer.innerHTML = `<p class="text-gray-500 text-center">Nenhum jogo agendado.</p>`;
-            }
-            
-            if (recentResults.length > 0) {
-                recentResults.forEach(([key, game]) => {
-                    recentContainer.innerHTML += `
-                         <div class="border rounded-lg p-3 shadow-sm">
-                            <p class="font-bold text-lg text-center">${game.match}</p>
-                            <p class="text-sm text-gray-600 text-center"><i class="fa fa-calendar-alt mr-1"></i> ${formatDateTime(game.date)}</p>
-                            <p class="text-sm text-gray-600 text-center"><i class="fa fa-map-marker-alt mr-1"></i> ${game.location}</p>
-                            <a href="${game.videoLink}" target="_blank" class="block w-full text-center bg-gray-800 text-white font-semibold py-2 rounded-lg mt-3">
-                                <i class="fa fa-video mr-1"></i> Ver Fotos/Vídeos
-                            </a>
-                        </div>
-                    `;
-                });
-            } else {
-                recentContainer.innerHTML = `<p class="text-gray-500 text-center">Nenhum resultado recente.</p>`;
-            }
-        }
-
-        // Tela Patrocínios: Grid
-        function renderSponsorsGrid() {
-            const container = document.getElementById('sponsors-grid');
-            container.innerHTML = '';
-            const sponsors = Object.entries(dbData.sponsors);
-
-            if (sponsors.length === 0) {
-                container.innerHTML = `<p class="text-gray-500 text-center col-span-2">Nenhum patrocinador encontrado.</p>`;
-                return;
-            }
-
-            sponsors.forEach(([key, sponsor]) => {
-                container.innerHTML += `
-                    <div class="cursor-pointer border rounded-lg p-2 text-center shadow-sm" onclick="showSponsor('${key}')">
-                        <div class="h-24 flex items-center justify-center bg-gray-100 rounded-md">
-                            <img src="${sponsor.image}" alt="${sponsor.name}" class="max-h-full max-w-full object-contain">
-                        </div>
-                        <p class="font-semibold mt-2">${sponsor.name}</p>
-                    </div>
-                `;
-            });
-        }
-
-        // --- NAVEGAÇÃO PARA DETALHES ---
-        
-        // Funções do Modal de Imagem
-        function openImageModal(imageUrl) {
-            const modal = document.getElementById('image-modal');
-            const img = document.getElementById('modal-image-src');
-            if (modal && img) {
-                img.src = imageUrl;
-                modal.classList.remove('hidden');
-            }
-        }
-
-        function closeImageModal() {
-            const modal = document.getElementById('image-modal');
-            const img = document.getElementById('modal-image-src');
-            if (modal && img) {
-                modal.classList.add('hidden');
-                img.src = ""; // Limpa a imagem para não "piscar" na próxima vez
-            }
-        }
-        
-        // Função para o menu colapsável (Accordion)
-        function toggleCollapse(elementId) {
-            const content = document.getElementById(elementId);
-            const icon = document.getElementById(elementId + '-icon');
-
-            if (content && icon) {
-                content.classList.toggle('hidden');
-                icon.classList.toggle('rotate-180'); // Tailwind tem a classe 'rotate-180'
-            }
-        }
-
-
-        // Detalhe da Notícia
-        window.showNewsItem = (key) => {
-            const news = dbData.news[key];
-            if (!news) return;
-            
-            document.getElementById('news-detail-title-header').textContent = news.title.substring(0, 20) + '...';
-            const container = document.getElementById('news-detail-content');
-            container.innerHTML = `
-                <img src="${news.image}" alt="${news.title}" class="w-full h-48 object-cover rounded-lg mb-4 cursor-pointer" onclick="openImageModal('${news.image}')">
-                <h2 class="text-2xl font-bold mb-2">${news.title}</h2>
-                <p class="text-sm text-gray-500 mb-4">${new Date(news.date).toLocaleDateString('pt-BR')}</p>
-                <div class="text-gray-700 whitespace-pre-wrap">${news.text}</div>
-            `;
-            navigateTo('news-detail-screen');
-        }
-
-/// Detalhe do Jogador
-        window.showPlayer = (key) => {
-            const player = dbData.players[key];
-            if (!player) return;
-
-            const content = document.getElementById('player-detail-content');
-            content.innerHTML = `
-                <div class="flex justify-center mb-4">
-                    <img src="${player.image}" alt="${player.name}" class="w-48 h-48 object-cover rounded-full border-4 border-yellow-400">
-                </div>
-                <h2 class="text-2xl font-bold text-center">${player.name}</h2>
-                <p class="text-lg text-gray-600 text-center">${player.role}</p>
-                ${player.description ? `<p class="text-md text-gray-800 mt-2 whitespace-pre-wrap">${player.description}</p>` : ''}
-            `;
-
-            const footer = document.getElementById('player-detail-footer');
-            footer.innerHTML = `
-                <a href="${player.instagram}" target="_blank" class="w-full bg-gray-800 text-white font-bold py-3 rounded-lg flex justify-center items-center">
-                    <i class="fa-brands fa-instagram text-xl mr-2"></i> INSTAGRAM
-                </a>
-            `;
-            navigateTo('player-detail-screen');
-        }
-
-        // Detalhe do Patrocinador
-        window.showSponsor = (key) => {
-            const sponsor = dbData.sponsors[key];
-            if (!sponsor) return;
-
-            const content = document.getElementById('sponsor-detail-content');
-            content.innerHTML = `
-                <div class="flex justify-center mb-4 p-4 bg-gray-100 rounded-lg">
-                    <img src="${sponsor.image}" alt="${sponsor.name}" class="w-48 h-24 object-contain">
-                </div>
-                <h2 class="text-2xl font-bold mb-4">${sponsor.name}</h2>
-                <div class="space-y-2">
-                    <p class="text-gray-700"><i class="fa fa-map-marker-alt w-5 mr-2 text-gray-500"></i> ${sponsor.address}</p>
-                    <p class="text-gray-700"><i class="fa fa-phone w-5 mr-2 text-gray-500"></i> ${sponsor.phone}</p>
-                </div>
-            `;
-
-            const footer = document.getElementById('sponsor-detail-footer');
-            footer.innerHTML = `
-                <a href="${sponsor.instagram}" target="_blank" class="w-full bg-gray-800 text-white font-bold py-3 rounded-lg flex justify-center items-center">
-                    <i class="fa-brands fa-instagram text-xl mr-2"></i> INSTAGRAM
-                </a>
-            `;
-            navigateTo('sponsor-detail-screen'); 
-        }
-        
-        // Expor as funções de navegação ao escopo global (window)
-        window.navigateTo = navigateTo;
-        window.goBack = goBack;
-        window.showNewsItem = showNewsItem;
-        window.showPlayer = showPlayer;
-        window.showSponsor = showSponsor;
-        
-        // Exposição das novas funções do modal
-        window.openImageModal = openImageModal;
-        window.closeImageModal = closeImageModal;
-        
-        // Expor a nova função de colapso
-        window.toggleCollapse = toggleCollapse;
-        // -------------------------
-
-        // Scroll automático do banner de notícias (Função desativada)
-        /*
-        function autoScrollBanner() { ... }
-        */
-
-        // --- INICIALIZAÇÃO E FETCH DE DADOS ---
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // Adiciona um tempo limite de 3 segundos para esconder a tela de carregamento.
-            setTimeout(() => {
-                const loadingScreen = document.getElementById('loading-screen');
-                if (loadingScreen) {
-                    loadingScreen.style.display = 'none';
-                }
-            }, 3000); // 3000ms = 3 segundos
-
-            
-            // Ouvir por mudanças em 'news'
-            onValue(ref(database, 'news'), (snapshot) => {
-                dbData.news = snapshot.val() || {};
-                dataLoaded.news = true;
-                renderHomeNewsSlider();
-                if (navigationStack[navigationStack.length - 1] === 'news-screen') {
-                    renderNewsList(); 
-                }
-            }, (error) => {
-                console.error("Erro ao carregar notícias:", error.message);
-                dataLoaded.news = true; 
-            });
-
-            // Ouvir por mudanças em 'players'
-            onValue(ref(database, 'players'), (snapshot) => {
-                dbData.players = snapshot.val() || {};
-                dataLoaded.players = true;
-                renderHomePlayers();
-            }, (error) => {
-                console.error("Erro ao carregar jogadores:", error.message);
-                dataLoaded.players = true;
-            });
-
-            // Ouvir por mudanças em 'upcomingGames'
-            onValue(ref(database, 'upcomingGames'), (snapshot) => {
-                dbData.upcomingGames = snapshot.val() || {};
-                dataLoaded.upcomingGames = true;
-                renderHomeUpcomingGames(); 
-                if (navigationStack[navigationStack.length - 1] === 'games-screen') {
-                    renderGamesLists(); 
-                }
-            });
-
-            // Ouvir por mudanças em 'recentResults'
-            onValue(ref(database, 'recentResults'), (snapshot) => {
-                dbData.recentResults = snapshot.val() || {};
-                dataLoaded.recentResults = true;
-                renderHomeRecentResults(); 
-                if (navigationStack[navigationStack.length - 1] === 'games-screen') {
-                    renderGamesLists(); 
-                }
-            });
-
-            // Ouvir por mudanças em 'sponsors'
-            onValue(ref(database, 'sponsors'), (snapshot) => {
-                dbData.sponsors = snapshot.val() || {};
-                dataLoaded.sponsors = true;
-                 if (navigationStack[navigationStack.length - 1] === 'sponsors-screen') {
-                    renderSponsorsGrid(); 
-                }
-            });
-        });
-
-    </script>
-</body>
-
-</html>
-
-
-
