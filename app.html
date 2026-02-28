@@ -202,17 +202,20 @@
                     </section>
                     <section class="mt-12">
                         <h2 class="text-2xl font-black text-kendence-dark-blue uppercase mb-4">Nosso Elenco</h2>
-                        <div id="home-players-list" class="flex space-x-6 overflow-x-auto pb-4 **custom-scrollbar**"></div>
+                        <div id="home-players-list" class="flex space-x-6 overflow-x-auto pb-4 custom-scrollbar"></div>
                     </section>
                     <section class="mt-12">
                         <h2 class="text-2xl font-black text-kendence-dark-blue uppercase mb-4">Jogos</h2>
-                        <div id="home-games-list" class="flex space-x-4 overflow-x-auto pb-4 **custom-scrollbar**"></div>
+                        <div id="home-games-list" class="flex space-x-4 overflow-x-auto pb-4 custom-scrollbar"></div>
                     </section>
                 </div>
             </div>
 
             <div id="news-screen" class="screen">
                 <div class="container mx-auto px-4 py-8">
+                    <button onclick="goBack()" class="mb-6 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center transition-colors">
+                        <i class="fa fa-arrow-left mr-2"></i> Voltar
+                    </button>
                     <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
                         <h1 class="text-3xl font-black text-kendence-dark-blue uppercase">Notícias</h1>
                         <div class="relative w-full sm:w-auto">
@@ -226,6 +229,9 @@
             
             <div id="games-screen" class="screen">
                  <div class="container mx-auto px-4 py-8">
+                    <button onclick="goBack()" class="mb-6 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center transition-colors">
+                        <i class="fa fa-arrow-left mr-2"></i> Voltar
+                    </button>
                     <h1 class="text-3xl font-black text-kendence-dark-blue uppercase mb-6">Calendário de Jogos</h1>
                     <div id="games-page-container"></div>
                 </div>
@@ -233,6 +239,9 @@
 
             <div id="players-screen" class="screen">
                 <div class="container mx-auto px-4 py-8">
+                    <button onclick="goBack()" class="mb-6 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center transition-colors">
+                        <i class="fa fa-arrow-left mr-2"></i> Voltar
+                    </button>
                     <h1 class="text-3xl font-black text-kendence-dark-blue uppercase mb-6">Nosso Elenco</h1>
                     <div id="players-grid-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"></div>
                 </div>
@@ -240,6 +249,9 @@
 
             <div id="history-screen" class="screen">
                 <div class="container mx-auto px-4 py-8">
+                     <button onclick="goBack()" class="mb-6 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center transition-colors">
+                        <i class="fa fa-arrow-left mr-2"></i> Voltar
+                    </button>
                      <h1 class="text-3xl font-black text-kendence-dark-blue uppercase mb-6">Nossa História</h1>
                      <div class="bg-white p-6 shadow-lg">
                         <img src="https://lh3.googleusercontent.com/d/10Mk2FghUvdHucNN1dEo1QsrE9PecaKzV" alt="História do Kendence F.C." class="w-full h-full object-cover object-top object-cover rounded-lg mb-6 cursor-pointer" onclick="openImageModal(this.src)">
@@ -261,6 +273,9 @@
             
             <div id="gallery-screen" class="screen">
                 <div class="container mx-auto px-4 py-8">
+                     <button onclick="goBack()" class="mb-6 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center transition-colors">
+                        <i class="fa fa-arrow-left mr-2"></i> Voltar
+                    </button>
                      <h1 class="text-3xl font-black text-kendence-dark-blue uppercase mb-6">Galeria</h1>
                      <div id="gallery-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         </div>
@@ -269,6 +284,9 @@
             
             <div id="sponsors-screen" class="screen">
                 <div class="container mx-auto px-4 py-8">
+                     <button onclick="goBack()" class="mb-6 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center transition-colors">
+                        <i class="fa fa-arrow-left mr-2"></i> Voltar
+                    </button>
                      <h1 class="text-3xl font-black text-kendence-dark-blue uppercase mb-6">Nossos Patrocinadores</h1>
                      <div id="sponsors-grid-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
                 </div>
@@ -361,65 +379,62 @@
 
         window.navigateTo = (screenId, event) => {
             if (event) event.preventDefault();
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
             
+            // Adiciona ao stack apenas se for uma nova tela
             if (navigationStack[navigationStack.length - 1] !== screenId) {
                 navigationStack.push(screenId);
             }
-            window.scrollTo(0, 0);
-            document.getElementById('mobile-menu').classList.add('hidden');
-        }
-            document.addEventListener('DOMContentLoaded', () => {
-    const totalTime = 3000; // Tempo total em milisegundos (3 segundos)
-    const intervalTime = 30; // Atualização a cada 30ms para ser suave
-    let currentTime = 0;
 
-    const progressBar = document.getElementById('progress-bar');
-    const progressText = document.getElementById('progress-text');
-    const loadingScreen = document.getElementById('loading-screen');
-    const appContainer = document.getElementById('app-container');
-
-    const updateLoader = setInterval(() => {
-        currentTime += intervalTime;
-        
-        // Calcula a porcentagem (0 a 100)
-        let percentage = Math.min((currentTime / totalTime) * 100, 100);
-        
-        // Atualiza a largura da barra e o texto
-        progressBar.style.width = percentage + '%';
-        progressText.textContent = Math.floor(percentage);
-
-        if (currentTime >= totalTime) {
-            clearInterval(updateLoader);
-            
-            // Efeito de saída
-            loadingScreen.style.opacity = '0';
-            setTimeout(() => {
-                loadingScreen.style.visibility = 'hidden';
-                appContainer.classList.add('loaded');
-            }, 500);
-        }
-    }, intervalTime);
-});
-
-        // Sua função de navegação existente
-        window.navigateTo = (screenId, event) => {
-            if (event) event.preventDefault();
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) targetScreen.classList.add('active');
+            
+            // Fecha o menu mobile ao selecionar opção
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu) mobileMenu.classList.add('hidden');
+            
             window.scrollTo(0, 0);
         }
+
         window.goBack = () => {
             if (navigationStack.length > 1) {
-                navigationStack.pop();
+                navigationStack.pop(); // Remove a tela atual
                 const lastScreenId = navigationStack[navigationStack.length - 1];
                 document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-                document.getElementById(lastScreenId).classList.add('active');
+                const lastScreen = document.getElementById(lastScreenId);
+                if (lastScreen) lastScreen.classList.add('active');
                 window.scrollTo(0, 0);
             }
         };
-        
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const totalTime = 3000;
+            const intervalTime = 30;
+            let currentTime = 0;
+
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const loadingScreen = document.getElementById('loading-screen');
+            const appContainer = document.getElementById('app-container');
+
+            const updateLoader = setInterval(() => {
+                currentTime += intervalTime;
+                let percentage = Math.min((currentTime / totalTime) * 100, 100);
+                
+                progressBar.style.width = percentage + '%';
+                progressText.textContent = Math.floor(percentage);
+
+                if (currentTime >= totalTime) {
+                    clearInterval(updateLoader);
+                    loadingScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingScreen.style.visibility = 'hidden';
+                        appContainer.classList.add('loaded');
+                    }, 500);
+                }
+            }, intervalTime);
+        });
+
         document.getElementById('mobile-menu-button').addEventListener('click', () => {
              document.getElementById('mobile-menu').classList.toggle('hidden');
         });
@@ -543,7 +558,6 @@
             <p class="text-xs font-bold text-kendence-dark-blue">FIM DE JOGO - ${formatDateTime(g.date, false)}</p>
             <p class="text-xl font-bold my-2">${g.match || 'Resultado indisponível'}</p>
             
-            <!-- OCORRÊNCIAS ADICIONADAS AQUI -->
             <div class="flex justify-between mt-1 mb-3 border-t pt-2 gap-2 text-[9px] text-gray-500 uppercase leading-tight italic">
                 <div class="w-1/2 text-left whitespace-pre-wrap">${g.occurrencesA || ''}</div>
                 <div class="w-1/2 text-right whitespace-pre-wrap">${g.occurrencesB || ''}</div>
@@ -633,7 +647,6 @@ const renderGamesPage = () => {
             <a href="${g.videoLink || '#'}" target="_blank" class="bg-kendence-red text-white font-bold text-xs uppercase px-4 py-2 rounded hover:bg-red-700">Ver Mídia</a>
         </div>
         
-        <!-- OCORRÊNCIAS ADICIONADAS AQUI TAMBÉM -->
         <div class="flex justify-between mt-2 pt-2 border-t border-gray-100 gap-4 text-[9px] text-gray-400 uppercase leading-tight">
             <div class="w-1/2 whitespace-pre-wrap"><strong>Kendence:</strong><br>${g.occurrencesA || '---'}</div>
             <div class="w-1/2 text-right whitespace-pre-wrap"><strong>Cartões:</strong><br>${g.occurrencesB || '---'}</div>
@@ -684,9 +697,6 @@ const renderGamesPage = () => {
              container.innerHTML = Object.values(dbData.sponsors).map(s => {
                 const imageUrl = s.imageFooter || s.image;
 
-                // CORREÇÃO DE COMPATIBILIDADE:
-                // Aceita 'instagram' OU 'link' para exibir o patrocinador.
-                // Apenas a imagem é estritamente obrigatória para aparecer.
                 if (!imageUrl) {
                     return ''; 
                 }
@@ -747,13 +757,13 @@ const renderGamesPage = () => {
             
             let html = '';
             galleryData.forEach(item => {
-                if (item.url) { // Simple link
+                if (item.url) { 
                     html += `
                         <a href="${item.url}" target="_blank" class="bg-white shadow-lg p-6 flex items-center text-xl font-bold text-kendence-dark-blue hover:bg-gray-100">
                             <i class="fa ${item.icon} text-3xl w-12 text-center text-kendence-red mr-4"></i>
                             ${item.name}
                         </a>`;
-                } else if (item.sublinks) { // Expandable section for Fotos e Vídeos
+                } else if (item.sublinks) { 
                     html += `
                         <div class="bg-white shadow-lg md:col-span-2 lg:col-span-3">
                             <button onclick="toggleGallerySection(this)" class="w-full text-left p-6 flex items-center text-xl font-bold text-kendence-dark-blue hover:bg-gray-100">
@@ -818,14 +828,8 @@ const renderGamesPage = () => {
         
         onValue(ref(database, 'sponsors'), (s) => { dbData.sponsors = s.val() || {}; renderSponsorsPage(); renderFooterSponsors(); });
         
-        // Renderizar conteúdo estático uma vez
         renderGalleryPage();
 
     </script>
-</body>
-</html>
-
-
-
 </body>
 </html>
