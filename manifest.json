@@ -1,0 +1,22 @@
+{
+  "name": "Kendence F.C. Oficial",
+  "short_name": "Kendence FC",
+  "description": "Site oficial do Kendence Futebol Clube",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#162B58",
+  "theme_color": "#D31F37",
+  "icons": [
+    {
+      "src": "icone-tela-inicial-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "https://i.postimg.cc/Twzwm9Bh/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
