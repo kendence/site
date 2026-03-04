@@ -34,33 +34,37 @@
 
         label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; color: #444; }
         input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
-        
-        .btn-submit { width: 100%; padding: 20px; background: var(--secondary); color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(26, 35, 126, 0.3); }
-        .btn-submit:hover { background: var(--primary); }
+        textarea { height: 80px; resize: vertical; }
 
-        /* Estilos do Modal (Popup) */
+        .btn-submit { width: 100%; padding: 20px; background: var(--secondary); color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(26, 35, 126, 0.3); }
+        .btn-submit:hover { background: var(--primary); box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3); }
+
+        /* Estilos do Modal */
         #modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.8);
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(5px);
         }
         .modal-content {
             background: white;
-            padding: 30px;
-            border-radius: 15px;
+            padding: 40px;
+            border-radius: 20px;
             text-align: center;
-            max-width: 400px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
         .modal-content h2 { color: var(--secondary); margin-top: 0; }
-        .modal-buttons { display: flex; gap: 10px; margin-top: 20px; }
-        .btn-modal { flex: 1; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .modal-buttons { display: flex; gap: 15px; margin-top: 25px; }
+        .btn-modal { flex: 1; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.2s; }
         .btn-yes { background: var(--primary); color: white; }
-        .btn-no { background: #ccc; }
+        .btn-no { background: #eee; color: #333; }
+        .btn-modal:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -88,8 +92,31 @@
                     <div><label>Apelido:</label><input type="text" name="Apelido"></div>
                     <div><label>Nascimento:</label><input type="date" name="Nascimento"></div>
                     <div><label>CPF:</label><input type="text" name="CPF"></div>
+                    <div><label>RG:</label><input type="text" name="RG"></div>
+                    <div><label>Telefone:</label><input type="tel" name="Telefone"></div>
                     <div><label>WhatsApp:</label><input type="tel" name="WhatsApp"></div>
+                    <div class="full"><label>E-mail:</label><input type="email" name="Email"></div>
                     <div class="full"><label>Endereço:</label><input type="text" name="Endereco"></div>
+                    <div><label>Contato de Emergência:</label><input type="text" name="Contato_Emergencia"></div>
+                    <div><label>Tipo Sanguíneo:</label><input type="text" name="Tipo_Sanguineo"></div>
+                    <div><label>Nº da Camisa:</label><input type="number" name="Numero_Camisa"></div>
+                    <div class="full"><label>Historico de Jogos:</label><textarea name="Historico_Jogos"></textarea></div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Dados Técnicos & Saúde</legend>
+                <div class="grid">
+                    <div><label>Posição Principal:</label><input type="text" name="Posicao_Principal"></div>
+                    <div><label>Posição Secundária:</label><input type="text" name="Posicao_Secundaria"></div>
+                    <div><label>Pé Dominante:</label><select name="Pe_Dominante"><option>Destro</option><option>Canhoto</option><option>Ambidestro</option></select></div>
+                    <div><label>Altura (m):</label><input type="text" name="Altura"></div>
+                    <div><label>Peso (kg):</label><input type="text" name="Peso"></div>
+                    <div><label>Último Exame Médico:</label><input type="date" name="Ultimo_Exame"></div>
+                    <div class="full"><label>Histórico de Lesões:</label><textarea name="Historico_Lesoes"></textarea></div>
+                    <div class="full"><label>Condição Física Atual:</label><textarea name="Condicao_Fisica"></textarea></div>
+                    <div><label>Status:</label><select name="Status"><option>Ativo</option><option>Inativo</option></select></div>
+                    <div><label>Categoria:</label><input type="text" name="Categoria"></div>
                 </div>
             </fieldset>
         </div>
@@ -100,18 +127,28 @@
                 <div class="grid">
                     <div class="full"><label>Nome Completo:</label><input type="text" name="Membro_Nome"></div>
                     <div><label>Cargo:</label><input type="text" name="Cargo"></div>
+                    <div><label>CPF:</label><input type="text" name="Membro_CPF"></div>
+                    <div class="full"><label>Endereço:</label><input type="text" name="Membro_Endereco"></div>
                     <div><label>WhatsApp:</label><input type="tel" name="Membro_WhatsApp"></div>
+                    <div><label>Entrada no Clube:</label><input type="date" name="Data_Entrada"></div>
+                    <div><label>Status:</label><select name="Membro_Status"><option>Ativo</option><option>Inativo</option></select></div>
                 </div>
             </fieldset>
         </div>
 
         <div id="form-patrocinador" class="form-section">
             <fieldset>
-                <legend>Dados da Empresa</legend>
+                <legend>Dados Cadastrais da Empresa</legend>
                 <div class="grid">
                     <div class="full"><label>Razão Social / Nome Fantasia:</label><input type="text" name="Empresa_Nome"></div>
-                    <div><label>Contato Principal:</label><input type="text" name="Responsavel_Nome"></div>
-                    <div><label>WhatsApp:</label><input type="tel" name="Empresa_WhatsApp"></div>
+                    <div><label>Logo (URL):</label><input type="text" name="Empresa_Logo"></div>
+                    <div><label>Redes Sociais (Insta/FB):</label><input type="text" name="Redes_Sociais"></div>
+                    <div class="full"><label>Endereço Completo Sede:</label><input type="text" name="Sede_Endereco"></div>
+                    <div><label>Contato Principal (Nome):</label><input type="text" name="Responsavel_Nome"></div>
+                    <div><label>Marketing/Diretoria:</label><input type="text" name="Setor_Responsavel"></div>
+                    <div><label>E-mail Corporativo:</label><input type="email" name="Empresa_Email"></div>
+                    <div><label>Telefone / WhatsApp:</label><input type="tel" name="Empresa_WhatsApp"></div>
+                    <div><label>Status da Parceria:</label><select name="Parceria_Status"><option>ATIVO</option><option>INATIVO</option></select></div>
                 </div>
             </fieldset>
         </div>
@@ -122,19 +159,19 @@
 
 <div id="modal-overlay">
     <div class="modal-content">
-        <h2>Obrigado pelo Cadastro!</h2>
-        <p>Suas informações foram recebidas com sucesso.</p>
-        <p><strong>Deseja baixar uma cópia da sua ficha em PDF?</strong></p>
+        <h2>🎉 Cadastro Concluído!</h2>
+        <p>Obrigado por se registrar no Kendence F.C.</p>
+        <p><strong>Deseja uma cópia da sua ficha em PDF?</strong></p>
         <div class="modal-buttons">
-            <button class="btn-modal btn-yes" onclick="finalizarCadastro(true)">SIM, BAIXAR</button>
-            <button class="btn-modal btn-no" onclick="finalizarCadastro(false)">NÃO, APENAS SAIR</button>
+            <button class="btn-modal btn-yes" onclick="finalizarProcesso(true)">SIM, BAIXAR PDF</button>
+            <button class="btn-modal btn-no" onclick="finalizarProcesso(false)">NÃO, OBRIGADO</button>
         </div>
     </div>
 </div>
 
 <script>
     const { jsPDF } = window.jspdf;
-    let dadosTemporarios = {}; // Para guardar os dados enquanto o modal está aberto
+    let dadosFormulario = {}; 
 
     function showForm(tipo) {
         document.querySelectorAll('.form-section, .tab-btn').forEach(el => el.classList.remove('active'));
@@ -145,63 +182,64 @@
 
     document.getElementById('mainForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        
         const tipo = document.getElementById('tipo_cadastro').value;
         const formData = new FormData(this);
         
-        // Coleta os dados
-        dadosTemporarios = { 
+        dadosFormulario = { 
             TIPO_DE_CADASTRO: tipo.toUpperCase(), 
             DATA_DO_REGISTRO: new Date().toLocaleString() 
         };
-        formData.forEach((value, key) => { if(value) dadosTemporarios[key] = value; });
 
-        // Salva no Banco local (opcional)
+        formData.forEach((value, key) => { if(value) dadosFormulario[key] = value; });
+
+        // Salva no Banco local (pode ser usado depois na página da diretoria)
         let db = JSON.parse(localStorage.getItem('kendence_pro_db') || '[]');
-        db.push(dadosTemporarios);
+        db.push(dadosFormulario);
         localStorage.setItem('kendence_pro_db', JSON.stringify(db));
 
-        // Abre o Modal em vez de dar alert
+        // Mostra o Popup
         document.getElementById('modal-overlay').style.display = 'flex';
     });
 
-    function finalizarCadastro(querPDF) {
-        if (querPDF) {
+    function finalizarProcesso(gerar) {
+        if (gerar) {
             gerarPDF();
         }
         
-        // Redireciona para o site oficial após um pequeno delay se baixou, ou imediato se não baixou
+        // Pequena pausa para o download iniciar e então redireciona
         setTimeout(() => {
-            window.location.href = 'https://kendence.github.io/site/';
-        }, querPDF ? 1000 : 100);
+            window.location.href = "https://kendence.github.io/site/";
+        }, gerar ? 1500 : 200);
     }
 
     function gerarPDF() {
         const doc = new jsPDF();
         const tipo = document.getElementById('tipo_cadastro').value;
         
+        // Cabeçalho PDF
         doc.setFillColor(26, 35, 126); 
         doc.rect(0, 0, 210, 40, 'F');
         doc.setTextColor(255, 255, 255);
         doc.setFontSize(22);
         doc.text("KENDENCE F.C.", 105, 20, { align: "center" });
         doc.setFontSize(12);
-        doc.text("Ficha Oficial de Cadastro", 105, 30, { align: "center" });
+        doc.text("Ficha Oficial de Registro", 105, 30, { align: "center" });
         
         doc.setTextColor(0, 0, 0);
         let y = 55;
         
-        Object.entries(dadosTemporarios).forEach(([key, val]) => {
+        // Lista todos os campos preenchidos
+        Object.entries(dadosFormulario).forEach(([key, val]) => {
             if(y > 280) { doc.addPage(); y = 20; }
             doc.setFont("helvetica", "bold");
             doc.text(`${key.replace(/_/g, ' ')}:`, 20, y);
             doc.setFont("helvetica", "normal");
-            doc.text(`${val}`, 80, y);
-            y += 9;
+            doc.text(`${val}`, 75, y);
+            y += 8;
         });
 
-        const nomeArquivo = dadosTemporarios.Nome_Completo || dadosTemporarios.Membro_Nome || dadosTemporarios.Empresa_Nome || 'Ficha';
-        doc.save(`Ficha_Kendence_${nomeArquivo}.pdf`);
+        const idNome = dadosFormulario.Nome_Completo || dadosFormulario.Membro_Nome || dadosFormulario.Empresa_Nome || 'Ficha';
+        doc.save(`Cadastro_${tipo}_${idNome}.pdf`);
     }
 </script>
 
