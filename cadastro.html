@@ -34,10 +34,33 @@
 
         label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; color: #444; }
         input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
-        textarea { height: 80px; resize: vertical; }
-
+        
         .btn-submit { width: 100%; padding: 20px; background: var(--secondary); color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(26, 35, 126, 0.3); }
-        .btn-submit:hover { background: var(--primary); box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3); }
+        .btn-submit:hover { background: var(--primary); }
+
+        /* Estilos do Modal (Popup) */
+        #modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+        }
+        .modal-content h2 { color: var(--secondary); margin-top: 0; }
+        .modal-buttons { display: flex; gap: 10px; margin-top: 20px; }
+        .btn-modal { flex: 1; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn-yes { background: var(--primary); color: white; }
+        .btn-no { background: #ccc; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -65,31 +88,8 @@
                     <div><label>Apelido:</label><input type="text" name="Apelido"></div>
                     <div><label>Nascimento:</label><input type="date" name="Nascimento"></div>
                     <div><label>CPF:</label><input type="text" name="CPF"></div>
-                    <div><label>RG:</label><input type="text" name="RG"></div>
-                    <div><label>Telefone:</label><input type="tel" name="Telefone"></div>
                     <div><label>WhatsApp:</label><input type="tel" name="WhatsApp"></div>
-                    <div class="full"><label>E-mail:</label><input type="email" name="Email"></div>
                     <div class="full"><label>Endereço:</label><input type="text" name="Endereco"></div>
-                    <div><label>Contato de Emergência:</label><input type="text" name="Contato_Emergencia"></div>
-                    <div><label>Tipo Sanguíneo:</label><input type="text" name="Tipo_Sanguineo"></div>
-                    <div><label>Nº da Camisa:</label><input type="number" name="Numero_Camisa"></div>
-                    <div class="full"><label>Historico de Jogos:</label><textarea name="Foto"></textarea></div>
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <legend>Dados Técnicos & Saúde</legend>
-                <div class="grid">
-                    <div><label>Posição Principal:</label><input type="text" name="Posicao_Principal"></div>
-                    <div><label>Posição Secundária:</label><input type="text" name="Posicao_Secundaria"></div>
-                    <div><label>Pé Dominante:</label><select name="Pe_Dominante"><option>Destro</option><option>Canhoto</option><option>Ambidestro</option></select></div>
-                    <div><label>Altura (m):</label><input type="text" name="Altura"></div>
-                    <div><label>Peso (kg):</label><input type="text" name="Peso"></div>
-                    <div><label>Último Exame Médico:</label><input type="date" name="Ultimo_Exame"></div>
-                    <div class="full"><label>Histórico de Lesões:</label><textarea name="Historico_Lesoes"></textarea></div>
-                    <div class="full"><label>Condição Física Atual:</label><textarea name="Condicao_Fisica"></textarea></div>
-                    <div><label>Status:</label><select name="Status"><option>Ativo</option><option>Inativo</option></select></div>
-                    <div><label>Categoria:</label><input type="text" name="Categoria"></div>
                 </div>
             </fieldset>
         </div>
@@ -100,28 +100,18 @@
                 <div class="grid">
                     <div class="full"><label>Nome Completo:</label><input type="text" name="Membro_Nome"></div>
                     <div><label>Cargo:</label><input type="text" name="Cargo"></div>
-                    <div><label>CPF:</label><input type="text" name="Membro_CPF"></div>
-                    <div class="full"><label>Endereço:</label><input type="text" name="Membro_Endereco"></div>
                     <div><label>WhatsApp:</label><input type="tel" name="Membro_WhatsApp"></div>
-                    <div><label>Entrada no Clube:</label><input type="date" name="Data_Entrada"></div>
-                    <div><label>Status:</label><select name="Membro_Status"><option>Ativo</option><option>Inativo</option></select></div>
                 </div>
             </fieldset>
         </div>
 
         <div id="form-patrocinador" class="form-section">
             <fieldset>
-                <legend>Dados Cadastrais da Empresa</legend>
+                <legend>Dados da Empresa</legend>
                 <div class="grid">
                     <div class="full"><label>Razão Social / Nome Fantasia:</label><input type="text" name="Empresa_Nome"></div>
-                    <div><label>Logo (URL):</label><input type="text" name="Empresa_Logo"></div>
-                    <div><label>Redes Sociais (Insta/FB):</label><input type="text" name="Redes_Sociais"></div>
-                    <div class="full"><label>Endereço Completo Sede:</label><input type="text" name="Sede_Endereco"></div>
-                    <div><label>Contato Principal (Nome):</label><input type="text" name="Responsavel_Nome"></div>
-                    <div><label>Marketing/Diretoria:</label><input type="text" name="Setor_Responsavel"></div>
-                    <div><label>E-mail Corporativo:</label><input type="email" name="Empresa_Email"></div>
-                    <div><label>Telefone / WhatsApp:</label><input type="tel" name="Empresa_WhatsApp"></div>
-                    <div><label>Status da Parceria:</label><select name="Parceria_Status"><option>ATIVO</option><option>INATIVO</option></select></div>
+                    <div><label>Contato Principal:</label><input type="text" name="Responsavel_Nome"></div>
+                    <div><label>WhatsApp:</label><input type="tel" name="Empresa_WhatsApp"></div>
                 </div>
             </fieldset>
         </div>
@@ -130,8 +120,21 @@
     </form>
 </div>
 
+<div id="modal-overlay">
+    <div class="modal-content">
+        <h2>Obrigado pelo Cadastro!</h2>
+        <p>Suas informações foram recebidas com sucesso.</p>
+        <p><strong>Deseja baixar uma cópia da sua ficha em PDF?</strong></p>
+        <div class="modal-buttons">
+            <button class="btn-modal btn-yes" onclick="finalizarCadastro(true)">SIM, BAIXAR</button>
+            <button class="btn-modal btn-no" onclick="finalizarCadastro(false)">NÃO, APENAS SAIR</button>
+        </div>
+    </div>
+</div>
+
 <script>
     const { jsPDF } = window.jspdf;
+    let dadosTemporarios = {}; // Para guardar os dados enquanto o modal está aberto
 
     function showForm(tipo) {
         document.querySelectorAll('.form-section, .tab-btn').forEach(el => el.classList.remove('active'));
@@ -142,21 +145,42 @@
 
     document.getElementById('mainForm').addEventListener('submit', function(e) {
         e.preventDefault();
+        
         const tipo = document.getElementById('tipo_cadastro').value;
         const formData = new FormData(this);
-        const data = { TIPO_DE_CADASTRO: tipo.toUpperCase(), DATA_DO_REGISTRO: new Date().toLocaleString() };
         
-        // Coleta todos os campos do formulário atual
-        formData.forEach((value, key) => { if(value) data[key] = value; });
+        // Coleta os dados
+        dadosTemporarios = { 
+            TIPO_DE_CADASTRO: tipo.toUpperCase(), 
+            DATA_DO_REGISTRO: new Date().toLocaleString() 
+        };
+        formData.forEach((value, key) => { if(value) dadosTemporarios[key] = value; });
 
-        // Salvar no Banco de Dados local do navegador
+        // Salva no Banco local (opcional)
         let db = JSON.parse(localStorage.getItem('kendence_pro_db') || '[]');
-        db.push(data);
+        db.push(dadosTemporarios);
         localStorage.setItem('kendence_pro_db', JSON.stringify(db));
 
-        // Criar PDF Profissional
+        // Abre o Modal em vez de dar alert
+        document.getElementById('modal-overlay').style.display = 'flex';
+    });
+
+    function finalizarCadastro(querPDF) {
+        if (querPDF) {
+            gerarPDF();
+        }
+        
+        // Redireciona para o site oficial após um pequeno delay se baixou, ou imediato se não baixou
+        setTimeout(() => {
+            window.location.href = 'https://kendence.github.io/site/';
+        }, querPDF ? 1000 : 100);
+    }
+
+    function gerarPDF() {
         const doc = new jsPDF();
-        doc.setFillColor(26, 35, 126); // Azul
+        const tipo = document.getElementById('tipo_cadastro').value;
+        
+        doc.setFillColor(26, 35, 126); 
         doc.rect(0, 0, 210, 40, 'F');
         doc.setTextColor(255, 255, 255);
         doc.setFontSize(22);
@@ -167,7 +191,7 @@
         doc.setTextColor(0, 0, 0);
         let y = 55;
         
-        Object.entries(data).forEach(([key, val]) => {
+        Object.entries(dadosTemporarios).forEach(([key, val]) => {
             if(y > 280) { doc.addPage(); y = 20; }
             doc.setFont("helvetica", "bold");
             doc.text(`${key.replace(/_/g, ' ')}:`, 20, y);
@@ -176,10 +200,9 @@
             y += 9;
         });
 
-        alert('Informações enviadas com sucesso! Salvando PDF da ficha...');
-        doc.save(`Ficha_${tipo}_${data.Nome_Completo || data.Empresa_Nome || 'Kendence'}.pdf`);
-        window.location.href = 'diretoria.html';
-    });
+        const nomeArquivo = dadosTemporarios.Nome_Completo || dadosTemporarios.Membro_Nome || dadosTemporarios.Empresa_Nome || 'Ficha';
+        doc.save(`Ficha_Kendence_${nomeArquivo}.pdf`);
+    }
 </script>
 
 </body>
