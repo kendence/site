@@ -224,22 +224,45 @@
     }
 
     function gerarPDF() {
-        const doc = new jsPDF();
-        doc.setFillColor(26, 35, 126); 
-        doc.rect(0, 0, 210, 40, 'F');
-        doc.setTextColor(255, 255, 255);
-        doc.text("KENDENCE F.C.", 105, 25, { align: "center" });
+    const doc = new jsPDF();
+    const larguraPagina = 190; // Margem de segurança
+    const margemEsquerda = 20;
+    let y = 55;
+
+    // Cabeçalho
+    doc.setFillColor(26, 35, 126); 
+    doc.rect(0, 0, 210, 40, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(22);
+    doc.text("KENDENCE F.C.", 105, 20, { align: "center" });
+    doc.setFontSize(12);
+    doc.text("Ficha Oficial de Registro", 105, 30, { align: "center" });
+    
+    doc.setTextColor(0, 0, 0);
+    
+    Object.entries(dadosFormulario).forEach(([key, val]) => {
+        // Verifica se precisa de nova página antes de escrever o título do campo
+        if (y > 270) { doc.addPage(); y = 20; }
+
+        doc.setFont("helvetica", "bold");
+        const titulo = `${key.replace(/_/g, ' ')}: `;
+        doc.text(titulo, margemEsquerda, y);
         
-        doc.setTextColor(0, 0, 0);
-        let y = 55;
-        Object.entries(dadosFormulario).forEach(([key, val]) => {
-            doc.setFont("helvetica", "bold");
-            doc.text(`${key}:`, 20, y);
-            doc.text(`${val}`, 75, y);
-            y += 8;
-        });
-        doc.save(`Ficha_Kendence.pdf`);
-    }
+        doc.setFont("helvetica", "normal");
+        // Quebra o texto automaticamente se for maior que a largura disponível
+        const textoProcessado = doc.splitTextToSize(String(val), larguraPagina - 60);
+        
+        // Escreve o valor (pode ocupar várias linhas)
+        doc.text(textoProcessado, margemEsquerda + 55, y);
+        
+        // Calcula o espaço ocupado pelo texto para o próximo campo
+        const alturaLinha = textoProcessado.length * 7;
+        y += Math.max(8, alturaLinha); // Pula no mínimo 8 ou a altura do texto
+    });
+
+    const idNome = dadosFormulario.Nome_Completo || dadosFormulario.Membro_Nome || 'Ficha';
+    doc.save(`Cadastro_${idNome}.pdf`);
+}
 </script>
 
 </body>
