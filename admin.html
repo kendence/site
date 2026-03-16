@@ -285,20 +285,38 @@
         };
 
         window.loadData = (name) => {
-            const display = document.getElementById('data-display');
-            onValue(ref(database, sections[name].dbRef), (snapshot) => {
-                display.innerHTML = '';
-                if (snapshot.exists()) {
-                    Object.entries(snapshot.val()).forEach(([key, val]) => {
-                        const item = document.createElement('div');
-                        item.className = 'flex justify-between items-center p-3 border-b hover:bg-gray-50';
-                        item.innerHTML = `<span class="font-medium text-sm">${val[sections[name].titleField]}</span>
-                            <div>
-                                <button onclick="editItem('${key}')" class="text-blue-600 mr-3 text-xs font-bold uppercase">Editar</button>
-                                <button onclick="deleteItem('${key}')" class="text-red-600 text-xs font-bold uppercase">Excluir</button>
-                            </div>`;
-                        display.appendChild(item);
-                    });
+    const display = document.getElementById('data-display');
+    onValue(ref(database, sections[name].dbRef), (snapshot) => {
+        display.innerHTML = '';
+        if (snapshot.exists()) {
+            // Convertemos o objeto em array de entradas [chave, valor]
+            const entries = Object.entries(snapshot.val());
+            
+            // Invertemos a ordem apenas para as seções solicitadas
+            if (['upcomingGames', 'recentResults', 'news'].includes(name)) {
+                entries.reverse();
+            }
+
+            entries.forEach(([key, val]) => {
+                const item = document.createElement('div');
+                item.className = 'flex justify-between items-center p-3 border-b hover:bg-gray-50';
+                item.innerHTML = `<span class="font-medium text-sm">${val[sections[name].titleField]}</span>
+                    <div>
+                        <button onclick="editItem('${key}')" class="text-blue-600 mr-3 text-xs font-bold uppercase">Editar</button>
+                        <button onclick="deleteItem('${key}')" class="text-red-600 text-xs font-bold uppercase">Excluir</button>
+                    </div>`;
+                display.appendChild(item);
+            });
+        } else {
+            display.innerHTML = '<p class="text-gray-400 text-sm py-4">Nenhum dado encontrado.</p>';
+        }
+    });
+};
+        } else {
+            display.innerHTML = '<p class="text-gray-400 text-sm py-4">Nenhum dado encontrado.</p>';
+        }
+    });
+};
                 } else {
                     display.innerHTML = '<p class="text-gray-400 text-sm py-4">Nenhum dado encontrado.</p>';
                 }
