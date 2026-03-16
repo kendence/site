@@ -31,42 +31,58 @@
 
 <div id="painel-lista"></div>
 
-<script>
-    function carregarDados() {
-        const painel = document.getElementById('painel-lista');
-        const dados = JSON.parse(localStorage.getItem('kendence_pro_db') || '[]');
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        if(dados.length === 0) {
-            painel.innerHTML = "<div style='text-align:center; padding:50px; color:#999'><h2>Nenhum cadastro recebido até o momento.</h2></div>";
+    const firebaseConfig = {
+        apiKey: "AIzaSyCb7BfxkjQy5-5FZ_FWO5e9HiUFnSiDSK8",
+        authDomain: "novokendence.firebaseapp.com",
+        databaseURL: "https://novokendence-default-rtdb.firebaseio.com",
+        projectId: "novokendence",
+        storageBucket: "novokendence.firebasestorage.app",
+        messagingSenderId: "371427375184",
+        appId: "1:371427375184:web:78107a11c5fc511962b955"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Carregar dados em tempo real
+    const painel = document.getElementById('painel-lista');
+    const cadastrosRef = ref(db, 'cadastros');
+
+    onValue(cadastrosRef, (snapshot) => {
+        const data = snapshot.val();
+        if(!data) {
+            painel.innerHTML = "<h2>Nenhum cadastro encontrado.</h2>";
             return;
         }
 
-        painel.innerHTML = dados.reverse().map((registro, index) => `
+        const itens = Object.values(data).reverse();
+        painel.innerHTML = itens.map(registro => `
             <div class="card">
-                <div style="display:flex; justify-content:space-between; align-items:center">
+                <div style="display:flex; justify-content:space-between">
                     <span class="tag ${registro.TIPO_DE_CADASTRO}">${registro.TIPO_DE_CADASTRO}</span>
-                    <small>📅 ${registro.DATA_DO_REGISTRO}</small>
+                    <small>${registro.DATA_DO_REGISTRO}</small>
                 </div>
                 <h3>${registro.Nome_Completo || registro.Membro_Nome || registro.Empresa_Nome || 'Sem Nome'}</h3>
                 <div class="info-grid">
-                    ${Object.entries(registro).map(([chave, valor]) => {
-                        if(chave === 'TIPO_DE_CADASTRO' || chave === 'DATA_DO_REGISTRO') return '';
-                        return `<div class="info-item"><b>${chave.replace(/_/g, ' ')}:</b> ${valor}</div>`;
+                    ${Object.entries(registro).map(([key, val]) => {
+                        if(['TIPO_DE_CADASTRO', 'DATA_DO_REGISTRO'].includes(key)) return '';
+                        return `<div class="info-item"><b>${key.replace(/_/g, ' ')}:</b> ${val}</div>`;
                     }).join('')}
                 </div>
             </div>
         `).join('');
-    }
+    });
 
-    function limparBanco() {
-        if(confirm("ATENÇÃO: Isso apagará todos os cadastros permanentemente. Confirma?")) {
-            localStorage.removeItem('kendence_pro_db');
-            carregarDados();
+    // Função para limpar banco
+    window.limparBanco = function() {
+        if(confirm("Deseja apagar TODOS os registros da nuvem?")) {
+            remove(ref(db, 'cadastros'));
         }
     }
-
-    carregarDados();
 </script>
-
 </body>
 </html>
