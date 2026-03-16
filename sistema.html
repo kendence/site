@@ -1,160 +1,217 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Diretoria - Kendence F.C.</title>
+    <title>Gestão de Equipe - Kendence F.C.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
-        #main-system-content { display: none; }
-        body { font-family: 'Segoe UI', sans-serif; background: #eef2f3; padding: 20px; }
-        .header { background: #1a237e; color: white; padding: 25px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .card { background: white; padding: 25px; border-radius: 12px; margin-bottom: 20px; border-left: 8px solid #d32f2f; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .card h3 { margin-top: 0; color: #1a237e; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .tag { padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; color: white; text-transform: uppercase; }
-        .JOGADOR { background: #2ecc71; }
-        .MEMBRO { background: #f1c40f; color: #333; }
-        .PATROCINADOR { background: #9b59b6; }
-        .btn-clear { background: #c0392b; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; margin-top: 15px; }
-        .info-item { 
-    font-size: 13px; 
-    line-height: 1.6; 
-    background: #f9f9f9; 
-    padding: 10px; 
-    border-radius: 4px;
-    word-break: break-word; /* Quebra palavras muito longas */
-    white-space: pre-wrap;  /* Mantém as quebras de linha que o usuário digitar */
-}
+        :root {
+            --kendence-red: #D31F37;
+            --kendence-blue: #1F3A79;
+            --kendence-dark-blue: #162B58;
+            --white: #ffffff;
+        }
 
-/* Se o texto for muito grande, faz o item ocupar a linha toda no grid */
-.info-item:has(br), .info-item:empty { grid-column: 1 / -1; } 
-/* Opcional: Forçar campos específicos a ocuparem a linha toda */
-.info-item b:contains("Historico") { display: block; margin-bottom: 5px; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background: #f0f2f5; }
+
+        /* ESTILO DA TELA DE LOGIN */
+        #auth-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--kendence-dark-blue);
+            display: flex; align-items: center; justify-content: center; z-index: 10000;
+        }
+        .login-box {
+            background: white; padding: 40px; border-radius: 15px;
+            width: 90%; max-width: 380px; text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .login-box input {
+            width: 100%; padding: 12px; margin: 10px 0;
+            border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;
+        }
+        .login-box button {
+            width: 100%; padding: 14px; background: var(--kendence-red);
+            color: white; border: none; border-radius: 8px;
+            font-weight: bold; cursor: pointer; margin-top: 10px;
+        }
+        
+        /* CONTEÚDO DO SISTEMA (ESCONDIDO POR PADRÃO) */
+        #main-system-content { display: none; }
+
+        /* Estilos básicos do Sistema */
+        header { background: var(--kendence-blue); color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+        nav { background: var(--white); padding: 10px; display: flex; gap: 10px; overflow-x: auto; border-bottom: 2px solid #ddd; }
+        .nav-btn { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; white-space: nowrap; }
+        .nav-btn.active { background: var(--kendence-red); color: white; }
+        .container { padding: 20px; max-width: 1200px; margin: auto; }
+        .section { display: none; }
+        .section.active { display: block; }
+        form { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        form h2 { grid-column: 1 / -1; margin-top: 0; }
+        .full-width { grid-column: 1 / -1; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; }
+        .btn-delete { color: red; cursor: pointer; font-weight: bold; border: none; background: none; }
     </style>
 </head>
 <body>
 
-<div id="auth-screen" style="position:fixed; top:0; left:0; width:100%; height:100%; background:var(--kendence-dark-blue); z-index:9999; display:flex; align-items:center; justify-content:center;">
-    <div style="background:white; padding:40px; border-radius:15px; width:90%; max-width:400px; text-align:center; box-shadow:0 10px 25px rgba(0,0,0,0.5);">
-        <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" style="height:80px; margin-bottom:20px;">
-        <h2 style="color:var(--kendence-dark-blue); margin-bottom:20px;">ACESSO RESTRITO</h2>
-        <input type="email" id="login-email" placeholder="E-mail" style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px;">
-        <input type="password" id="login-senha" placeholder="Senha" style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ccc; border-radius:5px;">
-        <button onclick="fazerLogin()" style="width:100%; padding:15px; background:var(--kendence-red); color:white; border:none; border-radius:5px; font-weight:bold; cursor:pointer;">ENTRAR NO SISTEMA</button>
-        <p id="login-erro" style="color:red; margin-top:15px; font-size:14px; display:none;">E-mail ou senha incorretos.</p>
+    <div id="auth-screen">
+        <div class="login-box">
+            <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" alt="Logo" style="width: 80px; margin-bottom: 20px;">
+            <h2>SISTEMA KENDENCE</h2>
+            <input type="email" id="login-email" placeholder="Seu e-mail">
+            <input type="password" id="login-senha" placeholder="Sua senha">
+            <button onclick="window.fazerLogin()">ACESSAR SISTEMA</button>
+            <p id="error-msg" style="color: red; display: none; margin-top: 10px;">Acesso negado.</p>
+        </div>
     </div>
-</div>
-<div class="header">
-    <div>
-        <h1 style="margin:0">Diretoria Kendence F.C.</h1>
-        <small>Gestão de Atletas, Membros e Parceiros</small>
+
+    <div id="main-system-content">
+        <header>
+            <div style="display:flex; align-items:center; gap:15px;">
+                <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" height="40">
+                <h1 style="font-size: 1.2rem;">KENDENCE F.C. - PAINEL ADM</h1>
+            </div>
+            <button onclick="window.logout()" style="background:transparent; color:white; border:1px solid white; padding:5px 15px; border-radius:5px; cursor:pointer;">Sair</button>
+        </header>
+
+        <nav id="mainNav">
+            <button class="nav-btn active" onclick="showSection('jogadores')">Jogadores</button>
+            <button class="nav-btn" onclick="showSection('comissao')">Comissão</button>
+            <button class="nav-btn" onclick="showSection('patrocinadores')">Patrocinadores</button>
+        </nav>
+
+        <div class="container">
+            <section id="jogadores" class="section active">
+                <form id="formJogador">
+                    <h2>Cadastrar Jogador</h2>
+                    <input type="hidden" id="jog-id">
+                    <input type="text" id="jog-nome" placeholder="Nome Completo" required>
+                    <input type="text" id="jog-apelido" placeholder="Apelido">
+                    <input type="number" id="jog-camisa" placeholder="Nº Camisa">
+                    <select id="jog-status">
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                        <option value="Lesionado">Lesionado</option>
+                    </select>
+                    <textarea id="jog-obs" class="full-width" placeholder="Histórico ou Observações"></textarea>
+                    <button type="submit" class="full-width" style="background:var(--kendence-blue); color:white; padding:10px; border:none; border-radius:5px; cursor:pointer;">Salvar Jogador</button>
+                </form>
+                <table id="tabelaJogadores">
+                    <thead>
+                        <tr>
+                            <th>Nome/Apelido</th>
+                            <th>Camisa</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaJogadores"></tbody>
+                </table>
+            </section>
+
+            </div>
     </div>
-    <button class="btn-clear" onclick="limparBanco()">Apagar Todos os Registros</button>
-</div>
 
-<div id="painel-lista"></div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-<script type="module">
-   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getDatabase, ref, set, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyCb7BfxkjQy5-5FZ_FWO5e9HiUFnSiDSK8",
+            authDomain: "novokendence.firebaseapp.com",
+            databaseURL: "https://novokendence-default-rtdb.firebaseio.com",
+            projectId: "novokendence",
+            storageBucket: "novokendence.firebasestorage.app",
+            messagingSenderId: "371427375184",
+            appId: "1:371427375184:web:78107a11c5fc511962b955"
+        };
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCb7BfxkjQy5-5FZ_FWO5e9HiUFnSiDSK8",
-    authDomain: "novokendence.firebaseapp.com",
-    databaseURL: "https://novokendence-default-rtdb.firebaseio.com",
-    projectId: "novokendence",
-    storageBucket: "novokendence.firebasestorage.app",
-    messagingSenderId: "371427375184",
-    appId: "1:371427375184:web:78107a11c5fc511962b955"
-};
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getDatabase(app);
+        // --- FUNÇÕES GLOBAIS ---
+        window.fazerLogin = () => {
+            const email = document.getElementById('login-email').value;
+            const senha = document.getElementById('login-senha').value;
+            signInWithEmailAndPassword(auth, email, senha).catch(() => {
+                document.getElementById('error-msg').style.display = 'block';
+            });
+        };
 
-// --- LÓGICA DE LOGIN ---
-window.fazerLogin = function() {
-    const email = document.getElementById('login-email').value;
-    const senha = document.getElementById('login-senha').value;
-    signInWithEmailAndPassword(auth, email, senha)
-        .catch(error => {
-            document.getElementById('login-erro').style.display = 'block';
-            console.error(error);
+        window.logout = () => signOut(auth);
+
+        window.showSection = (id) => {
+            document.querySelectorAll('.section, .nav-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.currentTarget.classList.add('active');
+        };
+
+        // --- MONITOR DE LOGIN ---
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('auth-screen').style.display = 'none';
+                document.getElementById('main-system-content').style.display = 'block';
+                iniciarSincronizacao();
+            } else {
+                document.getElementById('auth-screen').style.display = 'flex';
+                document.getElementById('main-system-content').style.display = 'none';
+            }
         });
-}
 
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        document.getElementById('auth-screen').style.display = 'none';
-        document.getElementById('main-system-content').style.display = 'block';
-        carregarTodosOsDados();
-    } else {
-        document.getElementById('auth-screen').style.display = 'flex';
-        document.getElementById('main-system-content').style.display = 'none';
-    }
-});
-
-// --- FUNÇÕES DE BANCO DE DADOS (Substituindo LocalStorage) ---
-function carregarTodosOsDados() {
-    // Escuta Jogadores
-    onValue(ref(db, 'jogadores'), (snapshot) => renderTabela('tabelaJogadores', snapshot.val(), 'jogador'));
-    // Escuta Comissão
-    onValue(ref(db, 'comissao'), (snapshot) => renderTabela('tabelaComissao', snapshot.val(), 'comissao'));
-    // Escuta Patrocinadores
-    onValue(ref(db, 'patrocinadores'), (snapshot) => renderTabela('tabelaPatrocinadores', snapshot.val(), 'patrocinador'));
-    // Escuta Agenda
-    onValue(ref(db, 'agenda'), (snapshot) => renderTabela('tabelaAgenda', snapshot.val(), 'agenda'));
-}
-
-// Salvar genérico para Firebase
-async function salvarNoFirebase(caminho, objeto, idField) {
-    const id = document.getElementById(idField).value;
-    try {
-        if (id) {
-            await set(ref(db, `${caminho}/${id}`), objeto);
-        } else {
-            const novoRef = push(ref(db, caminho));
-            objeto.id = novoRef.key;
-            await set(novoRef, objeto);
+        // --- BANCO DE DADOS EM TEMPO REAL ---
+        function iniciarSincronizacao() {
+            onValue(ref(db, 'jogadores'), (snapshot) => {
+                const dados = snapshot.val();
+                const lista = document.getElementById('listaJogadores');
+                lista.innerHTML = '';
+                if(dados) {
+                    Object.entries(dados).forEach(([id, jog]) => {
+                        lista.innerHTML += `
+                            <tr>
+                                <td><b>${jog.nome}</b><br><small>${jog.apelido || ''}</small></td>
+                                <td>${jog.camisa || '-'}</td>
+                                <td>${jog.status}</td>
+                                <td><button class="btn-delete" onclick="window.excluir('jogadores', '${id}')">Excluir</button></td>
+                            </tr>
+                        `;
+                    });
+                }
+            });
         }
-        alert("Dados salvos na nuvem!");
-    } catch (e) {
-        alert("Erro ao salvar: " + e.message);
-    }
-}
 
-// Excluir do Firebase
-window.excluirItem = function(caminho, id) {
-    if(confirm('Excluir permanentemente da nuvem?')) {
-        remove(ref(db, `${caminho}/${id}`));
-    }
-}
+        // --- FORMULÁRIO DE JOGADOR ---
+        document.getElementById('formJogador').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const dados = {
+                nome: document.getElementById('jog-nome').value,
+                apelido: document.getElementById('jog-apelido').value,
+                camisa: document.getElementById('jog-camisa').value,
+                status: document.getElementById('jog-status').value,
+                obs: document.getElementById('jog-obs').value
+            };
+            
+            const id = document.getElementById('jog-id').value;
+            if(id) {
+                set(ref(db, 'jogadores/' + id), dados);
+            } else {
+                push(ref(db, 'jogadores'), dados);
+            }
+            e.target.reset();
+        });
 
-// --- ADAPTAÇÃO DOS EVENTOS DE SUBMIT ---
-// (Exemplo para Jogador - Repita a lógica para os outros seguindo o padrão)
-document.getElementById('formJogador').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const dados = {
-        nome: document.getElementById('jog-nome').value,
-        apelido: document.getElementById('jog-apelido').value,
-        status: document.getElementById('jog-status').value,
-        camisa: document.getElementById('jog-camisa').value,
-        // ... (pegue os outros campos aqui igual ao seu código original)
-    };
-    salvarNoFirebase('jogadores', dados, 'jog-id');
-    limparFormulario('formJogador', 'jog-id');
-});
+        window.excluir = (path, id) => {
+            if(confirm("Deseja excluir este registro da nuvem?")) {
+                remove(ref(db, `${path}/${id}`));
+            }
+        };
 
-// IMPORTANTE: Mantenha suas funções de renderização (renderTabela), 
-// mas agora elas recebem os dados do snapshot.val() do Firebase.
-
-    // Função para limpar banco
-    window.limparBanco = function() {
-        if(confirm("Deseja apagar TODOS os registros da nuvem?")) {
-            remove(ref(db, 'cadastros'));
-        }
-    }
-</script>
+    </script>
 </body>
 </html>
