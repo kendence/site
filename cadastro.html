@@ -165,18 +165,35 @@
     </div>
 </div>
 
-<script>
-    const { jsPDF } = window.jspdf;
-    let dadosFormulario = {}; 
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    function showForm(tipo) {
+    const firebaseConfig = {
+        apiKey: "AIzaSyCb7BfxkjQy5-5FZ_FWO5e9HiUFnSiDSK8",
+        authDomain: "novokendence.firebaseapp.com",
+        databaseURL: "https://novokendence-default-rtdb.firebaseio.com",
+        projectId: "novokendence",
+        storageBucket: "novokendence.firebasestorage.app",
+        messagingSenderId: "371427375184",
+        appId: "1:371427375184:web:78107a11c5fc511962b955"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const { jsPDF } = window.jspdf;
+    let dadosFormulario = {};
+
+    // Função global para as abas
+    window.showForm = function(tipo) {
         document.querySelectorAll('.form-section, .tab-btn').forEach(el => el.classList.remove('active'));
         document.getElementById('form-' + tipo).classList.add('active');
         event.currentTarget.classList.add('active');
         document.getElementById('tipo_cadastro').value = tipo;
     }
 
-    document.getElementById('mainForm').addEventListener('submit', function(e) {
+    document.getElementById('mainForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         const tipo = document.getElementById('tipo_cadastro').value;
         const formData = new FormData(this);
@@ -188,54 +205,40 @@
 
         formData.forEach((value, key) => { if(value) dadosFormulario[key] = value; });
 
-        // Salva no Banco local (pode ser usado depois na página da diretoria)
-        let db = JSON.parse(localStorage.getItem('kendence_pro_db') || '[]');
-        db.push(dadosFormulario);
-        localStorage.setItem('kendence_pro_db', JSON.stringify(db));
-
-        // Mostra o Popup
-        document.getElementById('modal-overlay').style.display = 'flex';
+        try {
+            // SALVANDO NO FIREBASE
+            const cadastrosRef = ref(db, 'cadastros');
+            const novoCadastroRef = push(cadastrosRef);
+            await set(novoCadastroRef, dadosFormulario);
+            
+            document.getElementById('modal-overlay').style.display = 'flex';
+        } catch (error) {
+            console.error("Erro ao salvar:", error);
+            alert("Erro ao enviar cadastro. Verifique sua conexão.");
+        }
     });
 
-    function finalizarProcesso(gerar) {
-        if (gerar) {
-            gerarPDF();
-        }
-        
-        // Pequena pausa para o download iniciar e então redireciona
-        setTimeout(() => {
-            window.location.href = "https://kendence.github.io/site/";
-        }, gerar ? 1500 : 200);
+    window.finalizarProcesso = function(gerar) {
+        if (gerar) gerarPDF();
+        setTimeout(() => { window.location.href = "https://kendence.github.io/site/"; }, 1500);
     }
 
     function gerarPDF() {
         const doc = new jsPDF();
-        const tipo = document.getElementById('tipo_cadastro').value;
-        
-        // Cabeçalho PDF
         doc.setFillColor(26, 35, 126); 
         doc.rect(0, 0, 210, 40, 'F');
         doc.setTextColor(255, 255, 255);
-        doc.setFontSize(22);
-        doc.text("KENDENCE F.C.", 105, 20, { align: "center" });
-        doc.setFontSize(12);
-        doc.text("Ficha Oficial de Registro", 105, 30, { align: "center" });
+        doc.text("KENDENCE F.C.", 105, 25, { align: "center" });
         
         doc.setTextColor(0, 0, 0);
         let y = 55;
-        
-        // Lista todos os campos preenchidos
         Object.entries(dadosFormulario).forEach(([key, val]) => {
-            if(y > 280) { doc.addPage(); y = 20; }
             doc.setFont("helvetica", "bold");
-            doc.text(`${key.replace(/_/g, ' ')}:`, 20, y);
-            doc.setFont("helvetica", "normal");
+            doc.text(`${key}:`, 20, y);
             doc.text(`${val}`, 75, y);
             y += 8;
         });
-
-        const idNome = dadosFormulario.Nome_Completo || dadosFormulario.Membro_Nome || dadosFormulario.Empresa_Nome || 'Ficha';
-        doc.save(`Cadastro_${tipo}_${idNome}.pdf`);
+        doc.save(`Ficha_Kendence.pdf`);
     }
 </script>
 
