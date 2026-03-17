@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão de Equipe - Kendence F.C.</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --kendence-red: #D31F37;
@@ -13,283 +17,323 @@
             --light-bg: #f0f2f5;
             --white: #ffffff;
             --text-main: #1f2937;
+            --text-muted: #6b7280;
             --border-color: #e5e7eb;
+            --success: #10b981;
+            --warning: #f59e0b;
         }
 
-        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--light-bg); color: var(--text-main); }
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color: var(--light-bg); color: var(--text-main); display: flex; flex-direction: column; min-height: 100vh; }
 
         /* --- TELA DE LOGIN --- */
-        #auth-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--kendence-dark-blue); display: flex; 
-            align-items: center; justify-content: center; z-index: 10000;
-        }
-        .login-box {
-            background: white; padding: 40px; border-radius: 15px;
-            width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        }
-        .login-box input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; }
-        .login-box button { width: 100%; padding: 15px; background: var(--kendence-red); color: white; border: none; border-radius: 6px; font-weight: 800; cursor: pointer; }
-
-        /* --- ESTRUTURA DO SISTEMA --- */
+        #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--kendence-dark-blue); display: flex; align-items: center; justify-content: center; z-index: 10000; }
+        .login-box { background: white; padding: 40px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .login-box input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;}
+        .login-box button { width: 100%; padding: 15px; background: var(--kendence-red); color: white; border: none; border-radius: 6px; font-weight: 800; cursor: pointer; margin-top: 10px;}
         #main-system-content { display: none; }
-        header { background: var(--kendence-dark-blue); color: white; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-        nav { display: flex; justify-content: center; background: var(--kendence-red); flex-wrap: wrap; }
-        nav button { background: none; border: none; color: white; padding: 1rem 1.5rem; cursor: pointer; font-weight: 700; text-transform: uppercase; border-bottom: 4px solid transparent; }
-        nav button.active { border-bottom-color: white; }
 
-        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
-        .tab-content { display: none; background: white; padding: 2rem; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        /* --- CABEÇALHO --- */
+        header { background-color: var(--kendence-dark-blue); color: var(--white); padding: 1rem 1.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        header h1 { margin: 0; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; font-size: 1.5rem; }
+        .header-logo { height: 50px; width: auto; object-fit: contain; }
+
+        /* --- NAVEGAÇÃO --- */
+        nav { display: flex; justify-content: center; background-color: var(--kendence-red); flex-wrap: wrap; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        nav button { background: none; border: none; color: var(--white); padding: 1rem 1.5rem; cursor: pointer; font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; transition: 0.3s; border-bottom: 4px solid transparent; }
+        nav button:hover { background-color: rgba(255, 255, 255, 0.1); }
+        nav button.active { border-bottom-color: var(--white); }
+
+        /* --- ESTRUTURA PRINCIPAL --- */
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; flex-grow: 1; }
+        .tab-content { display: none; background: var(--white); padding: 2rem; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
         .tab-content.active { display: block; }
+        .flex-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+        h2 { font-size: 1.875rem; font-weight: 900; color: var(--kendence-dark-blue); text-transform: uppercase; margin: 0; }
 
-        /* FORMULÁRIOS */
-        .section-title { color: var(--kendence-dark-blue); border-bottom: 2px solid var(--kendence-red); margin: 2rem 0 1rem; font-weight: 800; text-transform: uppercase; }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-        .full-width { grid-column: 1 / -1; }
-        label { font-weight: 700; font-size: 0.8rem; display: block; margin-bottom: 3px; }
-        input, select, textarea { width: 100%; padding: 0.7rem; border: 1px solid var(--border-color); border-radius: 4px; box-sizing: border-box; }
-        
-        .btn-submit { background: var(--kendence-dark-blue); color: white; border: none; padding: 1rem; width: 100%; border-radius: 5px; font-weight: 800; cursor: pointer; margin-top: 1rem; }
-        .btn-delete { background: var(--kendence-red); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        /* --- FORMULÁRIOS --- */
+        .section-title { color: var(--kendence-dark-blue); padding: 0.5rem 0; border-bottom: 2px solid var(--kendence-red); margin-top: 2rem; margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: 800; text-transform: uppercase; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        label { font-weight: 700; margin-bottom: 0.3rem; font-size: 0.85rem; }
+        input, select, textarea { padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.375rem; font-size: 0.95rem; font-family: inherit; background-color: #f9fafb; transition: 0.2s; }
+        input[readonly] { background-color: #e5e7eb; color: var(--text-muted); cursor: not-allowed; }
+        textarea { resize: vertical; min-height: 80px; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
-        th, td { padding: 12px; border-bottom: 1px solid #eee; text-align: left; }
-        th { background: #f8f9fa; font-weight: 800; }
-        
-        /* ESTILOS DO BACKUP */
+        /* --- BOTÕES --- */
+        .btn-submit { background-color: var(--kendence-dark-blue); color: var(--white); border: none; padding: 1rem; font-size: 1rem; border-radius: 0.375rem; cursor: pointer; width: 100%; margin-top: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; transition: 0.3s; }
+        .btn-submit:hover { background-color: var(--kendence-blue); }
+        .btn-cancel { background-color: var(--text-muted); margin-top: 0.5rem; }
+        .btn-cancel:hover { background-color: #4b5563; }
+        .btn-print-top { background-color: var(--kendence-blue); color: var(--white); border: none; padding: 0.6rem 1.2rem; border-radius: 0.375rem; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+
+        /* --- TABELAS --- */
+        .table-container { overflow-x: auto; margin-top: 2.5rem; }
+        table { width: 100%; border-collapse: collapse; min-width: 700px; }
+        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
+        th { background-color: var(--light-bg); color: var(--kendence-dark-blue); font-weight: 800; text-transform: uppercase; font-size: 0.8rem; border-bottom: 2px solid var(--kendence-dark-blue); }
+        tr:hover { background-color: #f8fafc; }
+        .btn-action { padding: 0.4rem 0.8rem; border: none; border-radius: 0.25rem; cursor: pointer; color: var(--white); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-right: 0.3rem; margin-bottom: 0.3rem; }
+        .btn-edit { background-color: var(--warning); color: #000; }
+        .btn-delete { background-color: var(--kendence-red); }
+        .nome-clicavel { color: var(--kendence-blue); cursor: pointer; font-weight: 800; transition: 0.2s; text-decoration: underline; }
+        .nome-clicavel:hover { color: var(--kendence-red); }
+
+        /* --- MODAL DA FICHA E IMPRESSÃO --- */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(22, 43, 88, 0.7); backdrop-filter: blur(4px); }
+        .modal-content { background-color: var(--white); margin: 5% auto; padding: 2.5rem; border-radius: 0.5rem; width: 90%; max-width: 800px; position: relative; }
+        .close-btn { color: var(--text-muted); float: right; font-size: 28px; font-weight: bold; cursor: pointer; position: absolute; top: 15px; right: 20px; }
+        .ficha-header { display: flex; gap: 20px; margin-bottom: 20px; align-items: center; }
+        .ficha-foto { width: 150px; height: 150px; border-radius: 0.5rem; object-fit: cover; border: 4px solid var(--kendence-dark-blue); background-color: var(--light-bg); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: var(--text-muted); }
+        .ficha-dados h2 { margin: 0 0 5px 0; font-size: 2rem; }
+        .ficha-dados h3 { margin: 0 0 10px 0; color: var(--kendence-red); font-weight: 700; font-style: italic; }
+        .ficha-dados p { margin: 5px 0; font-size: 0.95rem; }
+        .ficha-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 2rem;}
+        .ficha-section { background: var(--light-bg); padding: 1.5rem; border-radius: 0.5rem; border-left: 4px solid var(--kendence-blue); }
+        .ficha-section h4 { margin-top: 0; color: var(--kendence-dark-blue); border-bottom: 2px solid var(--border-color); padding-bottom: 8px; font-weight: 800; text-transform: uppercase; font-size: 0.9rem;}
+        .ficha-section p { font-size: 0.9rem; line-height: 1.5; margin-bottom: 0.5rem;}
+        .ficha-section p strong { color: var(--kendence-dark-blue); }
+
+        /* --- BACKUP --- */
         .backup-card { border: 1px solid var(--border-color); padding: 2rem; border-radius: 0.5rem; margin-bottom: 1.5rem; text-align: center; background-color: #f9fafb; }
         .btn-backup { background-color: var(--kendence-blue); color: var(--white); border: none; padding: 0.8rem 1.5rem; font-size: 0.9rem; border-radius: 0.375rem; cursor: pointer; margin: 0.5rem; font-weight: 800; text-transform: uppercase; }
         .btn-danger-large { background-color: var(--kendence-red); color: var(--white); border: none; padding: 1rem 2rem; font-size: 1rem; border-radius: 0.375rem; cursor: pointer; margin: 0.5rem; font-weight: 800; text-transform: uppercase; }
+
+        /* CONFIGURAÇÃO DE IMPRESSÃO / PDF */
+        @media print {
+            body * { visibility: hidden; }
+            #modalFicha, #modalFicha * { visibility: visible; }
+            #modalFicha { position: absolute; left: 0; top: 0; width: 100%; background: white; margin: 0; padding: 0; }
+            .modal-content { margin: 0; padding: 0; border: none; width: 100%; box-shadow: none; }
+            .ficha-section { border: 1px solid #ccc; break-inside: avoid; }
+            table { break-inside: auto; }
+            tr { break-inside: avoid; page-break-inside: avoid; }
+            .no-print { display: none !important; }
+        }
     </style>
 </head>
 <body>
 
     <div id="auth-screen">
         <div class="login-box">
-            <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" height="80">
-            <h2>ACESSO RESTRITO</h2>
-            <input type="email" id="login-email" placeholder="E-mail">
+            <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" height="80" alt="Kendence FC">
+            <h2 style="color: var(--kendence-dark-blue);">ACESSO RESTRITO</h2>
+            <input type="email" id="login-email" placeholder="E-mail de acesso">
             <input type="password" id="login-senha" placeholder="Senha">
-            <button onclick="window.fazerLogin()">ENTRAR</button>
-            <p id="error-msg" style="color:red; display:none; margin-top:10px;">Credenciais inválidas.</p>
+            <button onclick="window.fazerLogin()">ENTRAR NO SISTEMA</button>
+            <p id="error-msg" style="color:red; display:none; margin-top:10px; font-size: 14px;">Usuário ou senha inválidos.</p>
         </div>
     </div>
 
     <div id="main-system-content">
-        <header>
-            <h1>Kendence F.C.</h1>
-            <button onclick="window.logout()" style="color:white; background:none; border:1px solid white; cursor:pointer; padding:5px 10px; border-radius:4px;">Sair</button>
+        <header class="no-print">
+            <div class="header-content">
+                <h1>Painel de Gestão - Kendence F.C.</h1>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" alt="Brasão" class="header-logo">
+                    <button onclick="window.logout()" style="background:transparent; color:white; border:1px solid white; padding:5px 15px; border-radius:5px; cursor:pointer; font-weight: bold;">Sair</button>
+                </div>
+            </div>
         </header>
 
         <nav class="no-print">
-            <button class="tab-btn active" onclick="openTab('jogadores')">Elenco</button>
-           <button class="tab-btn" onclick="openTab('comissao')">Comissão Técnica</button>
-           <button class="tab-btn" onclick="openTab('patrocinadores')">Patrocinadores</button>
-           <button class="tab-btn" onclick="openTab('agenda')">Calendário</button>
-           <button class="tab-btn" onclick="openTab('backup')">Sistema / Backup</button>
-       </nav>
+            <button class="tab-btn active" onclick="window.openTab('jogadores')">Elenco</button>
+            <button class="tab-btn" onclick="window.openTab('comissao')">Comissão Técnica</button>
+            <button class="tab-btn" onclick="window.openTab('patrocinadores')">Patrocinadores</button>
+            <button class="tab-btn" onclick="window.openTab('agenda')">Calendário</button>
+            <button class="tab-btn" onclick="window.openTab('backup')">Sistema / Backup</button>
+        </nav>
 
- <div class="container no-print">
-        <div id="jogadores" class="tab-content active">
-            <div class="flex-header"><h2>Cadastro do Elenco</h2></div>
-            <form id="formJogador">
-                <input type="hidden" id="jog-id">
-                <div class="section-title">Identificação Básica</div>
-                <div class="form-grid">
-                    <div class="form-group"><label>Foto (URL)</label><input type="text" id="jog-foto"></div>
-                    <div class="form-group full-width"><label>Nome Completo</label><input type="text" id="jog-nome" required></div>
-                    <div class="form-group"><label>Apelido</label><input type="text" id="jog-apelido" required></div>
-                    <div class="form-group"><label>Nascimento</label><input type="date" id="jog-nascimento" required></div>
-                    <div class="form-group"><label>Idade Automática</label><input type="number" id="jog-idade" readonly></div>
-                    <div class="form-group"><label>CPF</label><input type="text" id="jog-cpf"></div>
-                    <div class="form-group"><label>RG</label><input type="text" id="jog-rg"></div>
-                    <div class="form-group"><label>Telefone</label><input type="text" id="jog-telefone"></div>
-                    <div class="form-group"><label>WhatsApp</label><input type="text" id="jog-whatsapp"></div>
-                    <div class="form-group"><label>E-mail</label><input type="email" id="jog-email"></div>
-                    <div class="form-group"><label>Endereço</label><input type="text" id="jog-endereco"></div>
-                    <div class="form-group"><label>Contato de Emergência</label><input type="text" id="jog-emergencia"></div>
-                    <div class="form-group"><label>Tipo Sanguíneo</label><input type="text" id="jog-sangue"></div>
-                    <div class="form-group"><label>Nº da Camisa</label><input type="number" id="jog-camisa"></div>
-                </div>
-                <div class="section-title">Dados Técnicos</div>
-                <div class="form-grid">
-                    <div class="form-group"><label>Posição Principal</label><input type="text" id="jog-pos1"></div>
-                    <div class="form-group"><label>Posição Secundária</label><input type="text" id="jog-pos2"></div>
-                    <div class="form-group"><label>Pé Dominante</label><select id="jog-pe"><option value="">Selecione...</option><option value="Direito">Direito</option><option value="Esquerdo">Esquerdo</option><option value="Ambidestro">Ambidestro</option></select></div>
-                    <div class="form-group"><label>Altura (m)</label><input type="number" step="0.01" id="jog-altura"></div>
-                    <div class="form-group"><label>Peso (kg)</label><input type="number" step="0.1" id="jog-peso"></div>
-                    <div class="form-group"><label>Histórico de Lesões</label><textarea id="jog-lesoes"></textarea></div>
-                    <div class="form-group"><label>Condição Física Atual</label><input type="text" id="jog-condicao"></div>
-                    <div class="form-group"><label>Último Exame Médico</label><input type="date" id="jog-exame"></div>
-                    <div class="form-group"><label>Status</label><select id="jog-status"><option value="Ativo">Ativo</option><option value="Afastado">Afastado</option><option value="Suspenso">Suspenso</option></select></div>
-                    <div class="form-group"><label>Categoria</label><select id="jog-categoria"><option value="Titular">Titular</option><option value="Reserva">Reserva</option><option value="Base">Base</option></select></div>
-                </div>
-                <div class="section-title">Controle Interno</div>
-                <div class="form-grid">
-                    <div class="form-group"><label>Multas / Advertências</label><textarea id="jog-multas"></textarea></div>
-                    <div class="form-group"><label>Status da Mensalidade</label><input type="text" id="jog-mensalidade"></div>
-                    <div class="form-group"><label>Presença em Treinos</label><input type="text" id="jog-treinos"></div>
-                    <div class="form-group"><label>Presença em Jogos</label><input type="text" id="jog-jogos"></div>
-                    <div class="form-group full-width"><label>Observações da Comissão</label><textarea id="jog-obs"></textarea></div>
-                </div>
-                <button type="submit" class="btn-submit">Salvar Ficha do Jogador</button>
-                <button type="button" class="btn-submit btn-cancel" onclick="limparFormulario('formJogador', 'jog-id')">Cancelar Edição / Limpar</button>
-            </form>
-            <div class="table-container">
-                <table id="tabelaJogadores">
-                    <thead><tr><th>Camisa</th><th>Atleta (Clique para Ficha)</th><th>Posição</th><th>Status</th><th>Ações</th></tr></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="comissao" class="tab-content">
-            <div class="flex-header"><h2>Comissão Técnica & Staff</h2></div>
-            <form id="formComissao">
-                <input type="hidden" id="com-id">
-                <div class="section-title">Dados do Profissional</div>
-                <div class="form-grid">
-                    <div class="form-group"><label>Foto (Link/URL)</label><input type="text" id="com-foto"></div>
-                    <div class="form-group full-width"><label>Nome Completo</label><input type="text" id="com-nome" required></div>
-                    <div class="form-group"><label>Cargo</label><select id="com-cargo" required><option value="">Selecione...</option><option value="Técnico">Técnico</option><option value="Auxiliar">Auxiliar Técnico</option><option value="Preparador Físico">Preparador Físico</option><option value="Massagista">Massagista</option><option value="Médico">Médico</option><option value="Diretor">Diretor</option><option value="Marketing">Marketing</option><option value="Gandula">Gandula</option><option value="Outro">Outro</option></select></div>
-                    <div class="form-group"><label>CPF</label><input type="text" id="com-cpf"></div>
-                    <div class="form-group"><label>Endereço</label><input type="text" id="com-telefone"></div>
-                    <div class="form-group"><label>WhatsApp</label><input type="text" id="com-whatsapp"></div>
-                    <div class="form-group"><label>Entrada no Clube</label><input type="date" id="com-entrada"></div>
-                    <div class="form-group"><label>Salário / Ajuda de Custo (R$)</label><input  type="text" id="com-salario"></div>
-                    <div class="form-group"><label>Status</label><select id="com-status"><option value="Ativo">Ativo</option><option value="Desligado">Desligado</option></select></div>
-                    <div class="form-group full-width"><label>Observações Adicionais</label><textarea id="com-obs"></textarea></div>
-                </div>
-                <button type="submit" class="btn-submit">Salvar Membro</button>
-                <button type="button" class="btn-submit btn-cancel" onclick="limparFormulario('formComissao', 'com-id')">Cancelar Edição / Limpar</button>
-            </form>
-            <div class="table-container">
-                <table id="tabelaComissao">
-                    <thead><tr><th>Profissional (Clique para Ficha)</th><th>Cargo</th><th>Status</th><th>WhatsApp</th><th>Ações</th></tr></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="patrocinadores" class="tab-content">
-            <div class="flex-header">
-                <h2>Gestão de Patrocinadores (CRM)</h2>
-            </div>
-            <form id="formPatrocinador">
-                <input type="hidden" id="pat-id">
-                
-                <div class="section-title">Dados Cadastrais da Empresa</div>
-                <div class="form-grid">
-                    <div class="form-group full-width"><label>Razão Social / Nome Fantasia</label><input type="text" id="pat-nome" required></div>
-                    <div class="form-group"><label>Logo (Link/URL)</label><input type="text" id="pat-logo"></div>
-                    <div class="form-group"><label>Redes Sociais (Instagram/Facebook)</label><input type="text" id="pat-redes" placeholder="@empresa"></div>
-                    <div class="form-group full-width"><label>Endereço Completo Sede</label><input type="text" id="pat-endereco"></div>
-                    <div class="form-group"><label>Contato Principal (Nome)</label><input type="text" id="pat-contato-nome" placeholder="Marketing/Diretoria"></div>
-                    <div class="form-group"><label>E-mail Corporativo</label><input type="email" id="pat-email"></div>
-                    <div class="form-group"><label>Telefone / WhatsApp</label><input type="text" id="pat-telefone"></div>
-                </div>
-
-                <div class="section-title">Dados do Contrato e Financeiro</div>
-                <div class="form-grid">
-                    <div class="form-group"><label>Valor Total / Permuta</label><input type="text" id="pat-valor" placeholder="R$ ou Descrição de Produtos"></div>
-                    <div class="form-group"><label>Forma de Pagamento</label><input type="text" id="pat-pagamento" placeholder="Mensal, Trimestral, Única..."></div>
-                    <div class="form-group"><label>Datas de Vencimento</label><input type="text" id="pat-vencimento"></div>
-                    <div class="form-group"><label>Status da Parceria</label>
-                        <select id="pat-status">
-                            <option value="Ativo">Ativo</option>
-                            <option value="Pendente">Pendente / Negociação</option>
-                            <option value="Renovação">Em Renovação</option>
-                            <option value="Finalizado">Finalizado</option>
-                        </select>
+        <div class="container no-print">
+            <div id="jogadores" class="tab-content active">
+                <div class="flex-header"><h2>Cadastro do Elenco</h2></div>
+                <form id="formJogador">
+                    <input type="hidden" id="jog-id">
+                    <div class="section-title">Identificação Básica</div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Foto (URL)</label><input type="text" id="jog-foto"></div>
+                        <div class="form-group full-width"><label>Nome Completo</label><input type="text" id="jog-nome" required></div>
+                        <div class="form-group"><label>Apelido</label><input type="text" id="jog-apelido" required></div>
+                        <div class="form-group"><label>Nascimento</label><input type="date" id="jog-nascimento" required></div>
+                        <div class="form-group"><label>Idade Automática</label><input type="number" id="jog-idade" readonly></div>
+                        <div class="form-group"><label>CPF</label><input type="text" id="jog-cpf"></div>
+                        <div class="form-group"><label>RG</label><input type="text" id="jog-rg"></div>
+                        <div class="form-group"><label>Telefone</label><input type="text" id="jog-telefone"></div>
+                        <div class="form-group"><label>WhatsApp</label><input type="text" id="jog-whatsapp"></div>
+                        <div class="form-group"><label>E-mail</label><input type="email" id="jog-email"></div>
+                        <div class="form-group"><label>Endereço</label><input type="text" id="jog-endereco"></div>
+                        <div class="form-group"><label>Contato de Emergência</label><input type="text" id="jog-emergencia"></div>
+                        <div class="form-group"><label>Tipo Sanguíneo</label><input type="text" id="jog-sangue"></div>
+                        <div class="form-group"><label>Nº da Camisa</label><input type="number" id="jog-camisa"></div>
                     </div>
-                    <div class="form-group"><label>Início da Vigência</label><input type="date" id="pat-inicio"></div>
-                    <div class="form-group"><label>Término da Vigência</label><input type="date" id="pat-termino"></div>
-                </div>
-
-                <div class="section-title">Contrapartidas e Ativações</div>
-                <div class="form-grid">
-                    <div class="form-group"><label>Cota de Patrocínio</label>
-                        <select id="pat-cota">
-                            <option value="">Selecione...</option>
-                            <option value="Master">Master</option>
-                            <option value="Ouro">Ouro</option>
-                            <option value="Prata">Prata</option>
-                            <option value="Bronze">Bronze</option>
-                            <option value="Apoio / Permuta">Apoio / Permuta</option>
-                        </select>
+                    <div class="section-title">Dados Técnicos</div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Posição Principal</label><input type="text" id="jog-pos1"></div>
+                        <div class="form-group"><label>Posição Secundária</label><input type="text" id="jog-pos2"></div>
+                        <div class="form-group"><label>Pé Dominante</label><select id="jog-pe"><option value="">Selecione...</option><option value="Direito">Direito</option><option value="Esquerdo">Esquerdo</option><option value="Ambidestro">Ambidestro</option></select></div>
+                        <div class="form-group"><label>Altura (m)</label><input type="number" step="0.01" id="jog-altura"></div>
+                        <div class="form-group"><label>Peso (kg)</label><input type="number" step="0.1" id="jog-peso"></div>
+                        <div class="form-group"><label>Histórico de Lesões</label><textarea id="jog-lesoes"></textarea></div>
+                        <div class="form-group"><label>Condição Física Atual</label><input type="text" id="jog-condicao"></div>
+                        <div class="form-group"><label>Último Exame Médico</label><input type="date" id="jog-exame"></div>
+                        <div class="form-group"><label>Status</label><select id="jog-status"><option value="Ativo">Ativo</option><option value="Afastado">Afastado</option><option value="Suspenso">Suspenso</option></select></div>
+                        <div class="form-group"><label>Categoria</label><select id="jog-categoria"><option value="Titular">Titular</option><option value="Reserva">Reserva</option><option value="Base">Base</option></select></div>
                     </div>
-                    <div class="form-group"><label>Local de Exposição da Marca</label><input type="text" id="pat-local" placeholder="Peito, Costas, Banners..."></div>
-                    <div class="form-group full-width"><label>Materiais Necessários e Pendências</label><textarea id="pat-materiais" placeholder="Ex: Precisam enviar logo em vetor..."></textarea></div>
-                    <div class="form-group full-width"><label>Ações de Marketing Acordadas</label><textarea id="pat-marketing" placeholder="Eventos com jogadores, sorteios..."></textarea></div>
+                    <div class="section-title">Controle Interno</div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Multas / Advertências</label><textarea id="jog-multas"></textarea></div>
+                        <div class="form-group"><label>Status da Mensalidade</label><input type="text" id="jog-mensalidade"></div>
+                        <div class="form-group"><label>Presença em Treinos</label><input type="text" id="jog-treinos"></div>
+                        <div class="form-group"><label>Presença em Jogos</label><input type="text" id="jog-jogos"></div>
+                        <div class="form-group full-width"><label>Observações da Comissão</label><textarea id="jog-obs"></textarea></div>
+                    </div>
+                    <button type="submit" class="btn-submit">Salvar Ficha do Jogador na Nuvem</button>
+                    <button type="button" class="btn-submit btn-cancel" onclick="window.limparFormulario('formJogador', 'jog-id')">Cancelar Edição / Limpar</button>
+                </form>
+                <div class="table-container">
+                    <table id="tabelaJogadores">
+                        <thead><tr><th>Camisa</th><th>Atleta (Clique para Ficha)</th><th>Posição</th><th>Status</th><th class="no-print">Ações</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
+            </div>
 
-                <div class="section-title">Relacionamento (CRM) e Documentos</div>
-                <div class="form-grid">
-                    <div class="form-group"><label>Responsável Interno (Clube)</label><input type="text" id="pat-responsavel" placeholder="Quem atende a empresa"></div>
-                    <div class="form-group"><label>Link YouTube (Vídeos da marca)</label><input type="text" id="pat-youtube"></div>
-                    <div class="form-group full-width"><label>Histórico de Reuniões e Expectativas</label><textarea id="pat-crm" placeholder="Anotações de conversas..."></textarea></div>
-                    <div class="form-group"><label>Arquivo do Contrato (URL/PDF)</label><input type="text" id="pat-contrato" placeholder="Link do Drive"></div>
-                    <div class="form-group"><label>Media Kit da Empresa (URL)</label><input type="text" id="pat-mediakit"></div>
-                    <div class="form-group"><label>Notas Fiscais (Links/Anotações)</label><input type="text" id="pat-nf"></div>
+            <div id="comissao" class="tab-content">
+                <div class="flex-header"><h2>Comissão Técnica & Staff</h2></div>
+                <form id="formComissao">
+                    <input type="hidden" id="com-id">
+                    <div class="section-title">Dados do Profissional</div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Foto (Link/URL)</label><input type="text" id="com-foto"></div>
+                        <div class="form-group full-width"><label>Nome Completo</label><input type="text" id="com-nome" required></div>
+                        <div class="form-group"><label>Cargo</label><select id="com-cargo" required><option value="">Selecione...</option><option value="Técnico">Técnico</option><option value="Auxiliar">Auxiliar Técnico</option><option value="Preparador Físico">Preparador Físico</option><option value="Massagista">Massagista</option><option value="Médico">Médico</option><option value="Diretor">Diretor</option><option value="Marketing">Marketing</option><option value="Gandula">Gandula</option><option value="Outro">Outro</option></select></div>
+                        <div class="form-group"><label>CPF</label><input type="text" id="com-cpf"></div>
+                        <div class="form-group"><label>Endereço</label><input type="text" id="com-telefone"></div>
+                        <div class="form-group"><label>WhatsApp</label><input type="text" id="com-whatsapp"></div>
+                        <div class="form-group"><label>Entrada no Clube</label><input type="date" id="com-entrada"></div>
+                        <div class="form-group"><label>Salário / Ajuda de Custo (R$)</label><input type="text" id="com-salario"></div>
+                        <div class="form-group"><label>Status</label><select id="com-status"><option value="Ativo">Ativo</option><option value="Desligado">Desligado</option></select></div>
+                        <div class="form-group full-width"><label>Observações Adicionais</label><textarea id="com-obs"></textarea></div>
+                    </div>
+                    <button type="submit" class="btn-submit">Salvar Membro na Nuvem</button>
+                    <button type="button" class="btn-submit btn-cancel" onclick="window.limparFormulario('formComissao', 'com-id')">Cancelar Edição / Limpar</button>
+                </form>
+                <div class="table-container">
+                    <table id="tabelaComissao">
+                        <thead><tr><th>Profissional (Clique para Ficha)</th><th>Cargo</th><th>Status</th><th>WhatsApp</th><th class="no-print">Ações</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
+            </div>
 
-                <button type="submit" class="btn-submit">Salvar Patrocinador</button>
-                <button type="button" class="btn-submit btn-cancel" onclick="limparFormulario('formPatrocinador', 'pat-id')">Cancelar Edição / Limpar</button>
-            </form>
+            <div id="patrocinadores" class="tab-content">
+                <div class="flex-header"><h2>Gestão de Patrocinadores (CRM)</h2></div>
+                <form id="formPatrocinador">
+                    <input type="hidden" id="pat-id">
+                    <div class="section-title">Dados Cadastrais da Empresa</div>
+                    <div class="form-grid">
+                        <div class="form-group full-width"><label>Razão Social / Nome Fantasia</label><input type="text" id="pat-nome" required></div>
+                        <div class="form-group"><label>Logo (Link/URL)</label><input type="text" id="pat-logo"></div>
+                        <div class="form-group"><label>Redes Sociais (Instagram/Facebook)</label><input type="text" id="pat-redes" placeholder="@empresa"></div>
+                        <div class="form-group full-width"><label>Endereço Completo Sede</label><input type="text" id="pat-endereco"></div>
+                        <div class="form-group"><label>Contato Principal (Nome)</label><input type="text" id="pat-contato-nome" placeholder="Marketing/Diretoria"></div>
+                        <div class="form-group"><label>E-mail Corporativo</label><input type="email" id="pat-email"></div>
+                        <div class="form-group"><label>Telefone / WhatsApp</label><input type="text" id="pat-telefone"></div>
+                    </div>
+                    <div class="section-title">Dados do Contrato e Financeiro</div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Valor Total / Permuta</label><input type="text" id="pat-valor" placeholder="R$ ou Descrição de Produtos"></div>
+                        <div class="form-group"><label>Forma de Pagamento</label><input type="text" id="pat-pagamento" placeholder="Mensal, Trimestral, Única..."></div>
+                        <div class="form-group"><label>Datas de Vencimento</label><input type="text" id="pat-vencimento"></div>
+                        <div class="form-group"><label>Status da Parceria</label><select id="pat-status"><option value="Ativo">Ativo</option><option value="Pendente">Pendente / Negociação</option><option value="Renovação">Em Renovação</option><option value="Finalizado">Finalizado</option></select></div>
+                        <div class="form-group"><label>Início da Vigência</label><input type="date" id="pat-inicio"></div>
+                        <div class="form-group"><label>Término da Vigência</label><input type="date" id="pat-termino"></div>
+                    </div>
+                    <div class="section-title">Contrapartidas e Ativações</div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Cota de Patrocínio</label><select id="pat-cota"><option value="">Selecione...</option><option value="Master">Master</option><option value="Ouro">Ouro</option><option value="Prata">Prata</option><option value="Bronze">Bronze</option><option value="Apoio / Permuta">Apoio / Permuta</option></select></div>
+                        <div class="form-group"><label>Local de Exposição da Marca</label><input type="text" id="pat-local" placeholder="Peito, Costas, Banners..."></div>
+                        <div class="form-group full-width"><label>Materiais Necessários e Pendências</label><textarea id="pat-materiais" placeholder="Ex: Precisam enviar logo em vetor..."></textarea></div>
+                        <div class="form-group full-width"><label>Ações de Marketing Acordadas</label><textarea id="pat-marketing" placeholder="Eventos com jogadores, sorteios..."></textarea></div>
+                    </div>
+                    <div class="section-title">Relacionamento (CRM) e Documentos</div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Responsável Interno (Clube)</label><input type="text" id="pat-responsavel" placeholder="Quem atende a empresa"></div>
+                        <div class="form-group"><label>Link YouTube (Vídeos da marca)</label><input type="text" id="pat-youtube"></div>
+                        <div class="form-group full-width"><label>Histórico de Reuniões e Expectativas</label><textarea id="pat-crm" placeholder="Anotações de conversas..."></textarea></div>
+                        <div class="form-group"><label>Arquivo do Contrato (URL/PDF)</label><input type="text" id="pat-contrato" placeholder="Link do Drive"></div>
+                        <div class="form-group"><label>Media Kit da Empresa (URL)</label><input type="text" id="pat-mediakit"></div>
+                        <div class="form-group"><label>Notas Fiscais (Links/Anotações)</label><input type="text" id="pat-nf"></div>
+                    </div>
+                    <button type="submit" class="btn-submit">Salvar Patrocinador na Nuvem</button>
+                    <button type="button" class="btn-submit btn-cancel" onclick="window.limparFormulario('formPatrocinador', 'pat-id')">Cancelar Edição / Limpar</button>
+                </form>
+                <div class="table-container">
+                    <table id="tabelaPatrocinadores">
+                        <thead><tr><th>Empresa (Clique para Ficha)</th><th>Cota</th><th>Status</th><th>Vigência</th><th class="no-print">Ações</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
 
-            <div class="table-container">
-                <table id="tabelaPatrocinadores">
-                    <thead><tr><th>Empresa (Clique para Ficha)</th><th>Cota</th><th>Status</th><th>Vigência</th><th>Ações</th></tr></thead>
-                    <tbody></tbody>
-                </table>
+            <div id="agenda" class="tab-content">
+                <div class="flex-header">
+                    <h2>Calendário de Jogos</h2>
+                    <button class="btn-print-top" onclick="window.imprimirAgendaTabela()">🖨️ Imprimir Jogos</button>
+                </div>
+                <form id="formAgenda">
+                    <input type="hidden" id="age-id">
+                    <div class="section-title">Dados da Partida</div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Data</label><input type="date" id="age-data" required></div>
+                        <div class="form-group"><label>Horário</label><input type="time" id="age-horario"></div>
+                        <div class="form-group"><label>Adversário</label><input type="text" id="age-adversario" required></div>
+                        <div class="form-group"><label>Competição / Amistoso</label><input type="text" id="age-competicao"></div>
+                        <div class="form-group"><label>Local do Jogo</label><input type="text" id="age-local"></div>
+                        <div class="form-group"><label>Placar Final (Ex: 2 x 1)</label><input type="text" id="age-resultado"></div>
+                        <div class="form-group full-width"><label>Observações do Jogo</label><textarea id="age-obs"></textarea></div>
+                    </div>
+                    <button type="submit" class="btn-submit">Salvar Partida na Nuvem</button>
+                    <button type="button" class="btn-submit btn-cancel" onclick="window.limparFormulario('formAgenda', 'age-id')">Cancelar Edição / Limpar</button>
+                </form>
+                <div class="table-container" id="area-impressao-agenda">
+                    <table id="tabelaAgenda">
+                        <thead><tr><th>Data</th><th>Adversário / Competição</th><th>Placar</th><th class="col-acoes no-print">Ações</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="backup" class="tab-content">
+                <div class="flex-header"><h2>Gestão do Sistema e Banco de Dados</h2></div>
+                <div class="backup-card">
+                    <h3>Exportar Dados (Fazer Backup da Nuvem)</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Baixe um arquivo .json com todos os cadastros atuais do Firebase.</p>
+                    <button class="btn-backup" onclick="window.exportarDados()">⬇️ Baixar Backup do Sistema (.json)</button>
+                </div>
+                <div class="backup-card">
+                    <h3>Restaurar Dados (Importar Backup para a Nuvem)</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Selecione um arquivo .json válido para sobrescrever os dados atuais.</p>
+                    <input type="file" id="arquivoImportacao" accept=".json" style="margin-bottom: 10px; max-width: 300px;"><br>
+                    <button class="btn-backup" onclick="window.importarDados()">⬆️ Restaurar Banco de Dados</button>
+                </div>
+                <div class="backup-card" style="border-color: var(--kendence-red); background-color: #fff1f2;">
+                    <h3 style="color: var(--kendence-red);">Zona de Perigo</h3>
+                    <button class="btn-danger-large" onclick="window.apagarTudo()">⚠️ Apagar Todos os Dados da Nuvem</button>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div id="agenda" class="tab-content">
-            <div class="flex-header">
-                <h2>Calendário de Jogos</h2>
-                <button class="btn-print-top" onclick="imprimirAgendaTabela()">🖨️ Imprimir Jogos Cadastrados</button>
+    <div id="modalFicha" class="modal">
+        <div class="modal-content">
+            <span class="close-btn no-print" onclick="window.fecharModal()">&times;</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--kendence-dark-blue); padding-bottom: 10px; margin-bottom: 20px;">
+                <h2 style="margin: 0; color: var(--kendence-dark-blue); font-weight: 900; letter-spacing: 0.05em;">KENDENCE F.C.</h2>
+                <button class="btn-backup no-print" onclick="window.print()" style="margin: 0; background-color: var(--kendence-red);">🖨️ Salvar PDF / Imprimir</button>
             </div>
-            <form id="formAgenda">
-                <input type="hidden" id="age-id">
-                <div class="section-title">Dados da Partida</div>
-                <div class="form-grid">
-                    <div class="form-group"><label>Data</label><input type="date" id="age-data" required></div>
-                    <div class="form-group"><label>Horário</label><input type="time" id="age-horario"></div>
-                    <div class="form-group"><label>Adversário</label><input type="text" id="age-adversario" required></div>
-                    <div class="form-group"><label>Competição / Amistoso</label><input type="text" id="age-competicao"></div>
-                    <div class="form-group"><label>Local do Jogo</label><input type="text" id="age-local"></div>
-                    <div class="form-group"><label>Placar Final (Ex: 2 x 1)</label><input type="text" id="age-resultado"></div>
-                    <div class="form-group full-width"><label>Observações do Jogo</label><textarea id="age-obs"></textarea></div>
-                </div>
-                <button type="submit" class="btn-submit">Salvar Partida</button>
-                <button type="button" class="btn-submit btn-cancel" onclick="limparFormulario('formAgenda', 'age-id')">Cancelar Edição / Limpar</button>
-            </form>
-            <div class="table-container" id="area-impressao-agenda">
-                <table id="tabelaAgenda">
-                    <thead><tr><th>Data</th><th>Adversário / Competição</th><th>Placar</th><th class="col-acoes">Ações</th></tr></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="backup" class="tab-content">
-            <div class="flex-header"><h2>Gestão do Sistema e Banco de Dados</h2></div>
-            <div class="backup-card">
-                <h3>Exportar Dados (Fazer Backup da Nuvem)</h3>
-                <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Baixe um arquivo .json com todos os cadastros atuais do Firebase.</p>
-                <button class="btn-backup" onclick="window.exportarDados()">⬇️ Baixar Backup do Sistema (.json)</button>
-            </div>
-            <div class="backup-card">
-                <h3>Restaurar Dados (Importar Backup para a Nuvem)</h3>
-                <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Selecione um arquivo .json válido para sobrescrever os dados atuais.</p>
-                <input type="file" id="arquivoImportacao" accept=".json" style="margin-bottom: 10px; max-width: 300px;"><br>
-                <button class="btn-backup" onclick="window.importarDados()">⬆️ Restaurar Banco de Dados</button>
-            </div>
-            <div class="backup-card" style="border-color: var(--kendence-red); background-color: #fff1f2;">
-                <h3 style="color: var(--kendence-red);">Zona de Perigo</h3>
-                <button class="btn-danger-large" onclick="window.apagarTudo()">⚠️ Apagar Todos os Dados da Nuvem</button>
-            </div>
+            <div id="conteudoFicha"></div>
         </div>
     </div>
 
@@ -312,6 +356,12 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
+        // VARIÁVEL GLOBAL PARA GUARDAR OS DADOS DO FIREBASE E PERMITIR A EDIÇÃO/VISUALIZAÇÃO
+        let dadosLocais = { jogadores: {}, comissao: {}, patrocinadores: {}, agenda: {} };
+
+        // UTILITÁRIO
+        const formatarData = (dataStr) => dataStr ? dataStr.split('-').reverse().join('/') : '-';
+
         // --- AUTH ---
         window.fazerLogin = () => {
             const email = document.getElementById('login-email').value;
@@ -333,74 +383,186 @@
             }
         });
 
-        // --- NAVEGAÇÃO ---
+        // --- INTERFACE ---
         window.openTab = (id) => {
             document.querySelectorAll('.tab-content, .tab-btn').forEach(el => el.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             event.currentTarget.classList.add('active');
         };
 
-        // --- SINCRONIZAÇÃO EM TEMPO REAL ---
+        window.fecharModal = () => document.getElementById('modalFicha').style.display = 'none';
+        window.onclick = (e) => { const m = document.getElementById('modalFicha'); if (e.target == m) m.style.display = "none"; };
+        window.limparFormulario = (formId, idField) => { document.getElementById(formId).reset(); document.getElementById(idField).value = ''; };
+
+        // --- SINCRONIZAÇÃO E RENDERIZAÇÃO ---
         function iniciarSincronizacao() {
-            onValue(ref(db, 'jogadores'), (s) => render('tabelaJogadores', s.val(), 'jog'));
-            onValue(ref(db, 'comissao'), (s) => render('tabelaComissao', s.val(), 'com'));
-            onValue(ref(db, 'patrocinadores'), (s) => render('tabelaPatrocinadores', s.val(), 'pat'));
-            onValue(ref(db, 'agenda'), (s) => render('tabelaAgenda', s.val(), 'age'));
+            onValue(ref(db, 'jogadores'), (s) => { dadosLocais.jogadores = s.val() || {}; renderJogadores(); });
+            onValue(ref(db, 'comissao'), (s) => { dadosLocais.comissao = s.val() || {}; renderComissao(); });
+            onValue(ref(db, 'patrocinadores'), (s) => { dadosLocais.patrocinadores = s.val() || {}; renderPatrocinadores(); });
+            onValue(ref(db, 'agenda'), (s) => { dadosLocais.agenda = s.val() || {}; renderAgenda(); });
         }
 
-        function render(tableId, dados, prefix) {
-            const tbody = document.querySelector(`#${tableId} tbody`);
+        function renderJogadores() {
+            const tbody = document.querySelector('#tabelaJogadores tbody');
             tbody.innerHTML = '';
-            if(!dados) return;
-            Object.entries(dados).forEach(([id, obj]) => {
-                let row = `<tr>
-                    <td><b>${obj.nome || obj.adversario || obj.data || '-'}</b></td>
-                    <td>${obj.pos1 || obj.cargo || obj.cota || obj.adversario || '-'}</td>
-                    <td>${obj.status || obj.resultado || '-'}</td>
-                    <td><button class="btn-delete" onclick="window.excluir('${tableId.replace('tabela', '').toLowerCase()}', '${id}')">Excluir</button></td>
+            Object.entries(dadosLocais.jogadores).forEach(([id, item]) => {
+                let bgStatus = item.status === 'Ativo' ? 'var(--success)' : item.status === 'Suspenso' ? 'var(--kendence-red)' : 'var(--warning)';
+                tbody.innerHTML += `<tr>
+                    <td><strong>${item.camisa || '-'}</strong></td>
+                    <td class="nome-clicavel" onclick="window.abrirFichaJogador('${id}')" title="Ver ficha">${item.apelido || item.nome}</td>
+                    <td>${item.pos1 || '-'}</td>
+                    <td><span style="background:${bgStatus}; color:white; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold;">${item.status}</span></td>
+                    <td style="min-width: 140px;" class="no-print">
+                        <button class="btn-action btn-edit" onclick="window.editarItem('jog', 'jogadores', '${id}')">Editar</button>
+                        <button class="btn-action btn-delete" onclick="window.excluirItem('jogadores', '${id}')">Excluir</button>
+                    </td>
                 </tr>`;
-                tbody.innerHTML += row;
             });
         }
 
-        // --- SALVAMENTO ---
-        const setupForm = (formId, path, fields, idField) => {
-            document.getElementById(formId).addEventListener('submit', (e) => {
+        function renderComissao() {
+            const tbody = document.querySelector('#tabelaComissao tbody');
+            tbody.innerHTML = '';
+            Object.entries(dadosLocais.comissao).forEach(([id, item]) => {
+                tbody.innerHTML += `<tr>
+                    <td class="nome-clicavel" onclick="window.abrirFichaComissao('${id}')">${item.nome}</td>
+                    <td>${item.cargo}</td>
+                    <td><span style="background:${item.status==='Ativo'?'var(--success)':'var(--text-muted)'}; color:white; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold;">${item.status}</span></td>
+                    <td>${item.whatsapp || '-'}</td>
+                    <td class="no-print" style="min-width: 140px;">
+                        <button class="btn-action btn-edit" onclick="window.editarItem('com', 'comissao', '${id}')">Editar</button>
+                        <button class="btn-action btn-delete" onclick="window.excluirItem('comissao', '${id}')">Excluir</button>
+                    </td>
+                </tr>`;
+            });
+        }
+
+        function renderPatrocinadores() {
+            const tbody = document.querySelector('#tabelaPatrocinadores tbody');
+            tbody.innerHTML = '';
+            Object.entries(dadosLocais.patrocinadores).forEach(([id, item]) => {
+                let bgStatus = item.status === 'Ativo' ? 'var(--success)' : item.status === 'Finalizado' ? 'var(--text-muted)' : item.status === 'Pendente' ? 'var(--kendence-red)' : 'var(--warning)';
+                tbody.innerHTML += `<tr>
+                    <td class="nome-clicavel" onclick="window.abrirFichaPatrocinador('${id}')">${item.nome}</td>
+                    <td><strong>${item.cota || '-'}</strong></td>
+                    <td><span style="background:${bgStatus}; color:white; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold;">${item.status}</span></td>
+                    <td>${formatarData(item.inicio)} até ${formatarData(item.termino)}</td>
+                    <td class="no-print" style="min-width: 140px;">
+                        <button class="btn-action btn-edit" onclick="window.editarItem('pat', 'patrocinadores', '${id}')">Editar</button>
+                        <button class="btn-action btn-delete" onclick="window.excluirItem('patrocinadores', '${id}')">Excluir</button>
+                    </td>
+                </tr>`;
+            });
+        }
+
+        function renderAgenda() {
+            const tbody = document.querySelector('#tabelaAgenda tbody');
+            tbody.innerHTML = '';
+            // Ordenar por data
+            const jogosOrdenados = Object.entries(dadosLocais.agenda).sort((a, b) => new Date(a[1].data) - new Date(b[1].data));
+            jogosOrdenados.forEach(([id, item]) => {
+                tbody.innerHTML += `<tr>
+                    <td><strong>${formatarData(item.data)}</strong><br><small style="color:var(--text-muted)">${item.horario || ''}</small></td>
+                    <td><strong>${item.adversario}</strong><br><small>${item.competicao || ''}</small></td>
+                    <td><span style="font-weight: 900; color: var(--kendence-dark-blue); font-size: 1.1rem;">${item.resultado || '-'}</span></td>
+                    <td class="col-acoes no-print" style="min-width: 140px;">
+                        <button class="btn-action btn-edit" onclick="window.editarItem('age', 'agenda', '${id}')">Editar</button>
+                        <button class="btn-action btn-delete" onclick="window.excluirItem('agenda', '${id}')">Excluir</button>
+                    </td>
+                </tr>`;
+            });
+        }
+
+        // --- SALVAR (CREATE / UPDATE) GENÉRICO QUE PEGA TODOS OS CAMPOS ---
+        const setupForm = (formId, path, prefix) => {
+            document.getElementById(formId).addEventListener('submit', async (e) => {
                 e.preventDefault();
                 let obj = {};
-                fields.forEach(f => {
-                    const el = document.getElementById(f);
-                    if(el) obj[f.replace(idField + '-', '')] = el.value;
+                // Pega todos os inputs do form
+                const inputs = document.getElementById(formId).querySelectorAll('input, select, textarea');
+                inputs.forEach(el => {
+                    if(el.id && el.id.startsWith(prefix + '-')) {
+                        const key = el.id.replace(prefix + '-', '');
+                        if(key !== 'id') obj[key] = el.value;
+                    }
                 });
-                const id = document.getElementById(idField + '-id').value;
-                id ? set(ref(db, `${path}/${id}`), obj) : push(ref(db, path), obj);
-                e.target.reset();
+                
+                const id = document.getElementById(prefix + '-id').value;
+                try {
+                    if (id) await set(ref(db, `${path}/${id}`), obj);
+                    else await push(ref(db, path), obj);
+                    window.limparFormulario(formId, prefix + '-id');
+                    alert('Dados salvos na nuvem!');
+                } catch(err) { alert("Erro ao salvar: " + err.message); }
             });
         };
 
-        // Arrays de campos mantidos exatamente como você solicitou na última versão
-        setupForm('formJogador', 'jogadores', ['jog-nome', 'jog-apelido', 'jog-nascimento', 'jog-cpf', 'jog-whatsapp', 'jog-camisa', 'jog-status', 'jog-pos1', 'jog-pe', 'jog-lesoes'], 'jog');
-        setupForm('formComissao', 'comissao', ['com-nome', 'com-cargo', 'com-whatsapp', 'com-status'], 'com');
-        setupForm('formPatrocinador', 'patrocinadores', ['pat-nome', 'pat-cota', 'pat-vencimento', 'pat-status'], 'pat');
-        setupForm('formAgenda', 'agenda', ['age-data', 'age-adversario', 'age-resultado'], 'age');
+        setupForm('formJogador', 'jogadores', 'jog');
+        setupForm('formComissao', 'comissao', 'com');
+        setupForm('formPatrocinador', 'patrocinadores', 'pat');
+        setupForm('formAgenda', 'agenda', 'age');
 
-        window.excluir = (path, id) => confirm("Excluir registro?") && remove(ref(db, `${path}/${id}`));
+        // --- EXCLUIR E EDITAR ---
+        window.excluirItem = (path, id) => confirm("Excluir este registro permanentemente da nuvem?") && remove(ref(db, `${path}/${id}`));
+        
+        window.editarItem = (prefix, path, id) => {
+            const item = dadosLocais[path][id];
+            if(item) {
+                document.getElementById(`${prefix}-id`).value = id;
+                Object.keys(item).forEach(k => {
+                    const el = document.getElementById(`${prefix}-${k}`);
+                    if(el) el.value = item[k];
+                });
+                window.scrollTo(0, 0);
+            }
+        };
 
-        // --- FUNÇÕES DE BACKUP NO FIREBASE ---
+        // --- CALCULO IDADE AUTOMATICA ---
+        document.getElementById('jog-nascimento').addEventListener('change', function() {
+            if(this.value) {
+                const h = new Date(), n = new Date(this.value);
+                let i = h.getFullYear() - n.getFullYear();
+                if (h.getMonth() - n.getMonth() < 0 || (h.getMonth() === n.getMonth() && h.getDate() < n.getDate())) i--;
+                document.getElementById('jog-idade').value = i;
+            }
+        });
+
+        // --- MODAIS DE VISUALIZAÇÃO E IMPRESSÃO (RECUPERADOS) ---
+        window.abrirFichaJogador = function(id) {
+            const i = dadosLocais.jogadores[id]; if(!i) return;
+            document.getElementById('conteudoFicha').innerHTML = `<div class="ficha-header"><div class="ficha-foto">${i.foto ? `<img src="${i.foto}" style="width:100%; height:100%; object-fit:cover; border-radius: 0.3rem;">` : 'SEM FOTO'}</div><div class="ficha-dados"><h2>${i.nome || '-'}</h2><h3>"${i.apelido || '-'}"</h3><p><strong>Camisa:</strong> ${i.camisa || '-'} &nbsp;|&nbsp; <strong>Posição:</strong> ${i.pos1 || '-'}</p><p><strong>Status:</strong> ${i.status || '-'} &nbsp;|&nbsp; <strong>Categoria:</strong> ${i.categoria || '-'}</p><p><strong>Idade:</strong> ${i.idade || '-'} anos (Nasc: ${formatarData(i.nascimento)})</p></div></div><div class="ficha-grid"><div class="ficha-section"><h4>Dados Pessoais</h4><p><strong>CPF:</strong> ${i.cpf || '-'}</p><p><strong>RG:</strong> ${i.rg || '-'}</p><p><strong>Telefone:</strong> ${i.telefone || '-'}</p><p><strong>WhatsApp:</strong> ${i.whatsapp || '-'}</p><p><strong>E-mail:</strong> ${i.email || '-'}</p><p><strong>Endereço:</strong> ${i.endereco || '-'}</p><p><strong>Emergência:</strong> ${i.emergencia || '-'}</p><p><strong>Tp. Sangue:</strong> ${i.sangue || '-'}</p></div><div class="ficha-section"><h4>Dados Técnicos</h4><p><strong>Pos. Sec.:</strong> ${i.pos2 || '-'}</p><p><strong>Pé:</strong> ${i.pe || '-'}</p><p><strong>Altura/Peso:</strong> ${i.altura || '-'}m / ${i.peso || '-'}kg</p><p><strong>Condição:</strong> ${i.condicao || '-'}</p><p><strong>Exame:</strong> ${formatarData(i.exame)}</p><p><strong>Lesões:</strong><br> ${i.lesoes || '-'}</p></div><div class="ficha-section" style="grid-column: 1 / -1;"><h4>Controle</h4><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;"><p><strong>Presença:</strong> ${i.treinos || '-'} / ${i.jogos || '-'}</p><p><strong>Mensalidade:</strong> ${i.mensalidade || '-'}</p><p><strong>Multas:</strong><br> ${i.multas || '-'}</p><p><strong>Obs:</strong><br> ${i.obs || '-'}</p></div></div></div>`;
+            document.getElementById('modalFicha').style.display = 'block';
+        }
+
+        window.abrirFichaComissao = function(id) {
+            const i = dadosLocais.comissao[id]; if(!i) return;
+            document.getElementById('conteudoFicha').innerHTML = `<div class="ficha-header"><div class="ficha-foto">${i.foto ? `<img src="${i.foto}" style="width:100%; height:100%; object-fit:cover; border-radius: 0.3rem;">` : 'SEM FOTO'}</div><div class="ficha-dados"><h2>${i.nome}</h2><h3 style="color: var(--kendence-blue); font-style: normal;">${i.cargo}</h3><p><strong>Status:</strong> ${i.status}</p><p><strong>Membro Desde:</strong> ${formatarData(i.entrada)}</p></div></div><div class="ficha-grid"><div class="ficha-section"><h4>Dados Pessoais</h4><p><strong>CPF:</strong> ${i.cpf || '-'}</p><p><strong>Endereço:</strong> ${i.telefone || '-'}</p><p><strong>WhatsApp:</strong> ${i.whatsapp || '-'}</p></div><div class="ficha-section"><h4>Administrativo</h4><p><strong>Remuneração:</strong> ${i.salario ? 'R$ ' + i.salario : 'Não informado'}</p><p><strong>Observações:</strong><br> ${i.obs || 'Nenhum registro.'}</p></div></div>`;
+            document.getElementById('modalFicha').style.display = 'block';
+        }
+
+        window.abrirFichaPatrocinador = function(id) {
+            const i = dadosLocais.patrocinadores[id]; if(!i) return;
+            document.getElementById('conteudoFicha').innerHTML = `<div class="ficha-header"><div class="ficha-foto">${i.logo ? `<img src="${i.logo}" style="width:100%; height:100%; object-fit:contain; border-radius: 0.3rem; padding: 5px;">` : 'LOGO AQUI'}</div><div class="ficha-dados"><h2>${i.nome}</h2><h3>Patrocinador: ${i.cota || 'Não definido'}</h3><p><strong>Status Contratual:</strong> ${i.status}</p><p><strong>Vigência:</strong> ${formatarData(i.inicio)} a ${formatarData(i.termino)}</p><p><strong>Contato:</strong> ${i.contato_nome || '-'} | ${i.telefone || '-'} | ${i.email || '-'}</p></div></div><div class="ficha-grid"><div class="ficha-section"><h4>Acordo Comercial</h4><p><strong>Valor/Permuta:</strong> ${i.valor || '-'}</p><p><strong>Forma Pagamento:</strong> ${i.pagamento || '-'}</p><p><strong>Vencimentos:</strong> ${i.vencimento || '-'}</p><p><strong>Local Exposição:</strong> ${i.local || '-'}</p><p><strong>Ações Marketing:</strong><br> ${i.marketing || '-'}</p></div><div class="ficha-section"><h4>CRM / Relacionamento</h4><p><strong>Responsável (KFC):</strong> ${i.responsavel || '-'}</p><p><strong>Redes Sociais:</strong> ${i.redes || '-'}</p><p><strong>YouTube Mídia:</strong> ${i.youtube || '-'}</p><p><strong>Endereço:</strong> ${i.endereco || '-'}</p><p><strong>Histórico / Reuniões:</strong><br> ${i.crm || '-'}</p></div><div class="ficha-section" style="grid-column: 1 / -1;"><h4>Área de Documentação (Checagem)</h4><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;"><p><strong>Contrato Assinado:</strong> ${i.contrato ? 'Anexado/Link inserido' : 'Pendente'}</p><p><strong>Media Kit:</strong> ${i.mediakit ? 'Recebido' : 'Pendente'}</p><p><strong>Materiais Físicos/Logos:</strong><br> ${i.materiais || '-'}</p><p><strong>Registro Fiscal/NFs:</strong><br> ${i.nf || '-'}</p></div></div></div>`;
+            document.getElementById('modalFicha').style.display = 'block';
+        }
+
+        window.imprimirAgendaTabela = function() {
+            const tabelaHTML = document.getElementById('tabelaAgenda').outerHTML;
+            const html = `<div style="text-align: center; margin-bottom: 20px;"><h2 style="font-size: 2rem; color: var(--kendence-dark-blue); margin: 0;">Calendário de Jogos</h2></div><style> @media print { .col-acoes { display: none !important; } } </style><div class="table-container" style="margin-top: 0;">${tabelaHTML}</div>`;
+            document.getElementById('conteudoFicha').innerHTML = html;
+            document.getElementById('modalFicha').style.display = 'block';
+            setTimeout(() => { window.print(); }, 300);
+        }
+
+        // --- BACKUP FIREBASE ---
         window.exportarDados = async function() {
             try {
                 const snapshot = await get(ref(db));
-                const backup = snapshot.val() || {};
-                const ds = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup));
+                const ds = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(snapshot.val() || {}));
                 const dl = document.createElement('a');
-                dl.setAttribute("href", ds);
-                dl.setAttribute("download", "KendenceFC_Backup_Firebase.json");
-                document.body.appendChild(dl);
-                dl.click();
-                dl.remove();
-            } catch (error) {
-                alert("Erro ao exportar backup: " + error.message);
-            }
+                dl.setAttribute("href", ds); dl.setAttribute("download", "KendenceFC_Backup_Firebase.json");
+                document.body.appendChild(dl); dl.click(); dl.remove();
+            } catch (error) { alert("Erro ao exportar: " + error.message); }
         };
 
         window.importarDados = function() {
@@ -409,20 +571,14 @@
             const r = new FileReader();
             r.onload = async function(e) {
                 try {
-                    const d = JSON.parse(e.target.result);
-                    await set(ref(db), d);
-                    alert("✅ Banco de dados restaurado na nuvem com sucesso!");
-                } catch(err) {
-                    alert("❌ Erro no arquivo ou falha ao restaurar.");
-                }
-            };
-            r.readAsText(f);
+                    await set(ref(db), JSON.parse(e.target.result));
+                    alert("✅ Restaurado na nuvem!");
+                } catch(err) { alert("❌ Erro."); }
+            }; r.readAsText(f);
         };
 
         window.apagarTudo = function() {
-            if(confirm('⚠️ ALERTA VERMELHO! Apagar TODOS os dados de todas as abas permanentemente da nuvem?')) {
-                remove(ref(db)).then(() => alert('🗑️ Sistema completamente limpo na nuvem.'));
-            }
+            if(confirm('⚠️ Apagar TODOS os dados permanentemente da nuvem?')) remove(ref(db)).then(() => alert('🗑️ Limpo.'));
         };
     </script>
 </body>
