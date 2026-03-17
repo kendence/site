@@ -76,91 +76,194 @@
             <button onclick="window.logout()" style="color:white; background:none; border:1px solid white; cursor:pointer; padding:5px 10px; border-radius:4px;">Sair</button>
         </header>
 
-        <nav>
+        <nav class="no-print">
             <button class="tab-btn active" onclick="openTab('jogadores')">Elenco</button>
-            <button class="tab-btn" onclick="openTab('comissao')">Comissão</button>
-            <button class="tab-btn" onclick="openTab('patrocinadores')">Patrocinadores</button>
-            <button class="tab-btn" onclick="openTab('agenda')">Agenda</button>
-        </nav>
+           <button class="tab-btn" onclick="openTab('comissao')">Comissão Técnica</button>
+           <button class="tab-btn" onclick="openTab('patrocinadores')">Patrocinadores</button>
+           <button class="tab-btn" onclick="openTab('agenda')">Calendário</button>
+           <button class="tab-btn" onclick="openTab('backup')">Sistema / Backup</button>
+       </nav>
 
-        <div class="container">
-            <div id="jogadores" class="tab-content active">
-                <form id="formJogador">
-                    <input type="hidden" id="jog-id">
-                    <div class="section-title">Identificação Básica</div>
-                    <div class="form-grid">
-                        <div class="full-width"><label>Nome Completo</label><input type="text" id="jog-nome" required></div>
-                        <div><label>Apelido</label><input type="text" id="jog-apelido"></div>
-                        <div><label>Nascimento</label><input type="date" id="jog-nascimento"></div>
-                        <div><label>CPF</label><input type="text" id="jog-cpf"></div>
-                        <div><label>WhatsApp</label><input type="text" id="jog-whatsapp"></div>
-                        <div><label>Nº Camisa</label><input type="number" id="jog-camisa"></div>
-                        <div><label>Status</label><select id="jog-status"><option>Ativo</option><option>Inativo</option></select></div>
-                    </div>
-                    <div class="section-title">Dados Técnicos</div>
-                    <div class="form-grid">
-                        <div><label>Posição</label><input type="text" id="jog-pos1"></div>
-                        <div><label>Pé Dominante</label><select id="jog-pe"><option>Direito</option><option>Esquerdo</option><option>Ambidestro</option></select></div>
-                        <div class="full-width"><label>Histórico de Lesões</label><textarea id="jog-lesoes"></textarea></div>
-                    </div>
-                    <button type="submit" class="btn-submit">Salvar Jogador</button>
-                </form>
+ <div class="container no-print">
+        <div id="jogadores" class="tab-content active">
+            <div class="flex-header"><h2>Cadastro do Elenco</h2></div>
+            <form id="formJogador">
+                <input type="hidden" id="jog-id">
+                <div class="section-title">Identificação Básica</div>
+                <div class="form-grid">
+                    <div class="form-group"><label>Foto (URL)</label><input type="text" id="jog-foto"></div>
+                    <div class="form-group full-width"><label>Nome Completo</label><input type="text" id="jog-nome" required></div>
+                    <div class="form-group"><label>Apelido</label><input type="text" id="jog-apelido" required></div>
+                    <div class="form-group"><label>Nascimento</label><input type="date" id="jog-nascimento" required></div>
+                    <div class="form-group"><label>Idade Automática</label><input type="number" id="jog-idade" readonly></div>
+                    <div class="form-group"><label>CPF</label><input type="text" id="jog-cpf"></div>
+                    <div class="form-group"><label>RG</label><input type="text" id="jog-rg"></div>
+                    <div class="form-group"><label>Telefone</label><input type="text" id="jog-telefone"></div>
+                    <div class="form-group"><label>WhatsApp</label><input type="text" id="jog-whatsapp"></div>
+                    <div class="form-group"><label>E-mail</label><input type="email" id="jog-email"></div>
+                    <div class="form-group"><label>Endereço</label><input type="text" id="jog-endereco"></div>
+                    <div class="form-group"><label>Contato de Emergência</label><input type="text" id="jog-emergencia"></div>
+                    <div class="form-group"><label>Tipo Sanguíneo</label><input type="text" id="jog-sangue"></div>
+                    <div class="form-group"><label>Nº da Camisa</label><input type="number" id="jog-camisa"></div>
+                </div>
+                <div class="section-title">Dados Técnicos</div>
+                <div class="form-grid">
+                    <div class="form-group"><label>Posição Principal</label><input type="text" id="jog-pos1"></div>
+                    <div class="form-group"><label>Posição Secundária</label><input type="text" id="jog-pos2"></div>
+                    <div class="form-group"><label>Pé Dominante</label><select id="jog-pe"><option value="">Selecione...</option><option value="Direito">Direito</option><option value="Esquerdo">Esquerdo</option><option value="Ambidestro">Ambidestro</option></select></div>
+                    <div class="form-group"><label>Altura (m)</label><input type="number" step="0.01" id="jog-altura"></div>
+                    <div class="form-group"><label>Peso (kg)</label><input type="number" step="0.1" id="jog-peso"></div>
+                    <div class="form-group"><label>Histórico de Lesões</label><textarea id="jog-lesoes"></textarea></div>
+                    <div class="form-group"><label>Condição Física Atual</label><input type="text" id="jog-condicao"></div>
+                    <div class="form-group"><label>Último Exame Médico</label><input type="date" id="jog-exame"></div>
+                    <div class="form-group"><label>Status</label><select id="jog-status"><option value="Ativo">Ativo</option><option value="Afastado">Afastado</option><option value="Suspenso">Suspenso</option></select></div>
+                    <div class="form-group"><label>Categoria</label><select id="jog-categoria"><option value="Titular">Titular</option><option value="Reserva">Reserva</option><option value="Base">Base</option></select></div>
+                </div>
+                <div class="section-title">Controle Interno</div>
+                <div class="form-grid">
+                    <div class="form-group"><label>Multas / Advertências</label><textarea id="jog-multas"></textarea></div>
+                    <div class="form-group"><label>Status da Mensalidade</label><input type="text" id="jog-mensalidade"></div>
+                    <div class="form-group"><label>Presença em Treinos</label><input type="text" id="jog-treinos"></div>
+                    <div class="form-group"><label>Presença em Jogos</label><input type="text" id="jog-jogos"></div>
+                    <div class="form-group full-width"><label>Observações da Comissão</label><textarea id="jog-obs"></textarea></div>
+                </div>
+                <button type="submit" class="btn-submit">Salvar Ficha do Jogador</button>
+                <button type="button" class="btn-submit btn-cancel" onclick="limparFormulario('formJogador', 'jog-id')">Cancelar Edição / Limpar</button>
+            </form>
+            <div class="table-container">
                 <table id="tabelaJogadores">
-                    <thead><tr><th>Atleta</th><th>Posição</th><th>Status</th><th>Ações</th></tr></thead>
-                    <tbody id="listaJogadores"></tbody>
+                    <thead><tr><th>Camisa</th><th>Atleta (Clique para Ficha)</th><th>Posição</th><th>Status</th><th>Ações</th></tr></thead>
+                    <tbody></tbody>
                 </table>
             </div>
+        </div>
 
-            <div id="comissao" class="tab-content">
-                <form id="formComissao">
-                    <input type="hidden" id="com-id">
-                    <div class="section-title">Dados do Profissional</div>
-                    <div class="form-grid">
-                        <div class="full-width"><label>Nome Completo</label><input type="text" id="com-nome" required></div>
-                        <div><label>Cargo</label><input type="text" id="com-cargo" required></div>
-                        <div><label>WhatsApp</label><input type="text" id="com-whatsapp"></div>
-                        <div><label>Status</label><select id="com-status"><option>Ativo</option><option>Inativo</option></select></div>
-                    </div>
-                    <button type="submit" class="btn-submit">Salvar Membro</button>
-                </form>
+        <div id="comissao" class="tab-content">
+            <div class="flex-header"><h2>Comissão Técnica & Staff</h2></div>
+            <form id="formComissao">
+                <input type="hidden" id="com-id">
+                <div class="section-title">Dados do Profissional</div>
+                <div class="form-grid">
+                    <div class="form-group"><label>Foto (Link/URL)</label><input type="text" id="com-foto"></div>
+                    <div class="form-group full-width"><label>Nome Completo</label><input type="text" id="com-nome" required></div>
+                    <div class="form-group"><label>Cargo</label><select id="com-cargo" required><option value="">Selecione...</option><option value="Técnico">Técnico</option><option value="Auxiliar">Auxiliar Técnico</option><option value="Preparador Físico">Preparador Físico</option><option value="Massagista">Massagista</option><option value="Médico">Médico</option><option value="Diretor">Diretor</option><option value="Marketing">Marketing</option><option value="Gandula">Gandula</option><option value="Outro">Outro</option></select></div>
+                    <div class="form-group"><label>CPF</label><input type="text" id="com-cpf"></div>
+                    <div class="form-group"><label>Endereço</label><input type="text" id="com-telefone"></div>
+                    <div class="form-group"><label>WhatsApp</label><input type="text" id="com-whatsapp"></div>
+                    <div class="form-group"><label>Entrada no Clube</label><input type="date" id="com-entrada"></div>
+                    <div class="form-group"><label>Salário / Ajuda de Custo (R$)</label><input  type="text" id="com-salario"></div>
+                    <div class="form-group"><label>Status</label><select id="com-status"><option value="Ativo">Ativo</option><option value="Desligado">Desligado</option></select></div>
+                    <div class="form-group full-width"><label>Observações Adicionais</label><textarea id="com-obs"></textarea></div>
+                </div>
+                <button type="submit" class="btn-submit">Salvar Membro</button>
+                <button type="button" class="btn-submit btn-cancel" onclick="limparFormulario('formComissao', 'com-id')">Cancelar Edição / Limpar</button>
+            </form>
+            <div class="table-container">
                 <table id="tabelaComissao">
-                    <thead><tr><th>Membro</th><th>Cargo</th><th>Status</th><th>Ações</th></tr></thead>
-                    <tbody id="listaComissao"></tbody>
+                    <thead><tr><th>Profissional (Clique para Ficha)</th><th>Cargo</th><th>Status</th><th>WhatsApp</th><th>Ações</th></tr></thead>
+                    <tbody></tbody>
                 </table>
             </div>
+        </div>
 
-            <div id="patrocinadores" class="tab-content">
-                <form id="formPatrocinador">
-                    <input type="hidden" id="pat-id">
-                    <div class="section-title">Dados da Empresa</div>
-                    <div class="form-grid">
-                        <div class="full-width"><label>Nome Fantasia</label><input type="text" id="pat-nome" required></div>
-                        <div><label>Cota</label><select id="pat-cota"><option>Master</option><option>Ouro</option><option>Prata</option><option>Apoio</option></select></div>
-                        <div><label>Vencimento</label><input type="text" id="pat-vencimento"></div>
-                        <div><label>Status</label><select id="pat-status"><option>Ativo</option><option>Pendente</option></select></div>
+        <div id="patrocinadores" class="tab-content">
+            <div class="flex-header">
+                <h2>Gestão de Patrocinadores (CRM)</h2>
+            </div>
+            <form id="formPatrocinador">
+                <input type="hidden" id="pat-id">
+                
+                <div class="section-title">Dados Cadastrais da Empresa</div>
+                <div class="form-grid">
+                    <div class="form-group full-width"><label>Razão Social / Nome Fantasia</label><input type="text" id="pat-nome" required></div>
+                    <div class="form-group"><label>Logo (Link/URL)</label><input type="text" id="pat-logo"></div>
+                    <div class="form-group"><label>Redes Sociais (Instagram/Facebook)</label><input type="text" id="pat-redes" placeholder="@empresa"></div>
+                    <div class="form-group full-width"><label>Endereço Completo Sede</label><input type="text" id="pat-endereco"></div>
+                    <div class="form-group"><label>Contato Principal (Nome)</label><input type="text" id="pat-contato-nome" placeholder="Marketing/Diretoria"></div>
+                    <div class="form-group"><label>E-mail Corporativo</label><input type="email" id="pat-email"></div>
+                    <div class="form-group"><label>Telefone / WhatsApp</label><input type="text" id="pat-telefone"></div>
+                </div>
+
+                <div class="section-title">Dados do Contrato e Financeiro</div>
+                <div class="form-grid">
+                    <div class="form-group"><label>Valor Total / Permuta</label><input type="text" id="pat-valor" placeholder="R$ ou Descrição de Produtos"></div>
+                    <div class="form-group"><label>Forma de Pagamento</label><input type="text" id="pat-pagamento" placeholder="Mensal, Trimestral, Única..."></div>
+                    <div class="form-group"><label>Datas de Vencimento</label><input type="text" id="pat-vencimento"></div>
+                    <div class="form-group"><label>Status da Parceria</label>
+                        <select id="pat-status">
+                            <option value="Ativo">Ativo</option>
+                            <option value="Pendente">Pendente / Negociação</option>
+                            <option value="Renovação">Em Renovação</option>
+                            <option value="Finalizado">Finalizado</option>
+                        </select>
                     </div>
-                    <button type="submit" class="btn-submit">Salvar Patrocinador</button>
-                </form>
+                    <div class="form-group"><label>Início da Vigência</label><input type="date" id="pat-inicio"></div>
+                    <div class="form-group"><label>Término da Vigência</label><input type="date" id="pat-termino"></div>
+                </div>
+
+                <div class="section-title">Contrapartidas e Ativações</div>
+                <div class="form-grid">
+                    <div class="form-group"><label>Cota de Patrocínio</label>
+                        <select id="pat-cota">
+                            <option value="">Selecione...</option>
+                            <option value="Master">Master</option>
+                            <option value="Ouro">Ouro</option>
+                            <option value="Prata">Prata</option>
+                            <option value="Bronze">Bronze</option>
+                            <option value="Apoio / Permuta">Apoio / Permuta</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Local de Exposição da Marca</label><input type="text" id="pat-local" placeholder="Peito, Costas, Banners..."></div>
+                    <div class="form-group full-width"><label>Materiais Necessários e Pendências</label><textarea id="pat-materiais" placeholder="Ex: Precisam enviar logo em vetor..."></textarea></div>
+                    <div class="form-group full-width"><label>Ações de Marketing Acordadas</label><textarea id="pat-marketing" placeholder="Eventos com jogadores, sorteios..."></textarea></div>
+                </div>
+
+                <div class="section-title">Relacionamento (CRM) e Documentos</div>
+                <div class="form-grid">
+                    <div class="form-group"><label>Responsável Interno (Clube)</label><input type="text" id="pat-responsavel" placeholder="Quem atende a empresa"></div>
+                    <div class="form-group"><label>Link YouTube (Vídeos da marca)</label><input type="text" id="pat-youtube"></div>
+                    <div class="form-group full-width"><label>Histórico de Reuniões e Expectativas</label><textarea id="pat-crm" placeholder="Anotações de conversas..."></textarea></div>
+                    <div class="form-group"><label>Arquivo do Contrato (URL/PDF)</label><input type="text" id="pat-contrato" placeholder="Link do Drive"></div>
+                    <div class="form-group"><label>Media Kit da Empresa (URL)</label><input type="text" id="pat-mediakit"></div>
+                    <div class="form-group"><label>Notas Fiscais (Links/Anotações)</label><input type="text" id="pat-nf"></div>
+                </div>
+
+                <button type="submit" class="btn-submit">Salvar Patrocinador</button>
+                <button type="button" class="btn-submit btn-cancel" onclick="limparFormulario('formPatrocinador', 'pat-id')">Cancelar Edição / Limpar</button>
+            </form>
+
+            <div class="table-container">
                 <table id="tabelaPatrocinadores">
-                    <thead><tr><th>Empresa</th><th>Cota</th><th>Status</th><th>Ações</th></tr></thead>
-                    <tbody id="listaPatrocinadores"></tbody>
+                    <thead><tr><th>Empresa (Clique para Ficha)</th><th>Cota</th><th>Status</th><th>Vigência</th><th>Ações</th></tr></thead>
+                    <tbody></tbody>
                 </table>
             </div>
+        </div>
 
-            <div id="agenda" class="tab-content">
-                <form id="formAgenda">
-                    <input type="hidden" id="age-id">
-                    <div class="section-title">Dados da Partida</div>
-                    <div class="form-grid">
-                        <div><label>Data</label><input type="date" id="age-data" required></div>
-                        <div><label>Adversário</label><input type="text" id="age-adversario" required></div>
-                        <div><label>Placar Final</label><input type="text" id="age-resultado" placeholder="0 x 0"></div>
-                    </div>
-                    <button type="submit" class="btn-submit">Salvar Jogo</button>
-                </form>
+        <div id="agenda" class="tab-content">
+            <div class="flex-header">
+                <h2>Calendário de Jogos</h2>
+                <button class="btn-print-top" onclick="imprimirAgendaTabela()">🖨️ Imprimir Jogos Cadastrados</button>
+            </div>
+            <form id="formAgenda">
+                <input type="hidden" id="age-id">
+                <div class="section-title">Dados da Partida</div>
+                <div class="form-grid">
+                    <div class="form-group"><label>Data</label><input type="date" id="age-data" required></div>
+                    <div class="form-group"><label>Horário</label><input type="time" id="age-horario"></div>
+                    <div class="form-group"><label>Adversário</label><input type="text" id="age-adversario" required></div>
+                    <div class="form-group"><label>Competição / Amistoso</label><input type="text" id="age-competicao"></div>
+                    <div class="form-group"><label>Local do Jogo</label><input type="text" id="age-local"></div>
+                    <div class="form-group"><label>Placar Final (Ex: 2 x 1)</label><input type="text" id="age-resultado"></div>
+                    <div class="form-group full-width"><label>Observações do Jogo</label><textarea id="age-obs"></textarea></div>
+                </div>
+                <button type="submit" class="btn-submit">Salvar Partida</button>
+                <button type="button" class="btn-submit btn-cancel" onclick="limparFormulario('formAgenda', 'age-id')">Cancelar Edição / Limpar</button>
+            </form>
+            <div class="table-container" id="area-impressao-agenda">
                 <table id="tabelaAgenda">
-                    <thead><tr><th>Data</th><th>Adversário</th><th>Placar</th><th>Ações</th></tr></thead>
-                    <tbody id="listaAgenda"></tbody>
+                    <thead><tr><th>Data</th><th>Adversário / Competição</th><th>Placar</th><th class="col-acoes">Ações</th></tr></thead>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
