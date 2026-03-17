@@ -4,117 +4,166 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão de Equipe - Kendence F.C.</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --kendence-red: #D31F37;
             --kendence-blue: #1F3A79;
             --kendence-dark-blue: #162B58;
+            --light-bg: #f0f2f5;
             --white: #ffffff;
+            --text-main: #1f2937;
+            --border-color: #e5e7eb;
         }
 
-        body { font-family: 'Inter', sans-serif; margin: 0; background: #f0f2f5; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--light-bg); color: var(--text-main); }
 
-        /* ESTILO DA TELA DE LOGIN */
+        /* --- TELA DE LOGIN --- */
         #auth-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--kendence-dark-blue);
-            display: flex; align-items: center; justify-content: center; z-index: 10000;
+            background: var(--kendence-dark-blue); display: flex; 
+            align-items: center; justify-content: center; z-index: 10000;
         }
         .login-box {
             background: white; padding: 40px; border-radius: 15px;
-            width: 90%; max-width: 380px; text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
-        .login-box input {
-            width: 100%; padding: 12px; margin: 10px 0;
-            border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;
-        }
-        .login-box button {
-            width: 100%; padding: 14px; background: var(--kendence-red);
-            color: white; border: none; border-radius: 8px;
-            font-weight: bold; cursor: pointer; margin-top: 10px;
-        }
-        
-        /* CONTEÚDO DO SISTEMA (ESCONDIDO POR PADRÃO) */
-        #main-system-content { display: none; }
+        .login-box input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; }
+        .login-box button { width: 100%; padding: 15px; background: var(--kendence-red); color: white; border: none; border-radius: 6px; font-weight: 800; cursor: pointer; }
 
-        /* Estilos básicos do Sistema */
-        header { background: var(--kendence-blue); color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-        nav { background: var(--white); padding: 10px; display: flex; gap: 10px; overflow-x: auto; border-bottom: 2px solid #ddd; }
-        .nav-btn { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; white-space: nowrap; }
-        .nav-btn.active { background: var(--kendence-red); color: white; }
-        .container { padding: 20px; max-width: 1200px; margin: auto; }
-        .section { display: none; }
-        .section.active { display: block; }
-        form { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        form h2 { grid-column: 1 / -1; margin-top: 0; }
+        /* --- ESTRUTURA DO SISTEMA --- */
+        #main-system-content { display: none; }
+        header { background: var(--kendence-dark-blue); color: white; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+        nav { display: flex; justify-content: center; background: var(--kendence-red); flex-wrap: wrap; }
+        nav button { background: none; border: none; color: white; padding: 1rem 1.5rem; cursor: pointer; font-weight: 700; text-transform: uppercase; border-bottom: 4px solid transparent; }
+        nav button.active { border-bottom-color: white; }
+
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .tab-content { display: none; background: white; padding: 2rem; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .tab-content.active { display: block; }
+
+        /* FORMULÁRIOS */
+        .section-title { color: var(--kendence-dark-blue); border-bottom: 2px solid var(--kendence-red); margin: 2rem 0 1rem; font-weight: 800; text-transform: uppercase; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
         .full-width { grid-column: 1 / -1; }
-        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
-        th { background: #f8f9fa; }
-        .btn-delete { color: red; cursor: pointer; font-weight: bold; border: none; background: none; }
+        label { font-weight: 700; font-size: 0.8rem; display: block; margin-bottom: 3px; }
+        input, select, textarea { width: 100%; padding: 0.7rem; border: 1px solid var(--border-color); border-radius: 4px; box-sizing: border-box; }
+        
+        .btn-submit { background: var(--kendence-dark-blue); color: white; border: none; padding: 1rem; width: 100%; border-radius: 5px; font-weight: 800; cursor: pointer; margin-top: 1rem; }
+        .btn-delete { background: var(--kendence-red); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+        th, td { padding: 12px; border-bottom: 1px solid #eee; text-align: left; }
+        th { background: #f8f9fa; font-weight: 800; }
     </style>
 </head>
 <body>
 
     <div id="auth-screen">
         <div class="login-box">
-            <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" alt="Logo" style="width: 80px; margin-bottom: 20px;">
-            <h2>SISTEMA KENDENCE</h2>
-            <input type="email" id="login-email" placeholder="Seu e-mail">
-            <input type="password" id="login-senha" placeholder="Sua senha">
-            <button onclick="window.fazerLogin()">ACESSAR SISTEMA</button>
-            <p id="error-msg" style="color: red; display: none; margin-top: 10px;">Acesso negado.</p>
+            <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" height="80">
+            <h2>ACESSO RESTRITO</h2>
+            <input type="email" id="login-email" placeholder="E-mail">
+            <input type="password" id="login-senha" placeholder="Senha">
+            <button onclick="window.fazerLogin()">ENTRAR</button>
+            <p id="error-msg" style="color:red; display:none; margin-top:10px;">Credenciais inválidas.</p>
         </div>
     </div>
 
     <div id="main-system-content">
         <header>
-            <div style="display:flex; align-items:center; gap:15px;">
-                <img src="https://i.postimg.cc/YCqbzcpH/brasao-1.png" height="40">
-                <h1 style="font-size: 1.2rem;">KENDENCE F.C. - PAINEL ADM</h1>
-            </div>
-            <button onclick="window.logout()" style="background:transparent; color:white; border:1px solid white; padding:5px 15px; border-radius:5px; cursor:pointer;">Sair</button>
+            <h1>Kendence F.C.</h1>
+            <button onclick="window.logout()" style="color:white; background:none; border:1px solid white; cursor:pointer; padding:5px 10px; border-radius:4px;">Sair</button>
         </header>
 
-        <nav id="mainNav">
-            <button class="nav-btn active" onclick="showSection('jogadores')">Jogadores</button>
-            <button class="nav-btn" onclick="showSection('comissao')">Comissão</button>
-            <button class="nav-btn" onclick="showSection('patrocinadores')">Patrocinadores</button>
+        <nav>
+            <button class="tab-btn active" onclick="openTab('jogadores')">Elenco</button>
+            <button class="tab-btn" onclick="openTab('comissao')">Comissão</button>
+            <button class="tab-btn" onclick="openTab('patrocinadores')">Patrocinadores</button>
+            <button class="tab-btn" onclick="openTab('agenda')">Agenda</button>
         </nav>
 
         <div class="container">
-            <section id="jogadores" class="section active">
+            <div id="jogadores" class="tab-content active">
                 <form id="formJogador">
-                    <h2>Cadastrar Jogador</h2>
                     <input type="hidden" id="jog-id">
-                    <input type="text" id="jog-nome" placeholder="Nome Completo" required>
-                    <input type="text" id="jog-apelido" placeholder="Apelido">
-                    <input type="number" id="jog-camisa" placeholder="Nº Camisa">
-                    <select id="jog-status">
-                        <option value="Ativo">Ativo</option>
-                        <option value="Inativo">Inativo</option>
-                        <option value="Lesionado">Lesionado</option>
-                    </select>
-                    <textarea id="jog-obs" class="full-width" placeholder="Histórico ou Observações"></textarea>
-                    <button type="submit" class="full-width" style="background:var(--kendence-blue); color:white; padding:10px; border:none; border-radius:5px; cursor:pointer;">Salvar Jogador</button>
+                    <div class="section-title">Identificação Básica</div>
+                    <div class="form-grid">
+                        <div class="full-width"><label>Nome Completo</label><input type="text" id="jog-nome" required></div>
+                        <div><label>Apelido</label><input type="text" id="jog-apelido"></div>
+                        <div><label>Nascimento</label><input type="date" id="jog-nascimento"></div>
+                        <div><label>CPF</label><input type="text" id="jog-cpf"></div>
+                        <div><label>WhatsApp</label><input type="text" id="jog-whatsapp"></div>
+                        <div><label>Nº Camisa</label><input type="number" id="jog-camisa"></div>
+                        <div><label>Status</label><select id="jog-status"><option>Ativo</option><option>Inativo</option></select></div>
+                    </div>
+                    <div class="section-title">Dados Técnicos</div>
+                    <div class="form-grid">
+                        <div><label>Posição</label><input type="text" id="jog-pos1"></div>
+                        <div><label>Pé Dominante</label><select id="jog-pe"><option>Direito</option><option>Esquerdo</option><option>Ambidestro</option></select></div>
+                        <div class="full-width"><label>Histórico de Lesões</label><textarea id="jog-lesoes"></textarea></div>
+                    </div>
+                    <button type="submit" class="btn-submit">Salvar Jogador</button>
                 </form>
                 <table id="tabelaJogadores">
-                    <thead>
-                        <tr>
-                            <th>Nome/Apelido</th>
-                            <th>Camisa</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>Atleta</th><th>Posição</th><th>Status</th><th>Ações</th></tr></thead>
                     <tbody id="listaJogadores"></tbody>
                 </table>
-            </section>
-
             </div>
+
+            <div id="comissao" class="tab-content">
+                <form id="formComissao">
+                    <input type="hidden" id="com-id">
+                    <div class="section-title">Dados do Profissional</div>
+                    <div class="form-grid">
+                        <div class="full-width"><label>Nome Completo</label><input type="text" id="com-nome" required></div>
+                        <div><label>Cargo</label><input type="text" id="com-cargo" required></div>
+                        <div><label>WhatsApp</label><input type="text" id="com-whatsapp"></div>
+                        <div><label>Status</label><select id="com-status"><option>Ativo</option><option>Inativo</option></select></div>
+                    </div>
+                    <button type="submit" class="btn-submit">Salvar Membro</button>
+                </form>
+                <table id="tabelaComissao">
+                    <thead><tr><th>Membro</th><th>Cargo</th><th>Status</th><th>Ações</th></tr></thead>
+                    <tbody id="listaComissao"></tbody>
+                </table>
+            </div>
+
+            <div id="patrocinadores" class="tab-content">
+                <form id="formPatrocinador">
+                    <input type="hidden" id="pat-id">
+                    <div class="section-title">Dados da Empresa</div>
+                    <div class="form-grid">
+                        <div class="full-width"><label>Nome Fantasia</label><input type="text" id="pat-nome" required></div>
+                        <div><label>Cota</label><select id="pat-cota"><option>Master</option><option>Ouro</option><option>Prata</option><option>Apoio</option></select></div>
+                        <div><label>Vencimento</label><input type="text" id="pat-vencimento"></div>
+                        <div><label>Status</label><select id="pat-status"><option>Ativo</option><option>Pendente</option></select></div>
+                    </div>
+                    <button type="submit" class="btn-submit">Salvar Patrocinador</button>
+                </form>
+                <table id="tabelaPatrocinadores">
+                    <thead><tr><th>Empresa</th><th>Cota</th><th>Status</th><th>Ações</th></tr></thead>
+                    <tbody id="listaPatrocinadores"></tbody>
+                </table>
+            </div>
+
+            <div id="agenda" class="tab-content">
+                <form id="formAgenda">
+                    <input type="hidden" id="age-id">
+                    <div class="section-title">Dados da Partida</div>
+                    <div class="form-grid">
+                        <div><label>Data</label><input type="date" id="age-data" required></div>
+                        <div><label>Adversário</label><input type="text" id="age-adversario" required></div>
+                        <div><label>Placar Final</label><input type="text" id="age-resultado" placeholder="0 x 0"></div>
+                    </div>
+                    <button type="submit" class="btn-submit">Salvar Jogo</button>
+                </form>
+                <table id="tabelaAgenda">
+                    <thead><tr><th>Data</th><th>Adversário</th><th>Placar</th><th>Ações</th></tr></thead>
+                    <tbody id="listaAgenda"></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <script type="module">
@@ -136,7 +185,7 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        // --- FUNÇÕES GLOBAIS ---
+        // --- AUTH ---
         window.fazerLogin = () => {
             const email = document.getElementById('login-email').value;
             const senha = document.getElementById('login-senha').value;
@@ -144,16 +193,8 @@
                 document.getElementById('error-msg').style.display = 'block';
             });
         };
-
         window.logout = () => signOut(auth);
 
-        window.showSection = (id) => {
-            document.querySelectorAll('.section, .nav-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            event.currentTarget.classList.add('active');
-        };
-
-        // --- MONITOR DE LOGIN ---
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('auth-screen').style.display = 'none';
@@ -165,53 +206,54 @@
             }
         });
 
-        // --- BANCO DE DADOS EM TEMPO REAL ---
+        // --- NAVEGAÇÃO ---
+        window.openTab = (id) => {
+            document.querySelectorAll('.tab-content, .tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.currentTarget.classList.add('active');
+        };
+
+        // --- SINCRONIZAÇÃO EM TEMPO REAL ---
         function iniciarSincronizacao() {
-            onValue(ref(db, 'jogadores'), (snapshot) => {
-                const dados = snapshot.val();
-                const lista = document.getElementById('listaJogadores');
-                lista.innerHTML = '';
-                if(dados) {
-                    Object.entries(dados).forEach(([id, jog]) => {
-                        lista.innerHTML += `
-                            <tr>
-                                <td><b>${jog.nome}</b><br><small>${jog.apelido || ''}</small></td>
-                                <td>${jog.camisa || '-'}</td>
-                                <td>${jog.status}</td>
-                                <td><button class="btn-delete" onclick="window.excluir('jogadores', '${id}')">Excluir</button></td>
-                            </tr>
-                        `;
-                    });
-                }
+            onValue(ref(db, 'jogadores'), (s) => render('listaJogadores', s.val(), 'jog'));
+            onValue(ref(db, 'comissao'), (s) => render('listaComissao', s.val(), 'com'));
+            onValue(ref(db, 'patrocinadores'), (s) => render('listaPatrocinadores', s.val(), 'pat'));
+            onValue(ref(db, 'agenda'), (s) => render('listaAgenda', s.val(), 'age'));
+        }
+
+        function render(tbodyId, dados, prefix) {
+            const tbody = document.getElementById(tbodyId);
+            tbody.innerHTML = '';
+            if(!dados) return;
+            Object.entries(dados).forEach(([id, obj]) => {
+                let row = `<tr>
+                    <td><b>${obj.nome || obj.adversario || obj.data}</b></td>
+                    <td>${obj.pos1 || obj.cargo || obj.cota || obj.adversario}</td>
+                    <td>${obj.status || obj.resultado || '-'}</td>
+                    <td><button class="btn-delete" onclick="window.excluir('${tbodyId.replace('lista', '').toLowerCase()}', '${id}')">Excluir</button></td>
+                </tr>`;
+                tbody.innerHTML += row;
             });
         }
 
-        // --- FORMULÁRIO DE JOGADOR ---
-        document.getElementById('formJogador').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const dados = {
-                nome: document.getElementById('jog-nome').value,
-                apelido: document.getElementById('jog-apelido').value,
-                camisa: document.getElementById('jog-camisa').value,
-                status: document.getElementById('jog-status').value,
-                obs: document.getElementById('jog-obs').value
-            };
-            
-            const id = document.getElementById('jog-id').value;
-            if(id) {
-                set(ref(db, 'jogadores/' + id), dados);
-            } else {
-                push(ref(db, 'jogadores'), dados);
-            }
-            e.target.reset();
-        });
-
-        window.excluir = (path, id) => {
-            if(confirm("Deseja excluir este registro da nuvem?")) {
-                remove(ref(db, `${path}/${id}`));
-            }
+        // --- SALVAMENTO ---
+        const setupForm = (formId, path, fields, idField) => {
+            document.getElementById(formId).addEventListener('submit', (e) => {
+                e.preventDefault();
+                let obj = {};
+                fields.forEach(f => obj[f.replace(idField + '-', '')] = document.getElementById(f).value);
+                const id = document.getElementById(idField + '-id').value;
+                id ? set(ref(db, `${path}/${id}`), obj) : push(ref(db, path), obj);
+                e.target.reset();
+            });
         };
 
+        setupForm('formJogador', 'jogadores', ['jog-nome', 'jog-apelido', 'jog-nascimento', 'jog-cpf', 'jog-whatsapp', 'jog-camisa', 'jog-status', 'jog-pos1', 'jog-pe', 'jog-lesoes'], 'jog');
+        setupForm('formComissao', 'comissao', ['com-nome', 'com-cargo', 'com-whatsapp', 'com-status'], 'com');
+        setupForm('formPatrocinador', 'patrocinadores', ['pat-nome', 'pat-cota', 'pat-vencimento', 'pat-status'], 'pat');
+        setupForm('formAgenda', 'agenda', ['age-data', 'age-adversario', 'age-resultado'], 'age');
+
+        window.excluir = (path, id) => confirm("Excluir registro?") && remove(ref(db, `${path}/${id}`));
     </script>
 </body>
 </html>
